@@ -123,8 +123,8 @@ inputMapper.inputMapEmitter.on("gamepadStick", ({ direction }) => {
 
 Includes:
 
-- Deadzone filtering (prevents drift)
-- Threshold logic (controls when diagonal vs cardinal triggers)
+    - Deadzone filtering (prevents drift)
+    - Threshold logic (controls when diagonal vs cardinal triggers)
 
 ### 📡 Event Types
 
@@ -132,21 +132,101 @@ Your game can subscribe to:
 
 #### Keyboard:
 
-- keyPress
-- keyRelease
-- keyHold
+    - keyPress
+    - keyRelease
+    - keyHold
 
 #### Gamepad:
 
-- gamepadStick
-- gamepadButton
-- gamepadConnect
-- gamepadDisconnect
+    - gamepadStick
+    - gamepadButton
+    - gamepadConnect
+    - gamepadDisconnect
 
-Pointer:
+#### Pointer:
 
-pointer (up, down, move, cancel)
+    - pointer (up, down, move, cancel)
+    - wheel
 
-wheel
+#### Example:
 
-Example:
+```ts
+inputMapper.inputMapEmitter.on("pointer", e => {
+  console.log(e.event, e.screenPos);
+});
+```
+
+## 🧩 Example: Defining Multiple Contexts
+
+```ts
+inputMapper.registerMap({
+  name: "menu",
+  inputMap: {
+    KeyPresses: new Set([Keys.Enter]),
+    GamepadButtonsTriggers: new Set([Buttons.Face1]),
+  },
+});
+
+inputMapper.registerMap({
+  name: "inventory",
+  inputMap: {
+    KeyPresses: new Set([Keys.I, Keys.Escape]),
+    PointerTriggers: new Set(["move", "down"]),
+  },
+});
+```
+
+Switch modes anytime:
+
+```ts
+inputMapper.switchContext("inventory");
+```
+
+## 🛠️ Lifecycle Notes
+
+The system automatically:
+
+    - Hooks into Excalibur’s preupdate cycle
+    - Registers all keyboard/gamepad/pointer events
+    - Detects and manages connected gamepads
+    - Rebuilds polling tables when contexts change
+
+No cleanup necessary unless you tear down your engine.
+
+## 📖 API Summary
+
+`constructor(engine: Engine)`
+
+Creates the system and attaches all listeners.
+
+`registerMap({ name, inputMap })`
+
+Adds a new input context.
+
+`unregisterMap(name: string)`
+
+Removes a context.
+
+`switchContext(name: string)`
+
+Activates a context.
+
+`inputMapEmitter.on(eventName, handler)`
+
+Subscribe to one of the provided events.
+
+## 🤝 Contributing
+
+Ideas welcome—this system was built to grow:
+
+Custom mappings
+
+Input recording/playback
+
+UI event helpers
+
+Action-to-command mapping layer
+
+## 📜 License
+
+MIT — use it freely in commercial or hobby projects.
