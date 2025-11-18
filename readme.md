@@ -7,10 +7,13 @@ mapping, pub/sub signals, UUID generation, behavior trees, and simple components
 ## Table of Contents
 
 - Game Modules and Tools
+
   - [Finite State Machine](/Game%20Systems/Finite%20State%20Machine/readme.md)
   - [Pub/Sub Signals](/Game%20Systems/Pub%20Sub%20Signals/readme.md)
   - [Input Mapping](/Game%20Systems/Input%20Mapping/readme.md)
   - [UUID](/Game%20Systems/UUID/readme.md)
+  - [Poker Hand Evaluation](/Game%20Systems/Poker%20Hand%20Evaluation/readme.md)
+
 - ECS Components/Systems
   - [Component Template](/Systems&Components/General%20Purpose%20Component%20Template/GP%20Component.ts)
   - [Behavior Trees](/Systems&Components/Behavior%20Tree/readme.md)
