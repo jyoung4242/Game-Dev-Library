@@ -31,7 +31,7 @@ Designed to completely decouple your input logic from gameplay systems through s
 Add this module to your project (production or tooling):
 
 ```ts
-import { InputMapSystem } from "./InputMapSystem";
+import { InputMapSystem } from "./InputMapper";
 ```
 
 It requires ExcaliburJS and uses its built-in input/event classes.
