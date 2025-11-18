@@ -26,7 +26,7 @@ Perfect for menus, AI behaviors, combat states, cutscene logic, animation contro
 Just drop the module into your project:
 
 ```ts
-import { ExFSM, ExState } from "./fsm";
+import { ExFSM, ExState } from "./ExFSM";
 ```
 
 ## 🧠 The FSMResult<T> Type
