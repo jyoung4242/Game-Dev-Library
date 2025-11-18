@@ -1,4 +1,4 @@
-# Game Dev Library
+# Game Dev Library (Primarily for ExcaliburJS)
 
 A concise collection of small, reusable TypeScript systems and components useful for game development, utilities, and prototyping. This
 repository gathers lightweight implementations (and examples) for common game-engine features such as finite state machines, input
