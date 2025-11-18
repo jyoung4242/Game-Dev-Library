@@ -20,7 +20,7 @@ mapping, pub/sub signals, UUID generation, behavior trees, and simple components
 
 ## License
 
-This project does not include a license by default. Add a `LICENSE` file (for example, `MIT`) if you want to allow reuse.
+MIT — Free to use in commercial and hobby projects alike.
 
 ## Contact
 
