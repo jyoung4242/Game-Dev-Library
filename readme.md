@@ -20,6 +20,9 @@ mapping, pub/sub signals, UUID generation, behavior trees, and simple components
   - [Keyboard Control](/Systems&Components/KeyboardControl/readme.md)
   - [Card Game Components](/Systems&Components/Card%20Game%20Components/readme.md)
   - [Animation Component](/Systems&Components/Animation%20Component/readme.md)
+- Shaders and Post Processors
+  - [Shockwave](/Game%20Systems/Shaders%20and%20Post%20Processors/ShockWave/readme.md)
+- Procedural Generation
 - [License](#license)
 - [Contact](#contact)
 
