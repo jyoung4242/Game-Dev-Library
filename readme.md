@@ -14,6 +14,7 @@ mapping, pub/sub signals, UUID generation, behavior trees, and simple components
   - [UUID](/Game%20Systems/UUID/readme.md)
   - [Poker Hand Evaluation](/Game%20Systems/Poker%20Hand%20Evaluation/readme.md)
   - [Ascii Level Editor](/Game%20Systems/Ascii%20Level%20Editor/readme.md)
+  - [Editable UI elements](/Game%20Systems/Editable%20UI%20Element/readme.md)
 
 - ECS Components/Systems
   - [Component Template](/Systems&Components/General%20Purpose%20Component%20Template/GP%20Component.ts)
