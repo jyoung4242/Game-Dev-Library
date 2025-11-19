@@ -25,6 +25,7 @@ mapping, pub/sub signals, UUID generation, behavior trees, and simple components
   - [Shockwave](/Game%20Systems/Shaders%20and%20Post%20Processors/ShockWave/readme.md)
 - Procedural Generation
   - [Cellular Automata](/Game%20Systems/Procedural%20Generation/Cellular%20Automata/readme.md)
+  - [Wave Function Collapse](/Game%20Systems/Procedural%20Generation/Wave%20Function%20Collapse/readme.md)
 - [License](#license)
 - [Contact](#contact)
 
