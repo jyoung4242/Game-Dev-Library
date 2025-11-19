@@ -19,6 +19,7 @@ mapping, pub/sub signals, UUID generation, behavior trees, and simple components
   - [Behavior Trees](/Systems&Components/Behavior%20Tree/readme.md)
   - [Keyboard Control](/Systems&Components/KeyboardControl/readme.md)
   - [Card Game Components](/Systems&Components/Card%20Game%20Components/readme.md)
+  - [Animation Component](/Systems&Components/Animation%20Component/readme.md)
 - [License](#license)
 - [Contact](#contact)
 
