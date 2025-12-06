@@ -75,11 +75,6 @@ CURVATURE = 100.0  // Effectively disables curvature
 
 This is a screen-space shader that runs once per frame on the final rendered image. Performance impact is minimal on modern hardware.
 
-## Requirements
-
-- ExcaliburJS 0.25.0 or higher
-- WebGL 2.0 support (all modern browsers)
-
 ## Technical Details
 
 The shader uses GLSL ES 3.00 and processes the final framebuffer with these effects in order:
@@ -101,7 +96,7 @@ function's multiplier.
 
 ## License
 
-[Your License Here]
+MIT — free to use in commercial and personal projects.
 
 ## Contributing
 
@@ -109,4 +104,4 @@ Contributions welcome! Feel free to submit issues or pull requests.
 
 ---
 
-Made with ❤️ for the retro gaming community
+Made with ❤️ for the retro gaming and ExcaliburJS community
