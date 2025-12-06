@@ -1,5 +1,7 @@
 # CRT PostProcessor for ExcaliburJS
 
+![Screenshot](./ss.png)
+
 A customizable CRT (Cathode Ray Tube) shader post-processor that adds authentic retro monitor effects to your ExcaliburJS games.
 
 ## Features
