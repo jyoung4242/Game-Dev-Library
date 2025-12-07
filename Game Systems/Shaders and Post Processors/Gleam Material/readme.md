@@ -3,6 +3,8 @@
 A custom GLSL shader material that adds an animated white glint effect to sprites in ExcaliburJS. Perfect for creating shiny gems,
 metallic surfaces, or any object that needs that extra sparkle.
 
+![Glint Gif](./gleam.gif)
+
 ## Features
 
 - **Diagonal traveling glint** - A bright white band that sweeps across your sprite
