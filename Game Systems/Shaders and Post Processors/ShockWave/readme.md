@@ -3,6 +3,8 @@
 A dynamic shockwave visual effect post-processor for the Excalibur game engine. Creates rippling distortion effects with chromatic
 aberration, perfect for explosions, impacts, or other dramatic game events.
 
+![Shockwave](./example.gif)
+
 ## Features
 
 - **Multiple Simultaneous Shockwaves**: Support for up to 20 concurrent shockwave effects
