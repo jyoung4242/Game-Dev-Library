@@ -3,6 +3,8 @@
 A WebGL fragment shader that creates a smooth directional wipe effect for actors, revealing or hiding content with a soft-edged
 transition. Useful for screen transitions, scene reveals, fade-in/out effects, and visual storytelling.
 
+![WipeGif](./example.gif)
+
 ## Features
 
 - **Four directional wipes**: Left, right, up, or down animations
