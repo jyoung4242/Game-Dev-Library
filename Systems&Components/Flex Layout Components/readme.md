@@ -3,6 +3,9 @@
 A flexible and intuitive UI layout system for ExcaliburJS games that provides powerful positioning and alignment strategies similar to
 CSS flexbox.
 
+> [!WARNING]  
+> THIS MODULE DOES NOT MANAGE COMPONENT SIZE, JUST POSITION
+
 ## Overview
 
 This UI layout system extends ExcaliburJS's capabilities with a flexible container-based approach for organizing UI elements. It offers
