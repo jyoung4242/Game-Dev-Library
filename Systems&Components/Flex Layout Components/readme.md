@@ -17,14 +17,6 @@ various positioning strategies to help you create responsive game interfaces wit
 - Nested Containers: Create complex layouts through container nesting
 - Customizable Spacing: Set padding and gaps between elements
 
-## Installation
-
-> This **_HAS NOT_** BEEN IMPLEMENTED YET
-
-`bash`
-
-` npm install excalibur-ui-layout`
-
 ## Basic Usage
 
 ```ts
