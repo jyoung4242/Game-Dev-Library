@@ -311,12 +311,18 @@ export class CenterPositioningStrategy extends PlacementStrategy {
     if (children.length === 0) return;
     if (children.some(child => !child.parentContainer)) return; // Exit the method early
     let parentWidth = children[0].parentDims.x;
+    let parentHeight = children[0].parentDims.y;
     let totalChildrenDimension = 0;
     let parent = children[0].parentContainer;
     let parentDims = children[0].parentDims;
 
     for (const child of children) {
-      totalChildrenDimension += child.getDimension().x;
+      if (this.layoutDirection === "horizontal") {
+        totalChildrenDimension += child.getDimension().x;
+      } else {
+        totalChildrenDimension += child.getDimension().y;
+      }
+
       //if last index don't add gap
       if (children.indexOf(child) !== children.length - 1) {
         if (this.layoutDirection === "horizontal") {
@@ -328,10 +334,11 @@ export class CenterPositioningStrategy extends PlacementStrategy {
     }
 
     // calculate center position for on-axis positioning
+
     if (this.layoutDirection === "horizontal") {
       this.cursor.x = (parentWidth - totalChildrenDimension) / 2;
     } else {
-      this.cursor.y = (parentWidth - totalChildrenDimension) / 2;
+      this.cursor.y = (parentHeight - totalChildrenDimension) / 2;
     }
 
     for (const child of children) {
