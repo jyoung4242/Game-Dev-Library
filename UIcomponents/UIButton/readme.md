@@ -2,6 +2,8 @@
 
 A customizable 3D-style button component for Excalibur.js with hover and press states, gradient backgrounds, and event handling.
 
+![Button](./button.png)
+
 ## Installation
 
 Ensure you have the required dependencies:
