@@ -1,231 +1,246 @@
-# Excalibur UI Layout System
+# Excalibur UI Layout Module
 
-A flexible and intuitive UI layout system for ExcaliburJS games that provides powerful positioning and alignment strategies similar to
-CSS flexbox.
+A flexible and powerful UI layout system for [Excalibur.js](https://excaliburjs.com/) that provides CSS Flexbox-like positioning
+strategies for game UI elements.
+
+## Features
+
+- **Multiple Positioning Strategies**: `fixed`, `anchor-start`, `anchor-end`, `center`, `space-between`, `space-around`, `space-evenly`
+- **Flexible Layout Directions**: Horizontal and vertical layouts
+- **Alignment Control**: Start, center, and end alignment for cross-axis positioning
+- **Padding & Gap Support**: Configure spacing between elements and container edges
+- **Automatic Layout Updates**: Responds to window resize events
+- **Nested Containers**: Build complex UI hierarchies with parent-child relationships
 
 > [!WARNING]  
 > THIS MODULE DOES NOT MANAGE COMPONENT SIZE, JUST POSITION
 
-## Overview
+## Installation
 
-This UI layout system extends ExcaliburJS's capabilities with a flexible container-based approach for organizing UI elements. It offers
-various positioning strategies to help you create responsive game interfaces with minimal manual positioning.
+Copy the module file into your Excalibur.js project and import it:
 
-## Features
+```typescript
+import { UILayout, UIContainer } from "./path-to-module";
+```
 
-- Container-based Layout: Organize UI elements in containers with customizable properties
-- Flexible Positioning: Multiple positioning strategies (similar to CSS flexbox)
-- Dynamic Alignment: Control how elements align within their containers
-- Responsive Design: Layout updates automatically on window resize
-- Nested Containers: Create complex layouts through container nesting
-- Customizable Spacing: Set padding and gaps between elements
+## Quick Start
 
-## Basic Usage
+```typescript
+import { Engine, Scene } from 'excalibur';
+import { UILayout } from './ui-layout';
 
-```ts
-import { Engine } from "excalibur";
-import { UILayout, UIContainer } from "excalibur-ui-layout";
-
-// Create your Excalibur engine
-const engine = new Engine({ width: 800, height: 600 });
+const game = new Engine({...});
+const scene = new Scene();
 
 // Create the UI layout system
-const uiLayout = new UILayout(engine);
+const uiLayout = new UILayout(scene);
 
-// Create a container for UI elements
-const mainContainer = new UIContainer({
-  name: "mainContainer",
-  width: 300,
-  height: 400,
+// Add containers to the root
+const header = new UIContainer({
+  name: 'header',
+  width: 800,
+  height: 60,
+  layoutDirection: 'horizontal',
+  positionContentStrategy: 'center',
+  alignmentContentStrategy: 'center',
   padding: 10,
-  gap: 5,
-  layoutDirection: "vertical",
-  positionContentStrategy: "center",
-  alignmentContentStrategy: "center",
+  gap: 15
 });
 
-// Add the container to the root container
-uiLayout.root.addChildContainer(mainContainer);
+uiLayout.root.addChildContainer(header);
 
-// Add your UI elements to the container // (buttons, panels, text, etc.)
-
-// Remember to update the layout in your game loop
-engine.on("postupdate", () => {
+// Update layout in your game loop
+scene.on('preupdate', () => {
   uiLayout.update();
 });
-
-// Start the engine
-engine.start();
 ```
 
-## Positioning Strategies
-
-The module supports multiple positioning strategies for organizing UI elements:
-
-- `fixed`: Elements remain at their manually set positions
-- `anchor-start`: Elements are positioned from the start of the container (default)
-- `anchor-end`: Elements are positioned from the end of the container
-- `center`: Elements are centered within the container
-- `space-between`: Elements are evenly distributed with equal space between them
-- `space-around`: Elements are evenly distributed with equal
-- `space around` them space-evenly: Elements are evenly distributed with equal space between and around them
-
-## Alignment Strategies
-
-Alignment strategies control how elements are positioned on the cross-axis:
-
-- `anchor-start`: Elements are aligned to the start of the container (default)
-- `center`: Elements are centered on the cross-axis
-- `anchor-end`:Elements are aligned to the end of the container
-
-## Creating a Container
-
-```ts
-const container = new UIContainer({
-  name: "myContainer",
-  width: 300,
-  height: 200,
-  padding: 10, // uniform padding
-  gap: 5, // uniform gap
-  layoutDirection: "horizontal",
-  positionContentStrategy: "space-between",
-  alignmentContentStrategy: "center",
-});
-
-// Or with detailed padding and gap
-const detailedContainer = new UIContainer({
-  name: "detailedContainer",
-  width: 300,
-  height: 200,
-  padding: { leftPadding: 10, rightPadding: 5, topPadding: 20, bottomPadding: 15 },
-  gap: { horizontalGap: 10, verticalGap: 5 },
-  layoutDirection: "vertical",
-  positionContentStrategy: "center",
-  alignmentContentStrategy: "anchor-end",
-});
-```
-
-## Nested Containers
-
-You can create complex layouts using nested containers:
-
-```ts
-// Parent container
-const parentContainer = new UIContainer({
-  name: "parent",
-  width: 400,
-  height: 300,
-  padding: 10,
-  layoutDirection: "vertical",
-  positionContentStrategy: "center",
-});
-
-// Add parent to root
-uiLayout.root.addChildContainer(parentContainer);
-
-// Child container
-const childContainer = new UIContainer({
-  name: "child",
-  width: 200,
-  height: 100,
-  padding: 5,
-  layoutDirection: "horizontal",
-  positionContentStrategy: "space-between",
-});
-
-// Add child to parent
-parentContainer.addChildContainer(childContainer);
-```
-
-## Example: Creating a Game HUD
-
-```ts
-import { Engine, Actor, Color, Text, Font, vec } from "excalibur";
-import { UILayout, UIContainer } from "excalibur-ui-layout";
-
-// Create engine
-const engine = new Engine({ width: 800, height: 600 });
-
-// Create UI layout
-const uiLayout = new UILayout(engine);
-
-// Create top HUD bar
-const topHUD = new UIContainer({
-  name: "topHUD",
-  width: engine.screen.drawWidth,
-  height: 50,
-  padding: 10,
-  gap: 20,
-  layoutDirection: "horizontal",
-  positionContentStrategy: "space-between",
-  alignmentContentStrategy: "center",
-});
-
-// Add HUD to root
-uiLayout.root.addChildContainer(topHUD);
-
-// Create score display
-const scoreText = new Text({ text: "Score: 0", font: new Font({ size: 24, color: Color.White }) });
-const scoreContainer = new UIContainer({ name: "score", width: 150, height: 40 });
-scoreContainer.graphics.add(scoreText);
-
-// Create health display
-const healthText = new Text({ text: "Health: 100", font: new Font({ size: 24, color: Color.White }) }); const
-healthContainer = new UIContainer({ name: "health", width: 150, height: 40 });
-healthContainer.graphics.add(healthText);
-
-// Add elements to HUD
-topHUD.addChildContainer(scoreContainer);
-topHUD.addChildContainer(healthContainer);
-
-// Update layout on each frame
-engine.on("postupdate", () => {
-  uiLayout.update();
-});
-
-// Start the engine
-engine.start();
-```
-
-## Best Practices
-
-1. Plan your layout hierarchy before implementation
-2. Set appropriate container dimensions to ensure proper child positioning
-3. Update the layout in your game loop to handle dynamic changes
-4. Use the right positioning strategy for your specific needs
-5. Leverage nesting for complex layouts instead of trying to position everything in one container
-
-## API Reference
+## Core Concepts
 
 ### UILayout
 
-The main class that manages the layout system.
+The main layout manager that handles the root container and layout updates.
 
-#### Properties
-
-- `root`: The root container for all UI elements
-- `layoutDirtyFlag`: Indicates if the layout needs updating
-
-#### Methods
-
-- `update()`: Updates the layout if necessary
+```typescript
+const uiLayout = new UILayout(scene);
+const root = uiLayout.root; // Access the root container
+```
 
 ### UIContainer
 
-Represents a container for UI elements.
+Containers hold and position child UI elements using various strategies.
 
-#### Constructor Options
+```typescript
+const container = new UIContainer({
+  name: "my-container",
+  width: 400,
+  height: 300,
+  layoutDirection: "horizontal", // or 'vertical'
+  positionContentStrategy: "center", // see strategies below
+  alignmentContentStrategy: "center", // cross-axis alignment
+  padding: 20, // uniform padding
+  gap: 10, // uniform gap
+});
+```
 
-- `layoutDirection`: "horizontal" | "vertical" (default: "horizontal")
-- `positionContentStrategy`: "fixed" | "anchor-start" | "anchor-end" |"center" | "space-between" | "space-around" | "space-evenly"
-  (default: "fixed") - `alignmentContentStrategy`: "center" | "anchor-start" | "anchor-end" (default: "anchor-start")
-- `padding`: number | { leftPadding, rightPadding, topPadding, bottomPadding }
-- `gap`: number | {verticalGap, horizontalGap }
+## Configuration Options
 
-#### Methods
+### Layout Direction
 
-- `addChildContainer(child)`: Adds a child container
-- `updateLayout()`: Updates the layout of the container and its children
-- `getChildContainer(index)`: Gets a child container by index License MIT
+- `horizontal`: Children are positioned left to right
+- `vertical`: Children are positioned top to bottom
 
-Contributing Contributions are welcome! Please feel free to submit a Pull Request.
+### Position Strategies (Main Axis)
+
+- **`fixed`**: Children use their manually set positions (no automatic positioning)
+- **`anchor-start`**: Children start from the beginning (left/top)
+- **`anchor-end`**: Children start from the end (right/bottom)
+- **`center`**: Children are centered as a group
+- **`space-between`**: Equal space between children, none at edges
+- **`space-around`**: Equal space around each child (half-size at edges)
+- **`space-evenly`**: Equal space between children and at edges
+
+### Alignment Strategies (Cross Axis)
+
+- **`anchor-start`**: Align to start (top for horizontal, left for vertical)
+- **`center`**: Center alignment
+- **`anchor-end`**: Align to end (bottom for horizontal, right for vertical)
+
+### Padding
+
+Configure padding as a single number or per-side:
+
+```typescript
+// Uniform padding
+padding: 20
+
+// Individual sides
+padding: {
+  leftPadding: 10,
+  rightPadding: 10,
+  topPadding: 5,
+  bottomPadding: 5
+}
+```
+
+### Gap
+
+Configure gap as a single number or per-direction:
+
+```typescript
+// Uniform gap
+gap: 15
+
+// Individual directions
+gap: {
+  horizontalGap: 20,
+  verticalGap: 10
+}
+```
+
+## Examples
+
+### Centered Header with Buttons
+
+```typescript
+const header = new UIContainer({
+  width: 800,
+  height: 60,
+  layoutDirection: "horizontal",
+  positionContentStrategy: "center",
+  alignmentContentStrategy: "center",
+  gap: 10,
+});
+
+// Add button containers
+const button1 = new UIContainer({ width: 100, height: 40 });
+const button2 = new UIContainer({ width: 100, height: 40 });
+
+header.addChildContainer(button1);
+header.addChildContainer(button2);
+uiLayout.root.addChildContainer(header);
+```
+
+### Space-Between Navigation
+
+```typescript
+const nav = new UIContainer({
+  width: 600,
+  height: 50,
+  layoutDirection: "horizontal",
+  positionContentStrategy: "space-between",
+  alignmentContentStrategy: "center",
+  padding: 10,
+});
+```
+
+### Vertical Sidebar
+
+```typescript
+const sidebar = new UIContainer({
+  width: 200,
+  height: 600,
+  layoutDirection: "vertical",
+  positionContentStrategy: "anchor-start",
+  alignmentContentStrategy: "anchor-start",
+  padding: 15,
+  gap: 20,
+});
+```
+
+## API Reference
+
+### UILayout Methods
+
+- `constructor(scene: Scene)` - Initialize the layout system
+- `update()` - Update layout if dirty flag is set
+- `root` - Get the root container
+
+### UIContainer Methods
+
+- `addChildContainer(child: UIContainer)` - Add a child container
+- `getChildContainer(index: number)` - Get child by index
+- `getDimension()` - Get container dimensions as Vector
+- `updateLayout()` - Recalculate and apply layout
+
+### Events
+
+The layout system automatically responds to:
+
+- Window resize events
+- Manual dirty flag triggers via `uiEvents.emit('setDirty', new UILayoutDirtyFlag())`
+
+## Advanced Usage
+
+### Nested Layouts
+
+```typescript
+const mainContainer = new UIContainer({
+  layoutDirection: "vertical",
+  positionContentStrategy: "space-between",
+});
+
+const topRow = new UIContainer({
+  layoutDirection: "horizontal",
+  positionContentStrategy: "space-around",
+});
+
+mainContainer.addChildContainer(topRow);
+uiLayout.root.addChildContainer(mainContainer);
+```
+
+### Manual Layout Updates
+
+```typescript
+// Trigger a layout update manually
+uiLayout.layoutDirtyFlag = true;
+uiLayout.update();
+```
+
+## License
+
+This module is designed for use with Excalibur.js. Please refer to your project's license.
+
+## Contributing
+
+This is a layout system module for Excalibur.js game engine. Contributions and improvements are welcome!
