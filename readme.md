@@ -15,6 +15,7 @@ mapping, pub/sub signals, UUID generation, behavior trees, and simple components
   - [Poker Hand Evaluation](/Game%20Systems/Poker%20Hand%20Evaluation/readme.md)
   - [Ascii Level Editor](/Game%20Systems/Ascii%20Level%20Editor/readme.md)
   - [Editable UI elements](/Game%20Systems/Editable%20UI%20Element/readme.md)
+  - [Flex Box Positioning of Screen Elements](/Systems&Components/Flex%20Layout%20Components/readme.md)
 
 - ECS Components/Systems
 
@@ -24,7 +25,6 @@ mapping, pub/sub signals, UUID generation, behavior trees, and simple components
   - [Card Game Components](/Systems&Components/Card%20Game%20Components/readme.md)
   - [Animation Component](/Systems&Components/Animation%20Component/readme.md)
   - [Touching Component](/Systems&Components/Touching%20Component/readme.md)
-  - [Flex Box Positioning of Screen Elements](/Systems&Components/Flex%20Layout%20Components/readme.md)
 
 - UI Components
 
