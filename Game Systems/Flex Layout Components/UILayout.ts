@@ -1,4 +1,5 @@
-import { Engine, ScreenElement, ActorArgs, Vector, vec, Screen, GameEvent, EventEmitter, BoundingBox } from "excalibur";
+/* eslint-disable no-unused-vars */
+import { Engine, ScreenElement, ActorArgs, Vector, vec, Screen, GameEvent, EventEmitter, BoundingBox, Scene } from "excalibur";
 
 export type PositionStrategy = "fixed" | "anchor-start" | "anchor-end" | "center" | "space-between" | "space-around" | "space-evenly";
 export type AlignmentStrategy = "center" | "anchor-start" | "anchor-end";
@@ -37,20 +38,23 @@ export class UILayout {
   uiEvents = new EventEmitter<UILayoutEvents>();
   private _rootContainer: UIContainer;
   layoutDirtyFlag: boolean;
+  scene: Scene;
   engine: Engine;
   screen: Screen;
   contentArea: BoundingBox;
 
-  constructor(engine: Engine) {
-    this.engine = engine;
-    this.screen = engine.screen;
+  constructor(scene: Scene) {
+    this.scene = scene;
+    this.engine = scene.engine;
+    this.screen = this.engine.screen;
     this.contentArea = this.screen.contentArea;
     this.layoutDirtyFlag = true;
 
     window.addEventListener("resize", () => (this.layoutDirtyFlag = true));
     this.uiEvents.on("setDirty", () => {
-      this.engine = engine;
-      this.screen = engine.screen;
+      this.scene = scene;
+      this.engine = scene.engine;
+      this.screen = this.engine.screen;
       this.contentArea = this.screen.contentArea;
       this.layoutDirtyFlag = true;
     });
@@ -69,7 +73,7 @@ export class UILayout {
       this.uiEvents
     );
 
-    this.engine.add(this._rootContainer);
+    this.scene.add(this._rootContainer);
   }
 
   get root() {
