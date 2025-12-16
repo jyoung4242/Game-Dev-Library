@@ -169,7 +169,8 @@ const scoreText = new Text({ text: "Score: 0", font: new Font({ size: 24, color:
 const scoreContainer = new UIContainer({ name: "score", width: 150, height: 40 });
 scoreContainer.graphics.add(scoreText);
 
-// Create health display const healthText = new Text({ text: "Health: 100", font: new Font({ size: 24, color: Color.White }) }); const
+// Create health display
+const healthText = new Text({ text: "Health: 100", font: new Font({ size: 24, color: Color.White }) }); const
 healthContainer = new UIContainer({ name: "health", width: 150, height: 40 });
 healthContainer.graphics.add(healthText);
 
