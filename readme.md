@@ -29,6 +29,7 @@ mapping, pub/sub signals, UUID generation, behavior trees, and simple components
 - UI Components
 
   - [UIButton](/UIcomponents/UIButton/readme.md)
+  - [TypeWriter Graphic](/UIcomponents/Typewriter%20Graphic/readme.md)
 
 - Shaders and Post Processors
 
