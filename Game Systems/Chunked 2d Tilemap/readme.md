@@ -21,15 +21,21 @@ import { ChunkedTilemap, ChunkedTilemapSource } from "./Chunked2dTilemap";
 Create a flat array of tile indices representing your entire map:
 
 ```typescript
-const tileData: number[] = [
-  // Row 0
-  0, 1, 2, 3, 4, 5,
-  // Row 1
-  6, 7, 8, 9, 10, 11,
-  // Row 2
-  12, 13, 14, 15, 16, 17,
-  // ... etc
-];
+const source: ChunkedTilemapSource = {
+  //prettier-ignore
+  tiles: [
+    0,0,0,1,1, // Row 0: grass, grass, grass, dirt, dirt
+    0,2,2,1,1, // Row 1: grass, water, water, dirt, dirt
+    0,2,2,3,3, // Row 2: grass, water, water, wall, wall
+    0,0,0,3,3, // Row 3: grass, grass, grass, wall, wall
+  ],
+  mapWidth: 5, // 5 tiles wide
+  mapHeight: 4, // 4 tiles tall
+  tileWidth: 32,
+  tileHeight: 32,
+  chunkWidth: 2, // Split into 2x2 tile chunks
+  chunkHeight: 2,
+};
 ```
 
 ### Step 2: Configure the Tilemap
