@@ -6,6 +6,8 @@ The `ChunkedTilemap` system efficiently manages large 2D tilemaps by splitting t
 ExcaliburJS's built-in TileMap rendering and culling to automatically hide off-screen chunks, significantly improving performance for
 large game worlds.
 
+![Chunked Map](ss.png)
+
 ## Installation & Setup
 
 1. Import the `ChunkedTilemap` class and `ChunkedTilemapSource` interface:
