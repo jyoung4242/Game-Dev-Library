@@ -21,21 +21,13 @@ import { ChunkedTilemap, ChunkedTilemapSource } from "./Chunked2dTilemap";
 Create a flat array of tile indices representing your entire map:
 
 ```typescript
-const source: ChunkedTilemapSource = {
-  //prettier-ignore
-  tiles: [
+//prettier-ignore
+let myTiles =  [
     0,0,0,1,1, // Row 0: grass, grass, grass, dirt, dirt
     0,2,2,1,1, // Row 1: grass, water, water, dirt, dirt
     0,2,2,3,3, // Row 2: grass, water, water, wall, wall
     0,0,0,3,3, // Row 3: grass, grass, grass, wall, wall
-  ],
-  mapWidth: 5, // 5 tiles wide
-  mapHeight: 4, // 4 tiles tall
-  tileWidth: 32,
-  tileHeight: 32,
-  chunkWidth: 2, // Split into 2x2 tile chunks
-  chunkHeight: 2,
-};
+  ];
 ```
 
 ### Step 2: Configure the Tilemap
@@ -44,7 +36,7 @@ Define your tilemap configuration using `ChunkedTilemapSource`:
 
 ```typescript
 const tilemapConfig: ChunkedTilemapSource = {
-  tiles: tileData, // Your flat tile index array
+  tiles: myTiles, // Your flat tile index array
   mapWidth: 6, // Total map width in tiles
   mapHeight: 3, // Total map height in tiles
   tileWidth: 32, // Width of each tile in pixels
@@ -63,20 +55,21 @@ The recommended way to set up your tilemap is using `initializeTiles()`:
 ```typescript
 // Assuming you have a SpriteSheet loaded
 chunkedMap.initializeTiles((tile, tileIndex, globalX, globalY, localX, localY) => {
-  // Set graphics based on tile index
-  const sprite = spriteSheet.getSprite(tileIndex, 0);
-  if (sprite) {
-    tile.addGraphic(sprite);
-  }
 
-  // Set collision for solid tiles (e.g., index 3 is a wall)
-  if (tileIndex === 3) {
-    tile.solid = true;
-  }
+  // set Solid rules
+  if( tileindex == 3) tile.solid = true;
+  else tile.solid = false;
 
-  // Add multiple layers if needed
-  if (tileIndex === 5) {
-    tile.addGraphic(decorationSprite);
+  // layer graphics based on tile type (tileIndex)
+  switch(tileIndex){
+    case 0:
+      tile.addGraphics(GrassTile);
+      break;
+    case 1:
+      tile.addGraphics(WaterTile);
+      break;
+    ...
+
   }
 });
 ```
