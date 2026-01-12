@@ -20,7 +20,7 @@ import { ChunkedTilemap, ChunkedTilemapSource } from "./Chunked2dTilemap";
 
 ### Step 1: Prepare Your Tile Data
 
-Create a flat array of tile indices representing your entire map:
+Create a flat array of tile data representing your entire map:
 
 ```typescript
 //prettier-ignore
@@ -29,6 +29,18 @@ let myTiles =  [
     0,2,2,1,1, // Row 1: grass, water, water, dirt, dirt
     0,2,2,3,3, // Row 2: grass, water, water, wall, wall
     0,0,0,3,3, // Row 3: grass, grass, grass, wall, wall
+  ];
+```
+
+--or--
+
+```ts
+//prettier-ignore
+let myTiles =  [
+    {cell: 'grass'},{cell: 'grass'},{cell: 'grass'},{cell:'dirt'},{cell:'dirt'}, // Row 0: grass, grass, grass, dirt, dirt
+    {cell: 'grass'},{cell: 'water'},{cell: 'water'},{cell:'dirt'},{cell:'dirt'}, // Row 1: grass, water, water, dirt, dirt
+    {cell: 'grass'},{cell: 'water'},{cell: 'water'},{cell: 'wall'},{cell: 'wall'}, // Row 2: grass, water, water, wall, wall
+    {cell: 'grass'},{cell: 'grass'},{cell: 'grass'},{cell: 'wall'},{cell: 'wall'}, // Row 3: grass, grass, grass, wall, wall
   ];
 ```
 
@@ -58,6 +70,8 @@ The recommended way to set up your tilemap is using `initializeTiles()`:
 // Assuming you have a SpriteSheet loaded
 chunkedMap.initializeTiles((tile, tileIndex, globalX, globalY, localX, localY) => {
 
+  // tileIndex is whatever data you passed into the ChunkedMap module
+
   // set Solid rules
   if( tileindex == 3) tile.solid = true;
   else tile.solid = false;
@@ -68,6 +82,32 @@ chunkedMap.initializeTiles((tile, tileIndex, globalX, globalY, localX, localY) =
       tile.addGraphics(GrassTile);
       break;
     case 1:
+      tile.addGraphics(WaterTile);
+      break;
+    ...
+
+  }
+});
+```
+
+---or---
+
+```typescript
+// Assuming you have a SpriteSheet loaded
+chunkedMap.initializeTiles((tile, tileIndex, globalX, globalY, localX, localY) => {
+
+  // tileIndex is whatever data you passed into the ChunkedMap module
+
+  // set Solid rules
+  if( tileindex.cell == "wall") tile.solid = true;
+  else tile.solid = false;
+
+  // layer graphics based on tile type (tileIndex)
+  switch(tileIndex.cell){
+    case 'grass':
+      tile.addGraphics(GrassTile);
+      break;
+    case 'water':
       tile.addGraphics(WaterTile);
       break;
     ...

@@ -4,7 +4,7 @@ import { TileMap, Scene, Vector, Graphic, Tile } from "excalibur";
  * Configuration interface for creating a chunked tilemap
  */
 export interface ChunkedTilemapSource {
-  tiles: number[]; // flat tile index array
+  tiles: any[]; // flat tile index array, fill with whatever data you need
   mapWidth: number; // total map width in tiles
   mapHeight: number; // total map height in tiles
   tileWidth: number; // tile width in pixels
@@ -121,7 +121,7 @@ export class ChunkedTilemap {
    * Retrieves a tile index from the global flat tile array
    * Returns -1 if coordinates are out of bounds
    */
-  private getTileIndexFromGlobal(globalX: number, globalY: number): number {
+  private getTileIndexFromGlobal(globalX: number, globalY: number): any {
     const { mapWidth, mapHeight, tiles } = this.source;
 
     if (globalX < 0 || globalX >= mapWidth || globalY < 0 || globalY >= mapHeight) {
@@ -291,7 +291,7 @@ export class ChunkedTilemap {
    */
   public forEachTile(
     callback: (
-      tileIndex: number,
+      tileIndex: any,
       globalX: number,
       globalY: number,
       chunkX: number,
@@ -324,7 +324,7 @@ export class ChunkedTilemap {
   public forEachTileInChunk(
     chunkX: number,
     chunkY: number,
-    callback: (tileIndex: number, localX: number, localY: number, globalX: number, globalY: number) => void
+    callback: (tileIndex: any, localX: number, localY: number, globalX: number, globalY: number) => void
   ): void {
     const chunk = this.getChunk(chunkX, chunkY);
     if (!chunk) return;
@@ -431,7 +431,7 @@ export class ChunkedTilemap {
    * ```
    */
   public initializeTiles(
-    callback: (tile: Tile, tileIndex: number, globalX: number, globalY: number, localX: number, localY: number) => void
+    callback: (tile: Tile, tileIndex: any, globalX: number, globalY: number, localX: number, localY: number) => void
   ): void {
     this.forEachChunk((chunk, chunkX, chunkY) => {
       const actualWidth = this.getActualChunkWidth(chunkX);
