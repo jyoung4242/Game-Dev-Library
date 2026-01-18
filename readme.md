@@ -7,7 +7,8 @@ mapping, pub/sub signals, UUID generation, behavior trees, and simple components
 ## Table of Contents
 
 - Tools
-  - [Tileset Combiner](/Tools/Tile%20Set%20Combiner/readme.md)
+  - [Tileset Combiner](https://tilesetconsolidator.vercel.app/)
+    - [Readme](/Tools/Tile%20Set%20Combiner/readme.md)
 
 - Game Modules
   - [Finite State Machine](/Game%20Systems/Finite%20State%20Machine/readme.md)
