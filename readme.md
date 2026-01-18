@@ -6,8 +6,10 @@ mapping, pub/sub signals, UUID generation, behavior trees, and simple components
 
 ## Table of Contents
 
-- Game Modules and Tools
+- Tools
+  - [Tileset Combiner](/Tools/Tile%20Set%20Combiner/readme.md)
 
+- Game Modules
   - [Finite State Machine](/Game%20Systems/Finite%20State%20Machine/readme.md)
   - [Pub/Sub Signals](/Game%20Systems/Pub%20Sub%20Signals/readme.md)
   - [Input Mapping](/Game%20Systems/Input%20Mapping/readme.md)
@@ -19,7 +21,6 @@ mapping, pub/sub signals, UUID generation, behavior trees, and simple components
   - [Tilemap Chunking](/Game%20Systems/Chunked%202d%20Tilemap/readme.md)
 
 - ECS Components/Systems
-
   - [Component Template](/Systems&Components/General%20Purpose%20Component%20Template/GP%20Component.ts)
   - [Behavior Trees](/Systems&Components/Behavior%20Tree/readme.md)
   - [Keyboard Control](/Systems&Components/KeyboardControl/readme.md)
@@ -28,25 +29,21 @@ mapping, pub/sub signals, UUID generation, behavior trees, and simple components
   - [Touching Component](/Systems&Components/Touching%20Component/readme.md)
 
 - UI Components
-
   - [UIButton](/UIcomponents/UIButton/readme.md)
   - [TypeWriter Graphic](/UIcomponents/Typewriter%20Graphic/readme.md)
   - [SVG Graphic](/UIcomponents/SVG%20Graphic/readme.md)
 
 - Shaders and Post Processors
-
   - [Shockwave](/Game%20Systems/Shaders%20and%20Post%20Processors/ShockWave/readme.md)
   - [CRT](/Game%20Systems/Shaders%20and%20Post%20Processors/CRT/readme.md)
   - [Gleam Material](/Game%20Systems/Shaders%20and%20Post%20Processors/Gleam%20Material/readme.md)
   - [Wipe Fade Material](/Game%20Systems/Shaders%20and%20Post%20Processors/Wipe%20Shader/readme.md)
 
 - Procedural Generation
-
   - [Cellular Automata](/Game%20Systems/Procedural%20Generation/Cellular%20Automata/readme.md)
   - [Wave Function Collapse](/Game%20Systems/Procedural%20Generation/Wave%20Function%20Collapse/readme.md)
 
 - Tutorials
-
   - [Pushing to Itch via Github Actions](/Tutorials/using%20GH%20actions%20for%20Itch/readme.md)
   - [Checklist for prepping your Itch Site](/Tutorials//preparing%20your%20itch%20site/readme.md)
 

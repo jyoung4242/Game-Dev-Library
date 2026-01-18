@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Tileset Consolidator (Multi-Tile + Zoom)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- React -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+
+    <!-- Babel -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
+      canvas {
+        image-rendering: pixelated;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      const { useState, useRef, useEffect } = React;
+
+      /* =========================
+   MAIN APP
+   ========================= */
+      const TilesetConsolidator = () => {
+        const [sources, setSources] = useState([]);
+        const [groups, setGroups] = useState([]);
+        const [tileSize, setTileSize] = useState(32);
+        const [outputCols, setOutputCols] = useState(8);
+        const fileInputRef = useRef(null);
+
+        const detectTileSize = (w, h) => {
+          const sizes = [8, 16, 24, 32, 48, 64];
+          return sizes.find(s => w % s === 0 && h % s === 0) || 32;
+        };
+
+        const loadFiles = files => {
+          files.forEach(file => {
+            if (!file.type.startsWith("image")) return;
+            const reader = new FileReader();
+            reader.onload = e => {
+              const img = new Image();
+              img.onload = () => {
+                const size = detectTileSize(img.width, img.height);
+                setTileSize(size);
+                setSources(s => [
+                  ...s,
+                  {
+                    id: crypto.randomUUID(),
+                    name: file.name,
+                    image: img,
+                    width: img.width,
+                    height: img.height,
+                    tileSize: size,
+                    cols: img.width / size,
+                    rows: img.height / size,
+                    groups: [],
+                  },
+                ]);
+              };
+              img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+          });
+        };
+
+        const addGroup = (sourceId, group) => {
+          setSources(sources => sources.map(s => (s.id === sourceId ? { ...s, groups: [...s.groups, group] } : s)));
+          setGroups(g => [...g, group]);
+        };
+
+        const removeGroup = id => {
+          setGroups(g => g.filter(gr => gr.id !== id));
+          setSources(s =>
+            s.map(src => ({
+              ...src,
+              groups: src.groups.filter(gr => gr.id !== id),
+            })),
+          );
+        };
+
+        const moveGroup = (from, to) => {
+          if (to < 0 || to >= groups.length) return;
+          const copy = [...groups];
+          const [g] = copy.splice(from, 1);
+          copy.splice(to, 0, g);
+          setGroups(copy);
+        };
+
+        const exportPNG = () => {
+          if (!groups.length) return;
+
+          let cursorX = 0;
+          let cursorY = 0;
+          let rowH = 0;
+          const placements = [];
+
+          groups.forEach(g => {
+            if (cursorX + g.width > outputCols) {
+              cursorX = 0;
+              cursorY += rowH;
+              rowH = 0;
+            }
+            placements.push({ g, x: cursorX, y: cursorY });
+            cursorX += g.width;
+            rowH = Math.max(rowH, g.height);
+          });
+
+          const canvas = document.createElement("canvas");
+          canvas.width = outputCols * tileSize;
+          canvas.height = (cursorY + rowH) * tileSize;
+          const ctx = canvas.getContext("2d");
+
+          placements.forEach(p => {
+            const src = sources.find(s => s.id === p.g.sourceId);
+            ctx.drawImage(
+              src.image,
+              p.g.startCol * tileSize,
+              p.g.startRow * tileSize,
+              p.g.width * tileSize,
+              p.g.height * tileSize,
+              p.x * tileSize,
+              p.y * tileSize,
+              p.g.width * tileSize,
+              p.g.height * tileSize,
+            );
+          });
+
+          canvas.toBlob(b => {
+            const a = document.createElement("a");
+            a.href = URL.createObjectURL(b);
+            a.download = "tileset.png";
+            a.click();
+          });
+        };
+
+        return (
+          <div className="h-screen flex bg-gray-900 text-gray-100">
+            {/* SOURCES */}
+            <div className="w-1/2 p-4 overflow-y-auto border-r border-gray-700">
+              <div className="flex justify-between mb-3">
+                <h2 className="text-lg font-bold">Source Tilesets</h2>
+                <button className="bg-blue-600 px-3 py-1 rounded" onClick={() => fileInputRef.current.click()}>
+                  Add
+                </button>
+              </div>
+
+              <input ref={fileInputRef} type="file" multiple accept="image/*" hidden onChange={e => loadFiles([...e.target.files])} />
+
+              {sources.map(src => (
+                <TilesetViewer key={src.id} source={src} onAddGroup={addGroup} />
+              ))}
+            </div>
+
+            {/* CONSOLIDATED */}
+            <div className="w-1/2 p-4 overflow-y-auto">
+              <div className="flex justify-between mb-3">
+                <h2 className="text-lg font-bold">Consolidated ({groups.length})</h2>
+                <button className="bg-green-600 px-3 py-1 rounded" onClick={exportPNG}>
+                  Export PNG
+                </button>
+              </div>
+
+              <div className="mb-2">
+                Columns:
+                <input
+                  type="number"
+                  value={outputCols}
+                  onChange={e => setOutputCols(+e.target.value || 1)}
+                  className="ml-2 w-16 bg-gray-700 px-1 rounded"
+                />
+              </div>
+
+              <div className="grid gap-2">
+                {groups.map((g, i) => (
+                  <GroupPreview
+                    key={g.id}
+                    group={g}
+                    index={i}
+                    tileSize={tileSize}
+                    source={sources.find(s => s.id === g.sourceId)}
+                    onRemove={removeGroup}
+                    onMove={moveGroup}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        );
+      };
+
+      /* =========================
+   TILESET VIEWER (ZOOM)
+   ========================= */
+      const TilesetViewer = ({ source, onAddGroup }) => {
+        const canvasRef = useRef(null);
+        const containerRef = useRef(null);
+
+        const [zoom, setZoom] = useState(1);
+        const [dragStart, setDragStart] = useState(null);
+        const [dragEnd, setDragEnd] = useState(null);
+
+        const clampZoom = z => Math.min(6, Math.max(0.25, z));
+
+        const getTile = e => {
+          const rect = canvasRef.current.getBoundingClientRect();
+          const scaleX = source.width / rect.width;
+          const scaleY = source.height / rect.height;
+          return {
+            col: Math.floor(((e.clientX - rect.left) * scaleX) / source.tileSize),
+            row: Math.floor(((e.clientY - rect.top) * scaleY) / source.tileSize),
+          };
+        };
+
+        useEffect(() => {
+          const c = canvasRef.current;
+          const ctx = c.getContext("2d");
+          ctx.clearRect(0, 0, c.width, c.height);
+          ctx.drawImage(source.image, 0, 0);
+
+          source.groups.forEach(g => {
+            ctx.fillStyle = "rgba(59,130,246,.35)";
+            ctx.fillRect(
+              g.startCol * source.tileSize,
+              g.startRow * source.tileSize,
+              g.width * source.tileSize,
+              g.height * source.tileSize,
+            );
+            ctx.strokeStyle = "rgba(59,130,246,.9)";
+            ctx.lineWidth = 2;
+            ctx.strokeRect(
+              g.startCol * source.tileSize,
+              g.startRow * source.tileSize,
+              g.width * source.tileSize,
+              g.height * source.tileSize,
+            );
+          });
+
+          if (dragStart && dragEnd) {
+            const x = Math.min(dragStart.col, dragEnd.col);
+            const y = Math.min(dragStart.row, dragEnd.row);
+            const w = Math.abs(dragStart.col - dragEnd.col) + 1;
+            const h = Math.abs(dragStart.row - dragEnd.row) + 1;
+            ctx.strokeStyle = "yellow";
+            ctx.lineWidth = 2;
+            ctx.strokeRect(x * source.tileSize, y * source.tileSize, w * source.tileSize, h * source.tileSize);
+          }
+        });
+
+        const finishDrag = () => {
+          if (!dragStart || !dragEnd) return;
+          const sc = Math.min(dragStart.col, dragEnd.col);
+          const sr = Math.min(dragStart.row, dragEnd.row);
+          const w = Math.abs(dragStart.col - dragEnd.col) + 1;
+          const h = Math.abs(dragStart.row - dragEnd.row) + 1;
+
+          onAddGroup(source.id, {
+            id: crypto.randomUUID(),
+            sourceId: source.id,
+            startCol: sc,
+            startRow: sr,
+            width: w,
+            height: h,
+          });
+
+          setDragStart(null);
+          setDragEnd(null);
+        };
+
+        return (
+          <div className="mb-6 border border-gray-700 rounded bg-gray-800">
+            <div className="flex items-center justify-between px-3 py-2 text-sm">
+              <span>{source.name}</span>
+              <div className="flex items-center gap-2">
+                <span>Zoom</span>
+                <input type="range" min="0.25" max="6" step="0.25" value={zoom} onChange={e => setZoom(+e.target.value)} />
+                <span>{zoom.toFixed(2)}×</span>
+              </div>
+            </div>
+
+            <div
+              ref={containerRef}
+              className="overflow-auto p-2"
+              onWheel={e => {
+                if (!e.ctrlKey) return;
+                e.preventDefault();
+                setZoom(z => clampZoom(z + (e.deltaY < 0 ? 0.25 : -0.25)));
+              }}
+            >
+              <canvas
+                ref={canvasRef}
+                width={source.width}
+                height={source.height}
+                style={{
+                  width: source.width * zoom,
+                  height: source.height * zoom,
+                  cursor: "crosshair",
+                }}
+                onMouseDown={e => setDragStart(getTile(e))}
+                onMouseMove={e => dragStart && setDragEnd(getTile(e))}
+                onMouseUp={finishDrag}
+              />
+            </div>
+          </div>
+        );
+      };
+
+      /* =========================
+   GROUP PREVIEW
+   ========================= */
+      const GroupPreview = ({ group, index, source, tileSize, onRemove, onMove }) => {
+        const ref = useRef(null);
+
+        useEffect(() => {
+          const c = ref.current;
+          const ctx = c.getContext("2d");
+          c.width = group.width * tileSize;
+          c.height = group.height * tileSize;
+          ctx.drawImage(
+            source.image,
+            group.startCol * tileSize,
+            group.startRow * tileSize,
+            group.width * tileSize,
+            group.height * tileSize,
+            0,
+            0,
+            c.width,
+            c.height,
+          );
+        }, [group]);
+
+        return (
+          <div className="bg-gray-800 p-2 rounded border border-gray-700">
+            <canvas ref={ref} />
+            <div className="flex justify-between mt-1 text-xs">
+              <span>
+                {group.width}×{group.height}
+              </span>
+              <div className="space-x-1">
+                <button onClick={() => onMove(index, index - 1)}>←</button>
+                <button onClick={() => onMove(index, index + 1)}>→</button>
+                <button onClick={() => onRemove(group.id)}>✕</button>
+              </div>
+            </div>
+          </div>
+        );
+      };
+
+      ReactDOM.createRoot(document.getElementById("root")).render(<TilesetConsolidator />);
+    </script>
+  </body>
+</html>
