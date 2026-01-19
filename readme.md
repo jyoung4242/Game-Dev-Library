@@ -9,6 +9,8 @@ mapping, pub/sub signals, UUID generation, behavior trees, and simple components
 - Tools
   - [Tileset Combiner](https://tilesetconsolidator.vercel.app/)
     - [Readme](/Tools/Tile%20Set%20Combiner/readme.md)
+  - [Wave Function Collapse Authoring Tool]()
+    - [Readme](/Tools//WFC%20Tool/readme.md)
 
 - Game Modules
   - [Finite State Machine](/Game%20Systems/Finite%20State%20Machine/readme.md)

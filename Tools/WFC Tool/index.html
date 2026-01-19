@@ -1,0 +1,1370 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WFC Rule Authoring Tool v3</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: #1a1a1a;
+        color: #e0e0e0;
+        padding: 20px;
+      }
+      .container {
+        display: grid;
+        grid-template-columns: 320px 1fr 350px;
+        gap: 20px;
+        max-width: 1800px;
+        margin: 0 auto;
+      }
+      .panel {
+        background: #2a2a2a;
+        border-radius: 8px;
+        padding: 20px;
+        border: 1px solid #3a3a3a;
+      }
+      h2 {
+        color: #4a9eff;
+        margin-bottom: 15px;
+        font-size: 18px;
+        border-bottom: 2px solid #3a3a3a;
+        padding-bottom: 8px;
+      }
+      h3 {
+        color: #68b5ff;
+        margin: 15px 0 10px 0;
+        font-size: 14px;
+      }
+      label {
+        display: block;
+        margin-top: 12px;
+        font-size: 13px;
+        color: #b0b0b0;
+      }
+      input[type="number"],
+      input[type="file"] {
+        width: 100%;
+        padding: 8px;
+        margin-top: 4px;
+        background: #1a1a1a;
+        border: 1px solid #3a3a3a;
+        color: #e0e0e0;
+        border-radius: 4px;
+        font-size: 13px;
+      }
+      input[type="number"]:focus {
+        outline: none;
+        border-color: #4a9eff;
+      }
+      button {
+        padding: 10px 16px;
+        background: #4a9eff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 13px;
+        margin-top: 10px;
+        width: 100%;
+        font-weight: 600;
+      }
+      button:hover:not(:disabled) {
+        background: #68b5ff;
+      }
+      button:disabled {
+        background: #3a3a3a;
+        color: #666;
+        cursor: not-allowed;
+      }
+      button.danger {
+        background: #ff4a4a;
+      }
+      button.danger:hover:not(:disabled) {
+        background: #ff6868;
+      }
+      .tileset-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, 60px);
+        gap: 8px;
+        margin-top: 10px;
+        max-height: 300px;
+        overflow-y: auto;
+        padding: 4px;
+      }
+      .tile-thumb {
+        width: 60px;
+        height: 60px;
+        border: 2px solid #3a3a3a;
+        cursor: pointer;
+        border-radius: 4px;
+        position: relative;
+        background: #1a1a1a;
+      }
+      .tile-thumb:hover {
+        border-color: #68b5ff;
+      }
+      .tile-thumb.active {
+        border-color: #4a9eff;
+        box-shadow: 0 0 10px rgba(74, 158, 255, 0.5);
+      }
+      .tile-thumb canvas {
+        width: 100%;
+        height: 100%;
+        image-rendering: pixelated;
+      }
+      .tile-id {
+        position: absolute;
+        bottom: 2px;
+        right: 2px;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        font-size: 9px;
+        padding: 2px 4px;
+        border-radius: 2px;
+      }
+      .output-grid {
+        display: grid;
+        gap: 1px;
+        background: #000;
+        padding: 10px;
+        border-radius: 4px;
+        justify-content: center;
+        margin-top: 10px;
+      }
+      .output-cell {
+        background: #2a2a2a;
+        position: relative;
+        border: 1px solid #1a1a1a;
+        cursor: pointer;
+      }
+      .output-cell:hover {
+        border-color: #4a9eff;
+      }
+      .output-cell.seeded {
+        border: 2px solid #9a4aff;
+        box-shadow: 0 0 8px rgba(154, 74, 255, 0.4);
+      }
+      .output-cell canvas {
+        width: 100%;
+        height: 100%;
+        image-rendering: pixelated;
+      }
+      .output-cell.collapsing {
+        animation: pulse 0.5s ease-in-out;
+        border-color: #4a9eff;
+      }
+      .output-cell.reverted {
+        animation: revert 0.5s ease-in-out;
+        border-color: #ff4a4a;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.1);
+        }
+      }
+      @keyframes revert {
+        0%,
+        100% {
+          transform: scale(1);
+          background: #2a2a2a;
+        }
+        50% {
+          transform: scale(0.9);
+          background: #ff4a4a;
+        }
+      }
+      .entropy-overlay {
+        position: absolute;
+        bottom: 2px;
+        right: 2px;
+        background: rgba(0, 0, 0, 0.8);
+        color: #4a9eff;
+        font-size: 10px;
+        padding: 2px 4px;
+        border-radius: 2px;
+        font-weight: bold;
+      }
+      .rule-matrix {
+        display: grid;
+        grid-template-columns: auto repeat(4, 1fr);
+        gap: 4px;
+        margin-top: 10px;
+        font-size: 11px;
+      }
+      .rule-header {
+        font-weight: bold;
+        padding: 6px;
+        background: #1a1a1a;
+        text-align: center;
+        border-radius: 3px;
+      }
+      .rule-direction {
+        padding: 6px;
+        background: #1a1a1a;
+        border-radius: 3px;
+      }
+      .rule-cell {
+        padding: 4px;
+        background: #1a1a1a;
+        cursor: pointer;
+        text-align: center;
+        border-radius: 3px;
+        border: 1px solid transparent;
+      }
+      .rule-cell:hover {
+        background: #3a3a3a;
+      }
+      .rule-cell.allowed {
+        background: #2a5a2a;
+        border-color: #4a9a4a;
+      }
+      .status-bar {
+        background: #1a1a1a;
+        padding: 10px;
+        border-radius: 4px;
+        margin-top: 10px;
+        font-size: 12px;
+      }
+      .status-item {
+        margin: 4px 0;
+      }
+      .status-label {
+        color: #888;
+        display: inline-block;
+        width: 140px;
+      }
+      .status-value {
+        color: #4a9eff;
+        font-weight: bold;
+      }
+      .radio-group {
+        margin-top: 8px;
+      }
+      .radio-group label {
+        display: inline-flex;
+        align-items: center;
+        margin-right: 20px;
+        margin-top: 4px;
+        cursor: pointer;
+      }
+      .radio-group input[type="radio"] {
+        margin-right: 6px;
+        width: auto;
+      }
+      .error-message {
+        background: #5a2a2a;
+        border: 1px solid #ff4a4a;
+        color: #ffaaaa;
+        padding: 10px;
+        border-radius: 4px;
+        margin-top: 10px;
+        font-size: 12px;
+      }
+      .direction-rules {
+        margin-top: 10px;
+      }
+      .direction-section {
+        background: #1a1a1a;
+        padding: 10px;
+        border-radius: 4px;
+        margin-bottom: 8px;
+      }
+      .direction-title {
+        color: #68b5ff;
+        font-weight: bold;
+        margin-bottom: 6px;
+        font-size: 12px;
+      }
+      .allowed-tiles {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .allowed-tile-badge {
+        background: #2a5a2a;
+        color: #8fef8f;
+        padding: 4px 8px;
+        border-radius: 3px;
+        font-size: 11px;
+        cursor: pointer;
+        border: 1px solid #4a9a4a;
+      }
+      .allowed-tile-badge:hover {
+        background: #3a6a3a;
+      }
+      .scroll-container {
+        max-height: calc(100vh - 100px);
+        overflow-y: auto;
+      }
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #1a1a1a;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #4a4a4a;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #5a5a5a;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Left Panel: Controls -->
+      <div class="panel scroll-container">
+        <h2>Controls</h2>
+
+        <h3>Output Map Configuration</h3>
+        <label
+          >Map Width (tiles)
+          <input type="number" id="mapWidth" value="10" min="2" max="50" />
+        </label>
+        <label
+          >Map Height (tiles)
+          <input type="number" id="mapHeight" value="10" min="2" max="50" />
+        </label>
+
+        <h3>Tileset Import</h3>
+        <label
+          >Upload Tileset Image
+          <input type="file" id="tilesetUpload" accept="image/*" />
+        </label>
+        <label
+          >Tile Width (px)
+          <input type="number" id="tileWidth" value="16" min="1" />
+        </label>
+        <label
+          >Tile Height (px)
+          <input type="number" id="tileHeight" value="16" min="1" />
+        </label>
+
+        <h3>Collision Strategy</h3>
+        <div class="radio-group">
+          <label>
+            <input type="radio" name="collisionMode" value="stop" checked />
+            Stop on Collision
+          </label>
+          <label>
+            <input type="radio" name="collisionMode" value="backtrack" />
+            Backtrack N Steps
+          </label>
+        </div>
+        <label
+          >Backtrack Depth
+          <input type="number" id="backtrackDepth" value="5" min="1" max="100" disabled />
+        </label>
+
+        <h3>Interaction Mode</h3>
+        <div class="radio-group">
+          <label>
+            <input type="radio" name="interactionMode" value="paint" checked />
+            Paint Seeds
+          </label>
+          <label>
+            <input type="radio" name="interactionMode" value="erase" />
+            Erase Seeds
+          </label>
+        </div>
+
+        <h3>Run Mode</h3>
+        <div class="radio-group">
+          <label>
+            <input type="radio" name="runMode" value="full" checked />
+            Full Simulation
+          </label>
+          <label>
+            <input type="radio" name="runMode" value="step" />
+            Step-Through
+          </label>
+        </div>
+
+        <label
+          >Random Seed
+          <input type="number" id="randomSeed" value="12345" />
+        </label>
+
+        <h3>Simulation Controls</h3>
+        <button id="runBtn">Run Full Simulation</button>
+        <button id="stepBtn" disabled>Step Forward</button>
+        <button id="undoBtn" disabled>Undo Step</button>
+        <button id="resetBtn" class="danger">Reset Grid</button>
+
+        <h3>Export</h3>
+        <button id="exportRulesBtn" style="background: #9a4aff">Export Rules JSON</button>
+        <button id="exportOutputBtn" style="background: #4a9a4a">Export Output JSON</button>
+
+        <div class="status-bar">
+          <div class="status-item">
+            <span class="status-label">Current Step:</span>
+            <span class="status-value" id="statusStep">0</span>
+          </div>
+          <div class="status-item">
+            <span class="status-label">Uncollapsed Cells:</span>
+            <span class="status-value" id="statusUncollapsed">0</span>
+          </div>
+          <div class="status-item">
+            <span class="status-label">Backtracks Used:</span>
+            <span class="status-value" id="statusBacktracks">0</span>
+          </div>
+          <div class="status-item">
+            <span class="status-label">Status:</span>
+            <span class="status-value" id="statusMessage">Ready</span>
+          </div>
+        </div>
+
+        <div id="errorDisplay"></div>
+      </div>
+
+      <!-- Center Panel: Output Grid and Tileset -->
+      <div class="panel scroll-container">
+        <h2>Output Grid</h2>
+        <div id="outputGrid" class="output-grid"></div>
+
+        <h2 style="margin-top: 30px">Tileset</h2>
+        <div id="tilesetGrid" class="tileset-grid"></div>
+      </div>
+
+      <!-- Right Panel: Adjacency Rules -->
+      <div class="panel scroll-container">
+        <h2>Adjacency Rules</h2>
+        <div id="rulesPanel">
+          <p style="color: #888; font-size: 13px">Select a tile to author adjacency rules.</p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // ============================================================================
+      // GLOBAL STATE
+      // ============================================================================
+
+      const state = {
+        // Tileset data
+        tilesetImage: null,
+        tileWidth: 16,
+        tileHeight: 16,
+        tiles: [], // Array of {id, canvas} objects
+
+        // Active tile selection
+        activeTileId: null,
+
+        // Adjacency rules: rules[tileId][direction] = Set of allowed tile IDs
+        // direction: 0=up, 1=right, 2=down, 3=left
+        rules: {},
+
+        // Output grid configuration
+        mapWidth: 10,
+        mapHeight: 10,
+
+        // WFC state
+        grid: [], // 2D array of {collapsed: bool, tileId: number|null, possibleTiles: Set}
+
+        // Command history for undo/redo
+        commandHistory: [],
+        currentHistoryIndex: -1,
+
+        // Simulation state
+        runMode: "full", // 'full' or 'step'
+        collisionMode: "stop", // 'stop' or 'backtrack'
+        backtrackDepth: 5,
+        interactionMode: "paint", // 'paint' or 'erase'
+
+        // Statistics
+        stepCount: 0,
+        backtrackCount: 0,
+
+        // Random number generator with seed
+        rng: null,
+        seed: 12345,
+
+        // Running state
+        isRunning: false,
+      };
+
+      // ============================================================================
+      // SEEDED RANDOM NUMBER GENERATOR
+      // ============================================================================
+
+      class SeededRandom {
+        constructor(seed) {
+          this.seed = seed;
+        }
+
+        next() {
+          this.seed = (this.seed * 9301 + 49297) % 233280;
+          return this.seed / 233280;
+        }
+
+        choice(arr) {
+          return arr[Math.floor(this.next() * arr.length)];
+        }
+
+        reset(seed) {
+          this.seed = seed;
+        }
+      }
+
+      // ============================================================================
+      // COMMAND PATTERN FOR UNDO/REDO
+      // ============================================================================
+
+      class CollapseCommand {
+        constructor(x, y, chosenTileId, previousState) {
+          this.x = x;
+          this.y = y;
+          this.chosenTileId = chosenTileId;
+          this.previousState = previousState; // Deep copy of affected cells before collapse
+        }
+
+        execute() {
+          // Collapse the cell
+          const cell = state.grid[this.y][this.x];
+          cell.collapsed = true;
+          cell.tileId = this.chosenTileId;
+          cell.possibleTiles = new Set([this.chosenTileId]);
+
+          // Propagate constraints
+          propagateConstraints(this.x, this.y);
+        }
+
+        undo() {
+          // Restore previous state
+          for (const cellState of this.previousState) {
+            const cell = state.grid[cellState.y][cellState.x];
+            cell.collapsed = cellState.collapsed;
+            cell.tileId = cellState.tileId;
+            cell.possibleTiles = new Set(cellState.possibleTiles);
+            cell.isSeeded = cellState.isSeeded;
+          }
+        }
+      }
+
+      // ============================================================================
+      // WFC ENGINE
+      // ============================================================================
+
+      // Initialize the grid with all tiles possible in each cell
+      function initializeGrid() {
+        state.grid = [];
+        const allTileIds = state.tiles.map(t => t.id);
+
+        for (let y = 0; y < state.mapHeight; y++) {
+          const row = [];
+          for (let x = 0; x < state.mapWidth; x++) {
+            row.push({
+              collapsed: false,
+              tileId: null,
+              possibleTiles: new Set(allTileIds),
+              isSeeded: false, // Track manually placed seeds
+            });
+          }
+          state.grid.push(row);
+        }
+
+        state.commandHistory = [];
+        state.currentHistoryIndex = -1;
+        state.stepCount = 0;
+        state.backtrackCount = 0;
+        state.rng.reset(state.seed);
+      }
+
+      // Calculate entropy (number of possible tiles) for a cell
+      function getEntropy(cell) {
+        if (cell.collapsed) return 0;
+        return cell.possibleTiles.size;
+      }
+
+      // Find the cell with minimum entropy (excluding collapsed cells)
+      function findMinEntropyCell() {
+        let minEntropy = Infinity;
+        let candidates = [];
+
+        for (let y = 0; y < state.mapHeight; y++) {
+          for (let x = 0; x < state.mapWidth; x++) {
+            const cell = state.grid[y][x];
+            if (cell.collapsed || cell.isSeeded) continue; // Skip seeded cells
+
+            const entropy = getEntropy(cell);
+            if (entropy === 0) {
+              // Contradiction found
+              return null;
+            }
+
+            if (entropy < minEntropy) {
+              minEntropy = entropy;
+              candidates = [{ x, y }];
+            } else if (entropy === minEntropy) {
+              candidates.push({ x, y });
+            }
+          }
+        }
+
+        if (candidates.length === 0) return null;
+        return state.rng.choice(candidates);
+      }
+
+      // Propagate constraints from a collapsed cell to its neighbors
+      function propagateConstraints(x, y) {
+        const queue = [{ x, y }];
+        const visited = new Set();
+
+        while (queue.length > 0) {
+          const pos = queue.shift();
+          const key = `${pos.x},${pos.y}`;
+          if (visited.has(key)) continue;
+          visited.add(key);
+
+          const cell = state.grid[pos.y][pos.x];
+          if (!cell.collapsed) continue;
+
+          const tileId = cell.tileId;
+
+          // Check all four directions
+          const directions = [
+            { dx: 0, dy: -1, dir: 0 }, // up
+            { dx: 1, dy: 0, dir: 1 }, // right
+            { dx: 0, dy: 1, dir: 2 }, // down
+            { dx: -1, dy: 0, dir: 3 }, // left
+          ];
+
+          for (const { dx, dy, dir } of directions) {
+            const nx = pos.x + dx;
+            const ny = pos.y + dy;
+
+            if (nx < 0 || nx >= state.mapWidth || ny < 0 || ny >= state.mapHeight) continue;
+
+            const neighbor = state.grid[ny][nx];
+            if (neighbor.collapsed) continue;
+
+            // Get allowed tiles in this direction from current tile
+            const allowedTiles = state.rules[tileId]?.[dir] || new Set();
+
+            // Constrain neighbor's possible tiles
+            const before = neighbor.possibleTiles.size;
+            neighbor.possibleTiles = new Set([...neighbor.possibleTiles].filter(tid => allowedTiles.has(tid)));
+
+            // If we changed the neighbor, add it to the queue
+            if (neighbor.possibleTiles.size < before) {
+              queue.push({ x: nx, y: ny });
+            }
+          }
+        }
+      }
+
+      // Capture the current state of all cells (for undo)
+      function captureGridState() {
+        const snapshot = [];
+        for (let y = 0; y < state.mapHeight; y++) {
+          for (let x = 0; x < state.mapWidth; x++) {
+            const cell = state.grid[y][x];
+            snapshot.push({
+              x,
+              y,
+              collapsed: cell.collapsed,
+              tileId: cell.tileId,
+              possibleTiles: new Set(cell.possibleTiles),
+              isSeeded: cell.isSeeded,
+            });
+          }
+        }
+        return snapshot;
+      }
+
+      // Execute one WFC step (collapse one cell)
+      function executeWFCStep() {
+        const cellPos = findMinEntropyCell();
+
+        if (!cellPos) {
+          // Either complete or contradiction
+          const uncollapsed = countUncollapsedCells();
+          if (uncollapsed === 0) {
+            return { success: true, complete: true };
+          } else {
+            return { success: false, error: "Contradiction detected - no valid tiles for a cell" };
+          }
+        }
+
+        const cell = state.grid[cellPos.y][cellPos.x];
+        const possibleTiles = [...cell.possibleTiles];
+
+        if (possibleTiles.length === 0) {
+          return { success: false, error: "No possible tiles for selected cell" };
+        }
+
+        // Choose a random tile from possible tiles
+        const chosenTile = state.rng.choice(possibleTiles);
+
+        // Capture state before collapse for undo
+        const previousState = captureGridState();
+
+        // Create and execute command
+        const command = new CollapseCommand(cellPos.x, cellPos.y, chosenTile, previousState);
+        command.execute();
+
+        // Add to history
+        state.commandHistory = state.commandHistory.slice(0, state.currentHistoryIndex + 1);
+        state.commandHistory.push(command);
+        state.currentHistoryIndex++;
+        state.stepCount++;
+
+        // Animate the collapsing cell
+        animateCell(cellPos.x, cellPos.y, "collapsing");
+
+        return { success: true, complete: false };
+      }
+
+      // Count uncollapsed cells (excluding seeded cells)
+      function countUncollapsedCells() {
+        let count = 0;
+        for (let y = 0; y < state.mapHeight; y++) {
+          for (let x = 0; x < state.mapWidth; x++) {
+            if (!state.grid[y][x].collapsed && !state.grid[y][x].isSeeded) count++;
+          }
+        }
+        return count;
+      }
+
+      // Undo one step
+      function undoStep() {
+        if (state.currentHistoryIndex < 0) return false;
+
+        const command = state.commandHistory[state.currentHistoryIndex];
+        command.undo();
+        state.currentHistoryIndex--;
+        state.stepCount--;
+
+        // Animate the reverted cell
+        animateCell(command.x, command.y, "reverted");
+
+        return true;
+      }
+
+      // Backtrack N steps
+      function backtrackSteps(n) {
+        const actualSteps = Math.min(n, state.currentHistoryIndex + 1);
+        for (let i = 0; i < actualSteps; i++) {
+          undoStep();
+        }
+        state.backtrackCount++;
+        return actualSteps;
+      }
+
+      // ============================================================================
+      // SIMULATION CONTROL
+      // ============================================================================
+
+      async function runFullSimulation() {
+        state.isRunning = true;
+        updateUI();
+
+        while (true) {
+          const result = executeWFCStep();
+          renderGrid();
+          updateStatus();
+
+          if (result.complete) {
+            showMessage("Simulation complete!");
+            break;
+          }
+
+          if (!result.success) {
+            if (state.collisionMode === "stop") {
+              showError(result.error);
+              break;
+            } else if (state.collisionMode === "backtrack") {
+              // Try backtracking
+              const stepsBack = backtrackSteps(state.backtrackDepth);
+              if (stepsBack === 0) {
+                showError("Backtracking failed - no steps to backtrack");
+                break;
+              }
+              // Continue after backtracking
+              renderGrid();
+              updateStatus();
+              await sleep(50); // Small delay to show backtrack
+              continue;
+            }
+          }
+
+          await sleep(10); // Small delay for visualization
+        }
+
+        state.isRunning = false;
+        updateUI();
+      }
+
+      function stepSimulation() {
+        const result = executeWFCStep();
+        renderGrid();
+        updateStatus();
+
+        if (result.complete) {
+          showMessage("Simulation complete!");
+        } else if (!result.success) {
+          if (state.collisionMode === "backtrack") {
+            const stepsBack = backtrackSteps(state.backtrackDepth);
+            if (stepsBack === 0) {
+              showError("Backtracking failed - no steps to backtrack");
+            } else {
+              renderGrid();
+              updateStatus();
+            }
+          } else {
+            showError(result.error);
+          }
+        }
+
+        updateUI();
+      }
+
+      function undoStepUI() {
+        if (undoStep()) {
+          renderGrid();
+          updateStatus();
+          updateUI();
+        }
+      }
+
+      function resetGrid() {
+        if (state.tiles.length === 0) {
+          showError("Please upload a tileset first");
+          return;
+        }
+
+        initializeGrid();
+        renderGrid();
+        updateStatus();
+        clearError();
+        updateUI();
+      }
+
+      function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+      }
+
+      // ============================================================================
+      // TILESET MANAGEMENT
+      // ============================================================================
+
+      function loadTileset(file) {
+        const reader = new FileReader();
+        reader.onload = e => {
+          const img = new Image();
+          img.onload = () => {
+            state.tilesetImage = img;
+            sliceTileset();
+            renderTileset();
+            resetGrid();
+          };
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+
+      function sliceTileset() {
+        if (!state.tilesetImage) return;
+
+        state.tiles = [];
+        state.rules = {};
+
+        const cols = Math.floor(state.tilesetImage.width / state.tileWidth);
+        const rows = Math.floor(state.tilesetImage.height / state.tileHeight);
+
+        let tileId = 0;
+        for (let row = 0; row < rows; row++) {
+          for (let col = 0; col < cols; col++) {
+            const canvas = document.createElement("canvas");
+            canvas.width = state.tileWidth;
+            canvas.height = state.tileHeight;
+            const ctx = canvas.getContext("2d");
+
+            ctx.drawImage(
+              state.tilesetImage,
+              col * state.tileWidth,
+              row * state.tileHeight,
+              state.tileWidth,
+              state.tileHeight,
+              0,
+              0,
+              state.tileWidth,
+              state.tileHeight,
+            );
+
+            state.tiles.push({ id: tileId, canvas });
+
+            // Initialize empty rules for this tile
+            state.rules[tileId] = {
+              0: new Set(), // up
+              1: new Set(), // right
+              2: new Set(), // down
+              3: new Set(), // left
+            };
+
+            tileId++;
+          }
+        }
+      }
+
+      // ============================================================================
+      // JSON EXPORT FUNCTIONALITY
+      // ============================================================================
+
+      function exportRulesToJSON() {
+        if (state.tiles.length === 0) {
+          showError("No tileset loaded");
+          return;
+        }
+
+        // Convert rules to a serializable format
+        const rulesData = {
+          metadata: {
+            exportDate: new Date().toISOString(),
+            tileCount: state.tiles.length,
+            tileWidth: state.tileWidth,
+            tileHeight: state.tileHeight,
+          },
+          tiles: state.tiles.map(t => ({
+            id: t.id,
+          })),
+          adjacencyRules: {},
+        };
+
+        // Convert Set objects to arrays for JSON serialization
+        const directionNames = ["up", "right", "down", "left"];
+        for (const tileId in state.rules) {
+          rulesData.adjacencyRules[tileId] = {};
+          for (let dir = 0; dir < 4; dir++) {
+            const allowedTiles = Array.from(state.rules[tileId][dir]);
+            rulesData.adjacencyRules[tileId][directionNames[dir]] = allowedTiles;
+          }
+        }
+
+        downloadJSON(rulesData, "wfc-rules.json");
+        showMessage("Rules exported successfully!");
+      }
+
+      function exportOutputToJSON() {
+        if (state.tiles.length === 0 || state.grid.length === 0) {
+          showError("No output to export");
+          return;
+        }
+
+        // Create a 2D array of tile IDs
+        const gridData = [];
+        for (let y = 0; y < state.mapHeight; y++) {
+          const row = [];
+          for (let x = 0; x < state.mapWidth; x++) {
+            const cell = state.grid[y][x];
+            row.push({
+              tileId: cell.tileId,
+              isSeeded: cell.isSeeded,
+              collapsed: cell.collapsed,
+            });
+          }
+          gridData.push(row);
+        }
+
+        const outputData = {
+          metadata: {
+            exportDate: new Date().toISOString(),
+            width: state.mapWidth,
+            height: state.mapHeight,
+            tileWidth: state.tileWidth,
+            tileHeight: state.tileHeight,
+            seed: state.seed,
+            stepCount: state.stepCount,
+          },
+          grid: gridData,
+          // Also include a flat array for easier parsing
+          flatGrid: gridData.flat().map(cell => cell.tileId),
+        };
+
+        downloadJSON(outputData, "wfc-output.json");
+        showMessage("Output exported successfully!");
+      }
+
+      function downloadJSON(data, filename) {
+        const jsonStr = JSON.stringify(data, null, 2);
+        const blob = new Blob([jsonStr], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+
+      // ============================================================================
+      // MANUAL SEED PLACEMENT
+      // ============================================================================
+
+      function paintSeedTile(x, y) {
+        if (state.activeTileId === null) {
+          showError("Please select a tile first");
+          return;
+        }
+
+        const cell = state.grid[y][x];
+
+        // Mark as seeded and collapsed
+        cell.isSeeded = true;
+        cell.collapsed = true;
+        cell.tileId = state.activeTileId;
+        cell.possibleTiles = new Set([state.activeTileId]);
+
+        // Propagate constraints from this seed
+        propagateConstraints(x, y);
+
+        renderGrid();
+        updateStatus();
+      }
+
+      function eraseSeedTile(x, y) {
+        const cell = state.grid[y][x];
+
+        if (!cell.isSeeded) return;
+
+        // Reset the cell
+        cell.isSeeded = false;
+        cell.collapsed = false;
+        cell.tileId = null;
+        cell.possibleTiles = new Set(state.tiles.map(t => t.id));
+
+        // Re-propagate all constraints from all seeded cells
+        recalculateAllConstraints();
+
+        renderGrid();
+        updateStatus();
+      }
+
+      function recalculateAllConstraints() {
+        // Reset all non-seeded cells
+        for (let y = 0; y < state.mapHeight; y++) {
+          for (let x = 0; x < state.mapWidth; x++) {
+            const cell = state.grid[y][x];
+            if (!cell.isSeeded) {
+              cell.collapsed = false;
+              cell.tileId = null;
+              cell.possibleTiles = new Set(state.tiles.map(t => t.id));
+            }
+          }
+        }
+
+        // Propagate from all seeded cells
+        for (let y = 0; y < state.mapHeight; y++) {
+          for (let x = 0; x < state.mapWidth; x++) {
+            const cell = state.grid[y][x];
+            if (cell.isSeeded) {
+              propagateConstraints(x, y);
+            }
+          }
+        }
+      }
+
+      // ============================================================================
+      // RENDERING
+      // ============================================================================
+
+      function renderTileset() {
+        const container = document.getElementById("tilesetGrid");
+        container.innerHTML = "";
+
+        if (state.tiles.length === 0) {
+          container.innerHTML = '<p style="color: #888; font-size: 13px; padding: 10px;">Upload a tileset image to begin.</p>';
+          return;
+        }
+
+        state.tiles.forEach(tile => {
+          const div = document.createElement("div");
+          div.className = "tile-thumb";
+          if (tile.id === state.activeTileId) {
+            div.classList.add("active");
+          }
+
+          // Clone the canvas properly with its content
+          const canvas = document.createElement("canvas");
+          canvas.width = tile.canvas.width;
+          canvas.height = tile.canvas.height;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(tile.canvas, 0, 0);
+          div.appendChild(canvas);
+
+          const idLabel = document.createElement("div");
+          idLabel.className = "tile-id";
+          idLabel.textContent = tile.id;
+          div.appendChild(idLabel);
+
+          div.addEventListener("click", () => {
+            state.activeTileId = tile.id;
+            renderTileset();
+            renderRulesPanel();
+          });
+
+          container.appendChild(div);
+        });
+      }
+
+      function renderGrid() {
+        const container = document.getElementById("outputGrid");
+        const cellSize = Math.min(40, Math.floor(600 / Math.max(state.mapWidth, state.mapHeight)));
+
+        container.style.gridTemplateColumns = `repeat(${state.mapWidth}, ${cellSize}px)`;
+        container.innerHTML = "";
+
+        for (let y = 0; y < state.mapHeight; y++) {
+          for (let x = 0; x < state.mapWidth; x++) {
+            const cell = state.grid[y][x];
+            const div = document.createElement("div");
+            div.className = "output-cell";
+            div.style.width = cellSize + "px";
+            div.style.height = cellSize + "px";
+            div.id = `cell-${x}-${y}`;
+
+            // Mark seeded cells visually
+            if (cell.isSeeded) {
+              div.classList.add("seeded");
+            }
+
+            // Add click handler for manual seed placement
+            div.addEventListener("click", () => {
+              if (state.isRunning) return;
+
+              if (state.interactionMode === "paint") {
+                paintSeedTile(x, y);
+              } else if (state.interactionMode === "erase") {
+                eraseSeedTile(x, y);
+              }
+            });
+
+            if (cell.collapsed && cell.tileId !== null) {
+              const tile = state.tiles.find(t => t.id === cell.tileId);
+              if (tile) {
+                // Properly clone canvas with content
+                const canvas = document.createElement("canvas");
+                canvas.width = tile.canvas.width;
+                canvas.height = tile.canvas.height;
+                const ctx = canvas.getContext("2d");
+                ctx.drawImage(tile.canvas, 0, 0);
+                div.appendChild(canvas);
+              }
+            } else {
+              // Show entropy
+              const entropy = getEntropy(cell);
+              const overlay = document.createElement("div");
+              overlay.className = "entropy-overlay";
+              overlay.textContent = entropy;
+              div.appendChild(overlay);
+            }
+
+            container.appendChild(div);
+          }
+        }
+      }
+
+      function animateCell(x, y, animClass) {
+        const cell = document.getElementById(`cell-${x}-${y}`);
+        if (cell) {
+          cell.classList.add(animClass);
+          setTimeout(() => cell.classList.remove(animClass), 500);
+        }
+      }
+
+      function renderRulesPanel() {
+        const panel = document.getElementById("rulesPanel");
+
+        if (state.activeTileId === null || state.tiles.length === 0) {
+          panel.innerHTML = '<p style="color: #888; font-size: 13px;">Select a tile to author adjacency rules.</p>';
+          return;
+        }
+
+        const dirNames = ["Up", "Right", "Down", "Left"];
+
+        let html = `<h3>Rules for Tile ${state.activeTileId}</h3>`;
+        html += '<div class="direction-rules">';
+
+        for (let dir = 0; dir < 4; dir++) {
+          const allowedTiles = state.rules[state.activeTileId]?.[dir] || new Set();
+
+          html += `<div class="direction-section">`;
+          html += `<div class="direction-title">${dirNames[dir]} → Allowed Tiles</div>`;
+          html += `<div class="allowed-tiles">`;
+
+          state.tiles.forEach(tile => {
+            const isAllowed = allowedTiles.has(tile.id);
+            const badge = `
+            <div class="allowed-tile-badge ${isAllowed ? "" : "disabled"}" 
+                 style="background: ${isAllowed ? "#2a5a2a" : "#3a3a3a"}; 
+                        border-color: ${isAllowed ? "#4a9a4a" : "#5a5a5a"};
+                        color: ${isAllowed ? "#8fef8f" : "#888"};"
+                 onclick="toggleRule(${state.activeTileId}, ${dir}, ${tile.id})">
+              ${tile.id}
+            </div>
+          `;
+            html += badge;
+          });
+
+          html += "</div></div>";
+        }
+
+        html += "</div>";
+        panel.innerHTML = html;
+      }
+
+      function toggleRule(fromTileId, direction, toTileId) {
+        if (!state.rules[fromTileId]) {
+          state.rules[fromTileId] = { 0: new Set(), 1: new Set(), 2: new Set(), 3: new Set() };
+        }
+
+        const ruleSet = state.rules[fromTileId][direction];
+        if (ruleSet.has(toTileId)) {
+          ruleSet.delete(toTileId);
+        } else {
+          ruleSet.add(toTileId);
+        }
+
+        renderRulesPanel();
+      }
+
+      window.toggleRule = toggleRule; // Make accessible from onclick
+
+      // ============================================================================
+      // UI UPDATES
+      // ============================================================================
+
+      function updateStatus() {
+        document.getElementById("statusStep").textContent = state.stepCount;
+        document.getElementById("statusUncollapsed").textContent = countUncollapsedCells();
+        document.getElementById("statusBacktracks").textContent = state.backtrackCount;
+      }
+
+      function updateUI() {
+        const isStep = state.runMode === "step";
+        const canUndo = state.currentHistoryIndex >= 0;
+        const hasHistory = state.commandHistory.length > 0;
+
+        document.getElementById("stepBtn").disabled = !isStep || state.isRunning;
+        document.getElementById("undoBtn").disabled = !isStep || !canUndo || state.isRunning;
+        document.getElementById("runBtn").disabled = state.runMode !== "full" || state.isRunning;
+        document.getElementById("backtrackDepth").disabled = state.collisionMode !== "backtrack";
+      }
+
+      function showError(msg) {
+        const div = document.getElementById("errorDisplay");
+        div.innerHTML = `<div class="error-message">${msg}</div>`;
+        document.getElementById("statusMessage").textContent = "Error";
+        document.getElementById("statusMessage").style.color = "#ff4a4a";
+      }
+
+      function clearError() {
+        document.getElementById("errorDisplay").innerHTML = "";
+        document.getElementById("statusMessage").textContent = "Ready";
+        document.getElementById("statusMessage").style.color = "#4a9eff";
+      }
+
+      function showMessage(msg) {
+        document.getElementById("statusMessage").textContent = msg;
+        document.getElementById("statusMessage").style.color = "#4a9eff";
+      }
+
+      // ============================================================================
+      // EVENT LISTENERS
+      // ============================================================================
+
+      document.getElementById("tilesetUpload").addEventListener("change", e => {
+        if (e.target.files.length > 0) {
+          loadTileset(e.target.files[0]);
+        }
+      });
+
+      document.getElementById("tileWidth").addEventListener("change", e => {
+        state.tileWidth = parseInt(e.target.value);
+        if (state.tilesetImage) {
+          sliceTileset();
+          renderTileset();
+          resetGrid();
+        }
+      });
+
+      document.getElementById("tileHeight").addEventListener("change", e => {
+        state.tileHeight = parseInt(e.target.value);
+        if (state.tilesetImage) {
+          sliceTileset();
+          renderTileset();
+          resetGrid();
+        }
+      });
+
+      document.getElementById("mapWidth").addEventListener("change", e => {
+        state.mapWidth = parseInt(e.target.value);
+        resetGrid();
+      });
+
+      document.getElementById("mapHeight").addEventListener("change", e => {
+        state.mapHeight = parseInt(e.target.value);
+        resetGrid();
+      });
+
+      document.querySelectorAll('input[name="collisionMode"]').forEach(radio => {
+        radio.addEventListener("change", e => {
+          state.collisionMode = e.target.value;
+          updateUI();
+        });
+      });
+
+      document.getElementById("backtrackDepth").addEventListener("change", e => {
+        state.backtrackDepth = parseInt(e.target.value);
+      });
+
+      document.querySelectorAll('input[name="runMode"]').forEach(radio => {
+        radio.addEventListener("change", e => {
+          state.runMode = e.target.value;
+          updateUI();
+        });
+      });
+
+      document.querySelectorAll('input[name="interactionMode"]').forEach(radio => {
+        radio.addEventListener("change", e => {
+          state.interactionMode = e.target.value;
+        });
+      });
+
+      document.getElementById("randomSeed").addEventListener("change", e => {
+        state.seed = parseInt(e.target.value);
+        state.rng.reset(state.seed);
+      });
+
+      document.getElementById("runBtn").addEventListener("click", runFullSimulation);
+      document.getElementById("stepBtn").addEventListener("click", stepSimulation);
+      document.getElementById("undoBtn").addEventListener("click", undoStepUI);
+      document.getElementById("resetBtn").addEventListener("click", resetGrid);
+
+      document.getElementById("exportRulesBtn").addEventListener("click", exportRulesToJSON);
+      document.getElementById("exportOutputBtn").addEventListener("click", exportOutputToJSON);
+
+      // ============================================================================
+      // INITIALIZATION
+      // ============================================================================
+
+      state.rng = new SeededRandom(state.seed);
+      updateUI();
+      updateStatus();
+    </script>
+  </body>
+</html>
