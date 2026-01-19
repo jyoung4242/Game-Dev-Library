@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Tileset Consolidator (Multi-Tile + Zoom)</title>
+    <title>Tileset Consolidator v1.2</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- Tailwind -->
@@ -37,13 +37,13 @@
       const TilesetConsolidator = () => {
         const [sources, setSources] = useState([]);
         const [groups, setGroups] = useState([]);
-        const [tileSize, setTileSize] = useState(32);
+        const [tileSize, setTileSize] = useState(16);
         const [outputCols, setOutputCols] = useState(8);
         const fileInputRef = useRef(null);
 
         const detectTileSize = (w, h) => {
           const sizes = [8, 16, 24, 32, 48, 64];
-          return sizes.find(s => w % s === 0 && h % s === 0) || 32;
+          return sizes.find(s => w % s === 0 && h % s === 0) || 16;
         };
 
         const loadFiles = files => {
@@ -54,7 +54,6 @@
               const img = new Image();
               img.onload = () => {
                 const size = detectTileSize(img.width, img.height);
-                setTileSize(size);
                 setSources(s => [
                   ...s,
                   {
@@ -63,9 +62,6 @@
                     image: img,
                     width: img.width,
                     height: img.height,
-                    tileSize: size,
-                    cols: img.width / size,
-                    rows: img.height / size,
                     groups: [],
                   },
                 ]);
@@ -150,17 +146,30 @@
           <div className="h-screen flex bg-gray-900 text-gray-100">
             {/* SOURCES */}
             <div className="w-1/2 p-4 overflow-y-auto border-r border-gray-700">
-              <div className="flex justify-between mb-3">
+              <div className="flex justify-between items-center mb-3">
                 <h2 className="text-lg font-bold">Source Tilesets</h2>
-                <button className="bg-blue-600 px-3 py-1 rounded" onClick={() => fileInputRef.current.click()}>
-                  Add
-                </button>
+                <div className="flex gap-3 items-center">
+                  <label className="text-sm flex items-center gap-2">
+                    Tile Size:
+                    <input
+                      type="number"
+                      value={tileSize}
+                      onChange={e => setTileSize(Math.max(1, +e.target.value || 16))}
+                      className="w-16 bg-gray-700 px-2 py-1 rounded"
+                      min="1"
+                    />
+                    px
+                  </label>
+                  <button className="bg-blue-600 px-3 py-1 rounded" onClick={() => fileInputRef.current.click()}>
+                    Add
+                  </button>
+                </div>
               </div>
 
               <input ref={fileInputRef} type="file" multiple accept="image/*" hidden onChange={e => loadFiles([...e.target.files])} />
 
               {sources.map(src => (
-                <TilesetViewer key={src.id} source={src} onAddGroup={addGroup} />
+                <TilesetViewer key={src.id} source={src} tileSize={tileSize} onAddGroup={addGroup} />
               ))}
             </div>
 
@@ -202,15 +211,17 @@
       };
 
       /* =========================
-   TILESET VIEWER (ZOOM)
+   TILESET VIEWER (ZOOM + PAN)
    ========================= */
-      const TilesetViewer = ({ source, onAddGroup }) => {
+      const TilesetViewer = ({ source, tileSize, onAddGroup }) => {
         const canvasRef = useRef(null);
         const containerRef = useRef(null);
 
         const [zoom, setZoom] = useState(1);
         const [dragStart, setDragStart] = useState(null);
         const [dragEnd, setDragEnd] = useState(null);
+        const [panning, setPanning] = useState(false);
+        const [panStart, setPanStart] = useState(null);
 
         const clampZoom = z => Math.min(6, Math.max(0.25, z));
 
@@ -219,8 +230,8 @@
           const scaleX = source.width / rect.width;
           const scaleY = source.height / rect.height;
           return {
-            col: Math.floor(((e.clientX - rect.left) * scaleX) / source.tileSize),
-            row: Math.floor(((e.clientY - rect.top) * scaleY) / source.tileSize),
+            col: Math.floor(((e.clientX - rect.left) * scaleX) / tileSize),
+            row: Math.floor(((e.clientY - rect.top) * scaleY) / tileSize),
           };
         };
 
@@ -232,20 +243,10 @@
 
           source.groups.forEach(g => {
             ctx.fillStyle = "rgba(59,130,246,.35)";
-            ctx.fillRect(
-              g.startCol * source.tileSize,
-              g.startRow * source.tileSize,
-              g.width * source.tileSize,
-              g.height * source.tileSize,
-            );
+            ctx.fillRect(g.startCol * tileSize, g.startRow * tileSize, g.width * tileSize, g.height * tileSize);
             ctx.strokeStyle = "rgba(59,130,246,.9)";
             ctx.lineWidth = 2;
-            ctx.strokeRect(
-              g.startCol * source.tileSize,
-              g.startRow * source.tileSize,
-              g.width * source.tileSize,
-              g.height * source.tileSize,
-            );
+            ctx.strokeRect(g.startCol * tileSize, g.startRow * tileSize, g.width * tileSize, g.height * tileSize);
           });
 
           if (dragStart && dragEnd) {
@@ -255,12 +256,51 @@
             const h = Math.abs(dragStart.row - dragEnd.row) + 1;
             ctx.strokeStyle = "yellow";
             ctx.lineWidth = 2;
-            ctx.strokeRect(x * source.tileSize, y * source.tileSize, w * source.tileSize, h * source.tileSize);
+            ctx.strokeRect(x * tileSize, y * tileSize, w * tileSize, h * tileSize);
           }
         });
 
-        const finishDrag = () => {
-          if (!dragStart || !dragEnd) return;
+        const handleMouseDown = e => {
+          if (e.shiftKey || e.button === 1) {
+            // Pan mode
+            e.preventDefault();
+            setPanning(true);
+            setPanStart({
+              x: e.clientX,
+              y: e.clientY,
+              scrollLeft: containerRef.current.scrollLeft,
+              scrollTop: containerRef.current.scrollTop,
+            });
+          } else {
+            // Select mode
+            setDragStart(getTile(e));
+          }
+        };
+
+        const handleMouseMove = e => {
+          if (panning && panStart) {
+            const dx = e.clientX - panStart.x;
+            const dy = e.clientY - panStart.y;
+            containerRef.current.scrollLeft = panStart.scrollLeft - dx;
+            containerRef.current.scrollTop = panStart.scrollTop - dy;
+          } else if (dragStart && !panning) {
+            setDragEnd(getTile(e));
+          }
+        };
+
+        const handleMouseUp = () => {
+          if (panning) {
+            setPanning(false);
+            setPanStart(null);
+            return;
+          }
+
+          if (!dragStart || !dragEnd) {
+            setDragStart(null);
+            setDragEnd(null);
+            return;
+          }
+
           const sc = Math.min(dragStart.col, dragEnd.col);
           const sr = Math.min(dragStart.row, dragEnd.row);
           const w = Math.abs(dragStart.col - dragEnd.col) + 1;
@@ -284,6 +324,7 @@
             <div className="flex items-center justify-between px-3 py-2 text-sm">
               <span>{source.name}</span>
               <div className="flex items-center gap-2">
+                <span className="text-xs text-gray-400">Shift+Drag to Pan | Alt+Scroll to Zoom</span>
                 <span>Zoom</span>
                 <input type="range" min="0.25" max="6" step="0.25" value={zoom} onChange={e => setZoom(+e.target.value)} />
                 <span>{zoom.toFixed(2)}×</span>
@@ -293,8 +334,9 @@
             <div
               ref={containerRef}
               className="overflow-auto p-2"
+              style={{ maxHeight: "400px" }}
               onWheel={e => {
-                if (!e.ctrlKey) return;
+                if (!e.altKey) return;
                 e.preventDefault();
                 setZoom(z => clampZoom(z + (e.deltaY < 0 ? 0.25 : -0.25)));
               }}
@@ -306,11 +348,13 @@
                 style={{
                   width: source.width * zoom,
                   height: source.height * zoom,
-                  cursor: "crosshair",
+                  cursor: panning ? "grabbing" : "crosshair",
                 }}
-                onMouseDown={e => setDragStart(getTile(e))}
-                onMouseMove={e => dragStart && setDragEnd(getTile(e))}
-                onMouseUp={finishDrag}
+                onMouseDown={handleMouseDown}
+                onMouseMove={handleMouseMove}
+                onMouseUp={handleMouseUp}
+                onMouseLeave={handleMouseUp}
+                onContextMenu={e => e.preventDefault()}
               />
             </div>
           </div>
@@ -339,7 +383,7 @@
             c.width,
             c.height,
           );
-        }, [group]);
+        }, [group, tileSize]);
 
         return (
           <div className="bg-gray-800 p-2 rounded border border-gray-700">
