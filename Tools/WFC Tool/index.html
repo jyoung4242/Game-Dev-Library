@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>WFC Rule Authoring Tool v3</title>
+    <title>WFC Rule Authoring Tool v5</title>
     <style>
       * {
         margin: 0;
@@ -228,6 +228,48 @@
         background: #2a5a2a;
         border-color: #4a9a4a;
       }
+      .edge-rules-section {
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 2px solid #3a3a3a;
+      }
+      .edge-rule-row {
+        display: flex;
+        align-items: center;
+        margin: 8px 0;
+        gap: 10px;
+      }
+      .edge-rule-label {
+        width: 60px;
+        color: #b0b0b0;
+        font-size: 12px;
+      }
+      .edge-rule-select {
+        flex: 1;
+        padding: 6px;
+        background: #1a1a1a;
+        border: 1px solid #3a3a3a;
+        color: #e0e0e0;
+        border-radius: 4px;
+        font-size: 12px;
+        cursor: pointer;
+      }
+      .edge-rule-select:focus {
+        outline: none;
+        border-color: #4a9eff;
+      }
+      .edge-rule-select.forbidden {
+        border-color: #ff4a4a;
+        background: #3a1a1a;
+      }
+      .edge-rule-select.allowed {
+        border-color: #4a9eff;
+        background: #1a2a3a;
+      }
+      .edge-rule-select.required {
+        border-color: #ffa500;
+        background: #3a2a1a;
+      }
       .status-bar {
         background: #1a1a1a;
         padding: 10px;
@@ -351,6 +393,10 @@
           >Tile Height (px)
           <input type="number" id="tileHeight" value="16" min="1" />
         </label>
+        <label
+          >Import Rules JSON (optional)
+          <input type="file" id="rulesImport" accept=".json,application/json" />
+        </label>
 
         <h3>Collision Strategy</h3>
         <div class="radio-group">
@@ -466,6 +512,10 @@
         // direction: 0=up, 1=right, 2=down, 3=left
         rules: {},
 
+        // Edge rules: edgeRules[tileId] = {top, right, bottom, left}
+        // Values: 'forbidden', 'allowed', 'required'
+        edgeRules: {},
+
         // Output grid configuration
         mapWidth: 10,
         mapHeight: 10,
@@ -565,11 +615,53 @@
         for (let y = 0; y < state.mapHeight; y++) {
           const row = [];
           for (let x = 0; x < state.mapWidth; x++) {
+            // Determine which edges this cell touches
+            const isTopEdge = y === 0;
+            const isBottomEdge = y === state.mapHeight - 1;
+            const isLeftEdge = x === 0;
+            const isRightEdge = x === state.mapWidth - 1;
+            const isEdge = isTopEdge || isBottomEdge || isLeftEdge || isRightEdge;
+            const isInterior = !isEdge;
+
+            // Filter tiles based on edge rules
+            let allowedTiles = allTileIds.filter(tileId => {
+              const edgeRule = state.edgeRules[tileId];
+              if (!edgeRule) return true; // No rules = allowed everywhere
+
+              // Check if this is an interior cell
+              if (isInterior) {
+                // Interior cells cannot have tiles that REQUIRE any edge
+                if (
+                  edgeRule.top === "required" ||
+                  edgeRule.right === "required" ||
+                  edgeRule.bottom === "required" ||
+                  edgeRule.left === "required"
+                ) {
+                  return false;
+                }
+                return true;
+              }
+
+              // Edge cell - check each edge this cell touches
+              if (isTopEdge && edgeRule.top === "forbidden") return false;
+              if (isBottomEdge && edgeRule.bottom === "forbidden") return false;
+              if (isLeftEdge && edgeRule.left === "forbidden") return false;
+              if (isRightEdge && edgeRule.right === "forbidden") return false;
+
+              // Check required edges - tile must be on ALL required edges
+              if (edgeRule.top === "required" && !isTopEdge) return false;
+              if (edgeRule.bottom === "required" && !isBottomEdge) return false;
+              if (edgeRule.left === "required" && !isLeftEdge) return false;
+              if (edgeRule.right === "required" && !isRightEdge) return false;
+
+              return true;
+            });
+
             row.push({
               collapsed: false,
               tileId: null,
-              possibleTiles: new Set(allTileIds),
-              isSeeded: false, // Track manually placed seeds
+              possibleTiles: new Set(allowedTiles),
+              isSeeded: false,
             });
           }
           state.grid.push(row);
@@ -914,6 +1006,14 @@
               3: new Set(), // left
             };
 
+            // Initialize edge rules - default to 'allowed'
+            state.edgeRules[tileId] = {
+              top: "allowed",
+              right: "allowed",
+              bottom: "allowed",
+              left: "allowed",
+            };
+
             tileId++;
           }
         }
@@ -922,6 +1022,73 @@
       // ============================================================================
       // JSON EXPORT FUNCTIONALITY
       // ============================================================================
+
+      function importRulesFromJSON(file) {
+        const reader = new FileReader();
+        reader.onload = e => {
+          try {
+            const data = JSON.parse(e.target.result);
+
+            // Validate the JSON structure
+            if (!data.adjacencyRules || !data.tiles) {
+              showError("Invalid rules JSON format - missing required fields");
+              return;
+            }
+
+            // Check if tile count matches
+            if (data.tiles.length !== state.tiles.length) {
+              showError(`Tile count mismatch: JSON has ${data.tiles.length} tiles, but tileset has ${state.tiles.length} tiles`);
+              return;
+            }
+
+            // Import the rules
+            const directionNames = ["up", "right", "down", "left"];
+            state.rules = {};
+
+            for (const tileId in data.adjacencyRules) {
+              const numericTileId = parseInt(tileId);
+              state.rules[numericTileId] = {
+                0: new Set(),
+                1: new Set(),
+                2: new Set(),
+                3: new Set(),
+              };
+
+              const tileRules = data.adjacencyRules[tileId];
+              directionNames.forEach((dirName, dirIndex) => {
+                if (tileRules[dirName]) {
+                  tileRules[dirName].forEach(allowedTileId => {
+                    state.rules[numericTileId][dirIndex].add(allowedTileId);
+                  });
+                }
+              });
+            }
+
+            // Import edge rules if present
+            if (data.edgeRules) {
+              for (const tileId in data.edgeRules) {
+                const numericTileId = parseInt(tileId);
+                state.edgeRules[numericTileId] = data.edgeRules[tileId];
+              }
+            }
+
+            // Update UI
+            renderRulesPanel();
+            resetGrid(); // Apply edge rules
+            showMessage(`Rules imported successfully! Loaded ${Object.keys(data.adjacencyRules).length} tile rule sets.`);
+
+            // If metadata includes tile dimensions, offer to update them
+            if (data.metadata && (data.metadata.tileWidth !== state.tileWidth || data.metadata.tileHeight !== state.tileHeight)) {
+              console.log(
+                `Note: JSON tile size (${data.metadata.tileWidth}x${data.metadata.tileHeight}) differs from current (${state.tileWidth}x${state.tileHeight})`,
+              );
+            }
+          } catch (error) {
+            showError(`Failed to parse JSON: ${error.message}`);
+          }
+        };
+        reader.readAsText(file);
+      }
 
       function exportRulesToJSON() {
         if (state.tiles.length === 0) {
@@ -951,6 +1118,12 @@
             const allowedTiles = Array.from(state.rules[tileId][dir]);
             rulesData.adjacencyRules[tileId][directionNames[dir]] = allowedTiles;
           }
+        }
+
+        // Include edge rules
+        rulesData.edgeRules = {};
+        for (const tileId in state.edgeRules) {
+          rulesData.edgeRules[tileId] = state.edgeRules[tileId];
         }
 
         downloadJSON(rulesData, "wfc-rules.json");
@@ -1062,7 +1235,46 @@
             if (!cell.isSeeded) {
               cell.collapsed = false;
               cell.tileId = null;
-              cell.possibleTiles = new Set(state.tiles.map(t => t.id));
+
+              // Apply edge rules when resetting
+              const isTopEdge = y === 0;
+              const isBottomEdge = y === state.mapHeight - 1;
+              const isLeftEdge = x === 0;
+              const isRightEdge = x === state.mapWidth - 1;
+              const isEdge = isTopEdge || isBottomEdge || isLeftEdge || isRightEdge;
+              const isInterior = !isEdge;
+
+              const allTileIds = state.tiles.map(t => t.id);
+              let allowedTiles = allTileIds.filter(tileId => {
+                const edgeRule = state.edgeRules[tileId];
+                if (!edgeRule) return true;
+
+                if (isInterior) {
+                  if (
+                    edgeRule.top === "required" ||
+                    edgeRule.right === "required" ||
+                    edgeRule.bottom === "required" ||
+                    edgeRule.left === "required"
+                  ) {
+                    return false;
+                  }
+                  return true;
+                }
+
+                if (isTopEdge && edgeRule.top === "forbidden") return false;
+                if (isBottomEdge && edgeRule.bottom === "forbidden") return false;
+                if (isLeftEdge && edgeRule.left === "forbidden") return false;
+                if (isRightEdge && edgeRule.right === "forbidden") return false;
+
+                if (edgeRule.top === "required" && !isTopEdge) return false;
+                if (edgeRule.bottom === "required" && !isBottomEdge) return false;
+                if (edgeRule.left === "required" && !isLeftEdge) return false;
+                if (edgeRule.right === "required" && !isRightEdge) return false;
+
+                return true;
+              });
+
+              cell.possibleTiles = new Set(allowedTiles);
             }
           }
         }
@@ -1224,6 +1436,42 @@
         }
 
         html += "</div>";
+
+        // Edge Rules Section
+        html += '<div class="edge-rules-section">';
+        html += "<h3>Edge Rules for Tile " + state.activeTileId + "</h3>";
+
+        const edgeRule = state.edgeRules[state.activeTileId] || {
+          top: "allowed",
+          right: "allowed",
+          bottom: "allowed",
+          left: "allowed",
+        };
+
+        const edges = [
+          { name: "Top", key: "top" },
+          { name: "Right", key: "right" },
+          { name: "Bottom", key: "bottom" },
+          { name: "Left", key: "left" },
+        ];
+
+        edges.forEach(edge => {
+          const value = edgeRule[edge.key];
+          html += `
+          <div class="edge-rule-row">
+            <div class="edge-rule-label">${edge.name}:</div>
+            <select class="edge-rule-select ${value}" 
+                    onchange="setEdgeRule(${state.activeTileId}, '${edge.key}', this.value)">
+              <option value="forbidden" ${value === "forbidden" ? "selected" : ""}>⊗ Forbidden</option>
+              <option value="allowed" ${value === "allowed" ? "selected" : ""}>✓ Allowed</option>
+              <option value="required" ${value === "required" ? "selected" : ""}>★ Required</option>
+            </select>
+          </div>
+        `;
+        });
+
+        html += "</div>";
+
         panel.innerHTML = html;
       }
 
@@ -1242,7 +1490,27 @@
         renderRulesPanel();
       }
 
-      window.toggleRule = toggleRule; // Make accessible from onclick
+      function setEdgeRule(tileId, edge, value) {
+        if (!state.edgeRules[tileId]) {
+          state.edgeRules[tileId] = {
+            top: "allowed",
+            right: "allowed",
+            bottom: "allowed",
+            left: "allowed",
+          };
+        }
+
+        state.edgeRules[tileId][edge] = value;
+        renderRulesPanel();
+
+        // Reset grid to apply new edge rules
+        if (state.grid.length > 0) {
+          resetGrid();
+        }
+      }
+
+      window.toggleRule = toggleRule;
+      window.setEdgeRule = setEdgeRule;
 
       // ============================================================================
       // UI UPDATES
@@ -1290,6 +1558,18 @@
       document.getElementById("tilesetUpload").addEventListener("change", e => {
         if (e.target.files.length > 0) {
           loadTileset(e.target.files[0]);
+        }
+      });
+
+      document.getElementById("rulesImport").addEventListener("change", e => {
+        if (e.target.files.length > 0) {
+          if (state.tiles.length === 0) {
+            showError("Please upload a tileset before importing rules");
+            e.target.value = ""; // Clear the file input
+            return;
+          }
+          importRulesFromJSON(e.target.files[0]);
+          e.target.value = ""; // Clear the file input for potential re-import
         }
       });
 
