@@ -9,7 +9,7 @@ mapping, pub/sub signals, UUID generation, behavior trees, and simple components
 - Tools
   - [Tileset Combiner](https://tilesetconsolidator.vercel.app/)
     - [Readme](/Tools/Tile%20Set%20Combiner/readme.md)
-  - [Wave Function Collapse Authoring Tool]()
+  - [Wave Function Collapse Authoring Tool](https://wfc-auth-tool.vercel.app/)
     - [Readme](/Tools//WFC%20Tool/readme.md)
 
 - Game Modules
