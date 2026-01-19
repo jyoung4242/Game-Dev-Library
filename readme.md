@@ -11,6 +11,8 @@ mapping, pub/sub signals, UUID generation, behavior trees, and simple components
     - [Readme](/Tools/Tile%20Set%20Combiner/readme.md)
   - [Wave Function Collapse Authoring Tool](https://wfc-auth-tool.vercel.app/)
     - [Readme](/Tools//WFC%20Tool/readme.md)
+  - [Excalibur Animation Builder](https://anim-genv2.vercel.app/)
+    - [Readme](/Tools//Animation%20Builder/Readme.md)
 
 - Game Modules
   - [Finite State Machine](/Game%20Systems/Finite%20State%20Machine/readme.md)
