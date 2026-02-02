@@ -46,7 +46,8 @@ mapping, pub/sub signals, UUID generation, behavior trees, and simple components
   - [CRT](/Game%20Systems/Shaders%20and%20Post%20Processors/CRT/readme.md)
   - [Gleam Material](/Game%20Systems/Shaders%20and%20Post%20Processors/Gleam%20Material/readme.md)
   - [Wipe Fade Material](/Game%20Systems/Shaders%20and%20Post%20Processors/Wipe%20Shader/readme.md)
-  - :star:[Blur Shader](./Game%20Systems/Shaders%20and%20Post%20Processors/Blur%20Shader/readme.md)
+  - :star:[Blur Shader](./Game%20Systems/Shaders%20and%20Post%20Processors/Blur%20Shader/readme.md) :arrow_backward: NEW STUFF
+    HERE!!!!!
 
 - Procedural Generation
   - [Cellular Automata](/Game%20Systems/Procedural%20Generation/Cellular%20Automata/readme.md)
