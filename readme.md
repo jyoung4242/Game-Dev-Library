@@ -6,6 +6,14 @@ mapping, pub/sub signals, UUID generation, behavior trees, and simple components
 
 ## Table of Contents
 
+- UI Components
+  - UI Framework
+    - [Repo](https://github.com/jyoung4242/UIFramework/tree/main) :star:
+    - [Developer Guidelines for UIFramework](./UIcomponents/UIFramework/readme.md) :star: :arrow_backward: NEW STUFF HERE!!!!!
+
+  - [TypeWriter Graphic](/UIcomponents/Typewriter%20Graphic/readme.md)
+  - [SVG Graphic](/UIcomponents/SVG%20Graphic/readme.md)
+
 - Tools
   - [Tileset Combiner](https://tilesetconsolidator.vercel.app/)
     - [Readme](/Tools/Tile%20Set%20Combiner/readme.md)
@@ -32,13 +40,6 @@ mapping, pub/sub signals, UUID generation, behavior trees, and simple components
   - [Card Game Components](/Systems&Components/Card%20Game%20Components/readme.md)
   - [Animation Component](/Systems&Components/Animation%20Component/readme.md)
   - [Touching Component](/Systems&Components/Touching%20Component/readme.md)
-
-- UI Components
-  - UI Framework
-    - [Repo](https://github.com/jyoung4242/UIFramework/tree/main)
-    - [Readme For Framework](./UIcomponents/UIFramework/readme.md)
-  - [TypeWriter Graphic](/UIcomponents/Typewriter%20Graphic/readme.md)
-  - [SVG Graphic](/UIcomponents/SVG%20Graphic/readme.md)
 
 - Shaders and Post Processors
   - [Shockwave](/Game%20Systems/Shaders%20and%20Post%20Processors/ShockWave/readme.md)
