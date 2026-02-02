@@ -8,8 +8,8 @@ mapping, pub/sub signals, UUID generation, behavior trees, and simple components
 
 - UI Components
   - UI Framework
-    - [Repo](https://github.com/jyoung4242/UIFramework/tree/main) :star:
-    - [Developer Guidelines for UIFramework](./UIcomponents/UIFramework/readme.md) :star: :arrow_backward: NEW STUFF HERE!!!!!
+    - :star:[Repo](https://github.com/jyoung4242/UIFramework/tree/main):arrow_backward: NEW STUFF HERE!!!!!
+    - :star:[Developer Guidelines for UIFramework](./UIcomponents/UIFramework/readme.md) :arrow_backward: NEW STUFF HERE!!!!!
 
   - [TypeWriter Graphic](/UIcomponents/Typewriter%20Graphic/readme.md)
   - [SVG Graphic](/UIcomponents/SVG%20Graphic/readme.md)
