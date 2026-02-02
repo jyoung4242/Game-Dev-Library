@@ -2,6 +2,8 @@
 
 ## Overview
 
+![ss](./ss.png)
+
 The `UITextInput` component provides a fully-featured text input field with keyboard support, cursor management, password masking, and
 focus handling. It extends `InteractiveUIComponent` and integrates seamlessly with the Excalibur UI Framework's focus management
 system.
