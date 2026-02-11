@@ -32,6 +32,7 @@ mapping, pub/sub signals, UUID generation, behavior trees, and simple components
   - [Editable UI elements](/Game%20Systems/Editable%20UI%20Element/readme.md)
   - [Flex Box Positioning of Screen Elements](/Game%20Systems/Flex%20Layout%20Components/readme.md)
   - [Tilemap Chunking](/Game%20Systems/Chunked%202d%20Tilemap/readme.md)
+  - [Custom Platformer Camera Strategy](/Game%20Systems/Platformer%20Custom%20Camera/readme.md)
 
 - ECS Components/Systems
   - [Component Template](/Systems&Components/General%20Purpose%20Component%20Template/GP%20Component.ts)
