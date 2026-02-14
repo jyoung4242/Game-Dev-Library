@@ -21,6 +21,8 @@ mapping, pub/sub signals, UUID generation, behavior trees, and simple components
     - [Readme](/Tools//WFC%20Tool/readme.md)
   - [Excalibur Animation Builder](https://anim-genv2.vercel.app/)
     - [Readme](/Tools//Animation%20Builder/Readme.md)
+  - [Behavior Tree Builder](https://bt-builder.vercel.app/)
+    - [Readme](/Tools/BT%20Builder/readme.md)
 
 - Game Modules
   - [Finite State Machine](/Game%20Systems/Finite%20State%20Machine/readme.md)
