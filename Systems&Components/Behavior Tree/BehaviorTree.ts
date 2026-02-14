@@ -486,6 +486,12 @@ export class TreeBuilder {
     }
   }
 
+  // Add this method:
+  end(): TreeBuilder {
+    // Already at root, just return this
+    return this;
+  }
+
   build(): BehaviorTreeComponent {
     return this.component;
   }
@@ -516,8 +522,8 @@ abstract class BaseBuilder<T extends BaseNode> {
     return this.component;
   }
 
-  end(): TreeBuilder | BaseBuilder<any> {
-    return this.parentBuilder || new TreeBuilder(this.owner);
+  end(): TreeBuilder | SequenceBuilder | SelectorBuilder | DecoratorBuilder {
+    return (this.parentBuilder || new TreeBuilder(this.owner)) as TreeBuilder | SequenceBuilder | SelectorBuilder | DecoratorBuilder;
   }
 }
 
