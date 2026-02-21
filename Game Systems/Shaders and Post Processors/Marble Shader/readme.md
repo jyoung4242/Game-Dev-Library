@@ -1,5 +1,7 @@
 # Marble Shader
 
+![ss](./ss.gif)
+
 A procedural marble texture shader written in GLSL for use in game development with Excalibur.js. This shader generates realistic
 marble patterns with swirling veins, lighting effects, and customizable parameters.
 
