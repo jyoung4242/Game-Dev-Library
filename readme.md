@@ -6,6 +6,8 @@ mapping, pub/sub signals, UUID generation, behavior trees, and simple components
 
 ## Table of Contents
 
+- :star:Template Repo for quick starting project:arrow_backward: NEW STUFF HERE!!!!!
+  - [repo](https://github.com/jyoung4242/ExcaliburRepoTemplate)
 - UI Components
   - UI Framework
     - [Repo](https://github.com/jyoung4242/UIFramework/tree/main)
