@@ -8,9 +8,8 @@ mapping, pub/sub signals, UUID generation, behavior trees, and simple components
 
 - UI Components
   - UI Framework
-    - :star:[Repo](https://github.com/jyoung4242/UIFramework/tree/main) :arrow_backward: NEW STUFF HERE!!!!!
-    - :star:[Developer Guidelines for UIFramework](./UIcomponents/UIFramework/readme.md) :arrow_backward: NEW STUFF HERE!!!!!
-
+    - [Repo](https://github.com/jyoung4242/UIFramework/tree/main)
+    - [Developer Guidelines for UIFramework](./UIcomponents/UIFramework/readme.md)
   - [TypeWriter Graphic](/UIcomponents/Typewriter%20Graphic/readme.md)
   - [SVG Graphic](/UIcomponents/SVG%20Graphic/readme.md)
 
@@ -21,7 +20,7 @@ mapping, pub/sub signals, UUID generation, behavior trees, and simple components
     - [Readme](/Tools//WFC%20Tool/readme.md)
   - [Excalibur Animation Builder](https://anim-genv2.vercel.app/)
     - [Readme](/Tools//Animation%20Builder/Readme.md)
-  - [Behavior Tree Builder](https://bt-builder.vercel.app/) :arrow_backward: NEW STUFF HERE!!!!!
+  - [Behavior Tree Builder](https://bt-builder.vercel.app/)
     - [Readme](/Tools/BT%20Builder/readme.md)
 
 - Game Modules
@@ -43,6 +42,7 @@ mapping, pub/sub signals, UUID generation, behavior trees, and simple components
   - [Card Game Components](/Systems&Components/Card%20Game%20Components/readme.md)
   - [Animation Component](/Systems&Components/Animation%20Component/readme.md)
   - [Touching Component](/Systems&Components/Touching%20Component/readme.md)
+  - :star:[Cutscene/UI Event engine](/Systems&Components//CutScene_UIEvents/readme.md):arrow_backward: NEW STUFF HERE!!!!!
 
 - Shaders and Post Processors
   - [Shockwave](/Game%20Systems/Shaders%20and%20Post%20Processors/ShockWave/readme.md)
@@ -50,8 +50,7 @@ mapping, pub/sub signals, UUID generation, behavior trees, and simple components
   - [Gleam Material](/Game%20Systems/Shaders%20and%20Post%20Processors/Gleam%20Material/readme.md)
   - [Wipe Fade Material](/Game%20Systems/Shaders%20and%20Post%20Processors/Wipe%20Shader/readme.md)
   - [Blur Shader](./Game%20Systems/Shaders%20and%20Post%20Processors/Blur%20Shader/readme.md)
-  - :star:[Marble Shader](./Game%20Systems/Shaders%20and%20Post%20Processors/Marble%20Shader/readme.md) :arrow_backward: NEW STUFF
-    HERE!!!!!
+  - [Marble Shader](./Game%20Systems/Shaders%20and%20Post%20Processors/Marble%20Shader/readme.md)
 
 - Procedural Generation
   - [Cellular Automata](/Game%20Systems/Procedural%20Generation/Cellular%20Automata/readme.md)
