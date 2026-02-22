@@ -26,6 +26,7 @@ mapping, pub/sub signals, UUID generation, behavior trees, and simple components
     - [Readme](/Tools/BT%20Builder/readme.md)
 
 - Game Modules
+  - :star:[Game State Management](/Game%20Systems/Game%20State%20Manager/readme.md):arrow_backward: NEW STUFF HERE!!!!!
   - [Finite State Machine](/Game%20Systems/Finite%20State%20Machine/readme.md)
   - [Pub/Sub Signals](/Game%20Systems/Pub%20Sub%20Signals/readme.md)
   - [Input Mapping](/Game%20Systems/Input%20Mapping/readme.md)
