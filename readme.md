@@ -6,7 +6,7 @@ mapping, pub/sub signals, UUID generation, behavior trees, and simple components
 
 ## Table of Contents
 
-- :star:Template Repo for quick starting project:arrow_backward: NEW STUFF HERE!!!!!
+- Template Repo for quick starting project
   - [repo](https://github.com/jyoung4242/ExcaliburRepoTemplate)
 - UI Components
   - UI Framework
@@ -26,7 +26,7 @@ mapping, pub/sub signals, UUID generation, behavior trees, and simple components
     - [Readme](/Tools/BT%20Builder/readme.md)
 
 - Game Modules
-  - :star:[Game State Management](/Game%20Systems/Game%20State%20Manager/readme.md):arrow_backward: NEW STUFF HERE!!!!!
+  - [Game State Management](/Game%20Systems/Game%20State%20Manager/readme.md)
   - [Finite State Machine](/Game%20Systems/Finite%20State%20Machine/readme.md)
   - [Pub/Sub Signals](/Game%20Systems/Pub%20Sub%20Signals/readme.md)
   - [Input Mapping](/Game%20Systems/Input%20Mapping/readme.md)
@@ -37,6 +37,8 @@ mapping, pub/sub signals, UUID generation, behavior trees, and simple components
   - [Flex Box Positioning of Screen Elements](/Game%20Systems/Flex%20Layout%20Components/readme.md)
   - [Tilemap Chunking](/Game%20Systems/Chunked%202d%20Tilemap/readme.md)
   - [Custom Platformer Camera Strategy](/Game%20Systems/Platformer%20Custom%20Camera/readme.md)
+  - :star:[Inverse and Forward Kinimatics](/Game%20Systems/FKIK/readme.md):arrow_backward: NEW STUFF HERE!!!!!
+  - :star:[Peer2Peer Networking](/Game%20Systems/P2P/readme.md):arrow_backward: NEW STUFF HERE!!!!!
 
 - ECS Components/Systems
   - [Component Template](/Systems&Components/General%20Purpose%20Component%20Template/GP%20Component.ts)
@@ -45,7 +47,7 @@ mapping, pub/sub signals, UUID generation, behavior trees, and simple components
   - [Card Game Components](/Systems&Components/Card%20Game%20Components/readme.md)
   - [Animation Component](/Systems&Components/Animation%20Component/readme.md)
   - [Touching Component](/Systems&Components/Touching%20Component/readme.md)
-  - :star:[Cutscene/UI Event engine](/Systems&Components//CutScene_UIEvents/readme.md):arrow_backward: NEW STUFF HERE!!!!!
+  - [Cutscene/UI Event engine](/Systems&Components//CutScene_UIEvents/readme.md)
 
 - Shaders and Post Processors
   - [Shockwave](/Game%20Systems/Shaders%20and%20Post%20Processors/ShockWave/readme.md)
