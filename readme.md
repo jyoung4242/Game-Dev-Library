@@ -14,6 +14,7 @@ mapping, pub/sub signals, UUID generation, behavior trees, and simple components
     - [Developer Guidelines for UIFramework](./UIcomponents/UIFramework/readme.md)
   - [TypeWriter Graphic](/UIcomponents/Typewriter%20Graphic/readme.md)
   - [SVG Graphic](/UIcomponents/SVG%20Graphic/readme.md)
+  - :star:[Mini-map](/UIcomponents/MiniMap/readme.md):arrow_backward: NEW STUFF HERE!!!!!
 
 - Tools
   - [Tileset Combiner](https://tilesetconsolidator.vercel.app/)
