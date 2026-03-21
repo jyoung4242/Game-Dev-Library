@@ -88,94 +88,6 @@
         display: contents;
       }
 
-      /* ── NAV SEARCH ────────────────────────────────── */
-      .nav-search {
-        display: flex;
-        align-items: center;
-        margin-left: auto;
-        gap: 0;
-        position: relative;
-      }
-      .nav-search-input {
-        font-family: var(--mono);
-        font-size: 0.75rem;
-        background: var(--surface2);
-        color: var(--text);
-        border: 1px solid var(--border-hi);
-        border-radius: 6px;
-        padding: 0.3rem 0.7rem 0.3rem 2rem;
-        width: 0;
-        opacity: 0;
-        pointer-events: none;
-        transition:
-          width 0.25s ease,
-          opacity 0.2s ease,
-          border-color 0.15s;
-        outline: none;
-      }
-      .nav-search-input::placeholder {
-        color: var(--dim);
-      }
-      .nav-search-input:focus {
-        border-color: var(--accent2);
-      }
-      .nav-search-input.open {
-        width: 180px;
-        opacity: 1;
-        pointer-events: auto;
-      }
-      .nav-search-icon {
-        position: absolute;
-        left: 0;
-        width: 32px;
-        height: 32px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--muted);
-        cursor: pointer;
-        font-size: 0.85rem;
-        border: 1px solid var(--border-hi);
-        border-radius: 6px;
-        background: var(--surface2);
-        transition:
-          color 0.15s,
-          border-color 0.15s,
-          background 0.15s;
-        flex-shrink: 0;
-        z-index: 1;
-        user-select: none;
-      }
-      .nav-search-icon:hover,
-      .nav-search.active .nav-search-icon {
-        color: var(--accent2);
-        border-color: var(--accent2);
-      }
-      .nav-search.active .nav-search-icon {
-        background: color-mix(in srgb, var(--accent2) 10%, var(--surface2));
-      }
-      .nav-search-clear {
-        position: absolute;
-        right: 6px;
-        font-size: 0.7rem;
-        color: var(--dim);
-        cursor: pointer;
-        display: none;
-        line-height: 1;
-        padding: 2px;
-      }
-      .nav-search-clear:hover {
-        color: var(--text);
-      }
-      .nav-search.has-value .nav-search-clear {
-        display: block;
-      }
-      @media (max-width: 640px) {
-        .nav-search-input.open {
-          width: 140px;
-        }
-      }
-
       /* ── HERO ──────────────────────────────────────── */
       .hero {
         padding: 4.5rem 2rem 3rem;
@@ -605,12 +517,7 @@
     <nav>
       <span class="nav-logo">⬡ game-dev-lib</span>
       <span id="nav-links"></span>
-      <a href="https://github.com/jyoung4242/ExcaliburRepoTemplate" target="_blank">⚡ Template</a>
-      <div class="nav-search" id="nav-search">
-        <span class="nav-search-icon" id="search-icon" title="Search">⌕</span>
-        <input class="nav-search-input" id="search-input" type="text" placeholder="Search..." autocomplete="off" spellcheck="false" />
-        <span class="nav-search-clear" id="search-clear" title="Clear">✕</span>
-      </div>
+      <a href="https://github.com/jyoung4242/ExcaliburRepoTemplate" target="_blank" style="margin-left: auto">⚡ Template</a>
     </nav>
 
     <header class="hero">
@@ -642,7 +549,7 @@
       <p>Questions? Open an issue or find me on Discord: <code>mookie4241</code></p>
     </footer>
 
-    <a id="back-to-top" href="#" aria-label="Back to top">↑</a>
+    <a id="back-to-top" href="#" aria-label="Back to top" title="Back to top">↑</a>
 
     <script>
       // =============================================================================
@@ -742,6 +649,14 @@
           title: "SVG Graphic",
           desc: "Render inline SVGs as Excalibur graphics. Lets you use vector art directly inside your game scene.",
           links: [{ label: "Docs", href: `${GITHUB}/UIcomponents/SVG%20Graphic/readme.md` }],
+        },
+        {
+          section: "ui",
+          emoji: "🗺️",
+          title: "Mini-map",
+          desc: "Display a mini-map of the game world. Useful for visualizing game state and navigation.",
+          links: [{ label: "Docs", href: `${GITHUB}/UIcomponents/MiniMap/readme.md` }],
+          isNew: true,
         },
 
         // ── GAME MODULES ──────────────────────────────────────────────────────────
@@ -1087,97 +1002,6 @@
           });
         });
       });
-      // =============================================================================
-      //  SEARCH
-      // =============================================================================
-      const searchWrap = document.getElementById("nav-search");
-      const searchIcon = document.getElementById("search-icon");
-      const searchInput = document.getElementById("search-input");
-      const searchClear = document.getElementById("search-clear");
-
-      function openSearch() {
-        searchWrap.classList.add("active");
-        searchInput.classList.add("open");
-        searchInput.focus();
-      }
-
-      function closeSearch() {
-        searchInput.value = "";
-        searchWrap.classList.remove("active", "has-value");
-        searchInput.classList.remove("open");
-        applySearch("");
-      }
-
-      function applySearch(query) {
-        const q = query.trim().toLowerCase();
-
-        if (!q) {
-          // No query — reset to All filter
-          filterBtns.forEach(b => b.classList.toggle("active", b.dataset.filter === "all"));
-          allSections.forEach(sec => {
-            delete sec.dataset.hidden;
-            sec.querySelectorAll(".card").forEach(c => (c.style.display = ""));
-          });
-          return;
-        }
-
-        // Clear active filter while searching
-        filterBtns.forEach(b => b.classList.remove("active"));
-
-        allSections.forEach(sec => {
-          const cards = sec.querySelectorAll(".card");
-          let visibleCount = 0;
-          cards.forEach(card => {
-            // Match against the card's title, description, and section name
-            const title = card.querySelector("h3")?.textContent.toLowerCase() ?? "";
-            const desc = card.querySelector("p")?.textContent.toLowerCase() ?? "";
-            const cat = sec.dataset.category.toLowerCase();
-            const match = title.includes(q) || desc.includes(q) || cat.includes(q);
-            card.style.display = match ? "" : "none";
-            if (match) visibleCount++;
-          });
-          if (visibleCount === 0) sec.dataset.hidden = "";
-          else delete sec.dataset.hidden;
-        });
-      }
-
-      searchIcon.addEventListener("click", () => {
-        if (searchInput.classList.contains("open")) {
-          if (!searchInput.value) closeSearch();
-          else searchInput.focus();
-        } else {
-          openSearch();
-        }
-      });
-
-      searchInput.addEventListener("input", () => {
-        const hasVal = searchInput.value.length > 0;
-        searchWrap.classList.toggle("has-value", hasVal);
-        applySearch(searchInput.value);
-      });
-
-      searchClear.addEventListener("click", closeSearch);
-
-      searchInput.addEventListener("keydown", e => {
-        if (e.key === "Escape") closeSearch();
-      });
-
-      // Clicking a category filter while search is open clears the search first
-      filterBtns.forEach(btn => {
-        btn.addEventListener(
-          "click",
-          () => {
-            if (searchInput.value) {
-              searchInput.value = "";
-              searchWrap.classList.remove("has-value");
-              searchInput.classList.remove("open");
-              searchWrap.classList.remove("active");
-            }
-          },
-          true,
-        );
-      });
-
       // Back to top
       const topBtn = document.getElementById("back-to-top");
       window.addEventListener(
