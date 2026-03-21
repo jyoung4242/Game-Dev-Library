@@ -1,0 +1,1100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Game Dev Library</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=DM+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --bg: #0b0e14;
+        --surface: #13171f;
+        --surface2: #1a1f2b;
+        --border: #252c3a;
+        --border-hi: #2e3850;
+        --text: #dce4f0;
+        --muted: #6b7895;
+        --dim: #3d4b63;
+        --accent: #e05c3a;
+        --accent2: #4fa3e8;
+        --accent3: #4dbd7e;
+        --new: #3d7ede;
+        --mono: "JetBrains Mono", monospace;
+        --sans: "DM Sans", system-ui, sans-serif;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--sans);
+        font-size: 15px;
+        line-height: 1.6;
+        min-height: 100vh;
+      }
+
+      /* ── NAV ──────────────────────────────────────── */
+      nav {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(11, 14, 20, 0.88);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border);
+        padding: 0 2rem;
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        height: 52px;
+        overflow-x: auto;
+      }
+
+      .nav-logo {
+        font-family: var(--mono);
+        font-weight: 700;
+        font-size: 0.9rem;
+        color: var(--accent);
+        white-space: nowrap;
+        letter-spacing: 0.04em;
+        margin-right: 0.5rem;
+      }
+
+      nav a {
+        font-size: 0.78rem;
+        font-family: var(--mono);
+        color: var(--muted);
+        text-decoration: none;
+        white-space: nowrap;
+        letter-spacing: 0.05em;
+        transition: color 0.15s;
+      }
+      nav a:hover {
+        color: var(--text);
+      }
+
+      /* ── HERO ─────────────────────────────────────── */
+      .hero {
+        padding: 4.5rem 2rem 3rem;
+        max-width: 860px;
+        margin: 0 auto;
+      }
+
+      .hero-tag {
+        display: inline-block;
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--accent3);
+        border: 1px solid color-mix(in srgb, var(--accent3) 30%, transparent);
+        padding: 0.2rem 0.65rem;
+        border-radius: 4px;
+        margin-bottom: 1.2rem;
+      }
+
+      .hero h1 {
+        font-family: var(--mono);
+        font-size: clamp(1.9rem, 5vw, 3rem);
+        font-weight: 700;
+        line-height: 1.15;
+        color: var(--text);
+        letter-spacing: -0.03em;
+        margin-bottom: 1rem;
+      }
+
+      .hero h1 span {
+        color: var(--accent);
+      }
+
+      .hero p {
+        color: var(--muted);
+        font-size: 1rem;
+        max-width: 600px;
+        margin-bottom: 1.8rem;
+      }
+
+      .hero-links {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: var(--mono);
+        font-size: 0.78rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+        padding: 0.45rem 1rem;
+        border-radius: 6px;
+        transition: all 0.15s;
+      }
+
+      .btn-primary {
+        background: var(--accent);
+        color: #fff;
+        border: 1px solid var(--accent);
+      }
+      .btn-primary:hover {
+        background: #c94f30;
+        border-color: #c94f30;
+      }
+
+      .btn-ghost {
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border-hi);
+      }
+      .btn-ghost:hover {
+        color: var(--text);
+        border-color: var(--dim);
+        background: var(--surface);
+      }
+
+      /* ── FILTER BAR ───────────────────────────────── */
+      .filter-bar {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem 1.5rem;
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+      }
+
+      .filter-btn {
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        border: 1px solid var(--border);
+        background: transparent;
+        color: var(--muted);
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+      .filter-btn:hover {
+        border-color: var(--dim);
+        color: var(--text);
+      }
+      .filter-btn.active {
+        background: var(--accent2);
+        border-color: var(--accent2);
+        color: #fff;
+      }
+
+      /* ── SECTION ──────────────────────────────────── */
+      .section {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem 3.5rem;
+      }
+
+      .section-head {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 1.25rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .section-icon {
+        width: 28px;
+        height: 28px;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.85rem;
+        flex-shrink: 0;
+      }
+
+      .icon-tools {
+        background: color-mix(in srgb, #e05c3a 15%, transparent);
+      }
+      .icon-ui {
+        background: color-mix(in srgb, #4fa3e8 15%, transparent);
+      }
+      .icon-modules {
+        background: color-mix(in srgb, #4dbd7e 15%, transparent);
+      }
+      .icon-ecs {
+        background: color-mix(in srgb, #c97fd4 15%, transparent);
+      }
+      .icon-shaders {
+        background: color-mix(in srgb, #f0c44a 15%, transparent);
+      }
+      .icon-procgen {
+        background: color-mix(in srgb, #4fa3e8 15%, transparent);
+      }
+      .icon-tutorials {
+        background: color-mix(in srgb, #4dbd7e 15%, transparent);
+      }
+
+      .section-title {
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .section-count {
+        margin-left: auto;
+        font-family: var(--mono);
+        font-size: 0.68rem;
+        color: var(--dim);
+      }
+
+      /* ── GRID ─────────────────────────────────────── */
+      .card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+        gap: 0.85rem;
+      }
+
+      /* ── CARD ─────────────────────────────────────── */
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 1.1rem 1.15rem 0.9rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.55rem;
+        transition:
+          border-color 0.18s,
+          transform 0.18s,
+          background 0.18s;
+        position: relative;
+      }
+
+      .card:hover {
+        border-color: var(--accent2);
+        background: var(--surface2);
+        transform: translateY(-2px);
+      }
+
+      .card-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 0.5rem;
+      }
+
+      .card-emoji {
+        font-size: 1.1rem;
+        line-height: 1;
+        margin-top: 1px;
+      }
+
+      .badge-new {
+        font-family: var(--mono);
+        font-size: 0.6rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        background: var(--new);
+        color: #fff;
+        padding: 0.15rem 0.45rem;
+        border-radius: 4px;
+        flex-shrink: 0;
+      }
+
+      .card h3 {
+        font-family: var(--mono);
+        font-size: 0.88rem;
+        font-weight: 700;
+        color: var(--text);
+        line-height: 1.3;
+      }
+
+      .card p {
+        font-size: 0.8rem;
+        color: var(--muted);
+        line-height: 1.55;
+        flex: 1;
+      }
+
+      .card-links {
+        display: flex;
+        gap: 0.45rem;
+        flex-wrap: wrap;
+        margin-top: 0.3rem;
+      }
+
+      .card-link {
+        font-family: var(--mono);
+        font-size: 0.7rem;
+        text-decoration: none;
+        border: 1px solid var(--border-hi);
+        padding: 0.18rem 0.55rem;
+        border-radius: 4px;
+        color: var(--muted);
+        transition: all 0.13s;
+      }
+      .card-link:hover {
+        border-color: var(--accent2);
+        color: var(--accent2);
+      }
+
+      .card-link.launch {
+        border-color: color-mix(in srgb, var(--accent) 40%, transparent);
+        color: var(--accent);
+      }
+      .card-link.launch:hover {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: #fff;
+      }
+
+      /* ── FOOTER ───────────────────────────────────── */
+      footer {
+        border-top: 1px solid var(--border);
+        padding: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      footer p {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+
+      footer code {
+        font-family: var(--mono);
+        font-size: 0.78rem;
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        padding: 0.1rem 0.4rem;
+        border-radius: 4px;
+        color: var(--accent3);
+      }
+
+      /* ── HIDDEN ───────────────────────────────────── */
+      .section[data-hidden] {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAV -->
+    <nav>
+      <span class="nav-logo">⬡ game-dev-lib</span>
+      <a href="#tools">Tools</a>
+      <a href="#ui">UI</a>
+      <a href="#modules">Modules</a>
+      <a href="#ecs">ECS</a>
+      <a href="#shaders">Shaders</a>
+      <a href="#procgen">Procgen</a>
+      <a href="#tutorials">Tutorials</a>
+      <a href="https://github.com/jyoung4242/ExcaliburRepoTemplate" target="_blank" style="margin-left: auto">⚡ Template</a>
+    </nav>
+
+    <!-- HERO -->
+    <header class="hero">
+      <div class="hero-tag">ExcaliburJS · TypeScript · MIT</div>
+      <h1>Game Dev<br /><span>Library</span></h1>
+      <p>
+        Modular, reusable systems for ExcaliburJS and general game development. FSMs, input mapping, pub/sub signals, behavior trees,
+        shaders, procedural generation, and more.
+      </p>
+      <div class="hero-links">
+        <a class="btn btn-primary" href="https://github.com/jyoung4242/ExcaliburRepoTemplate" target="_blank">⚡ Template Repo</a>
+        <a class="btn btn-ghost" href="#tools">Browse Library</a>
+      </div>
+    </header>
+
+    <!-- FILTER -->
+    <div class="filter-bar">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="tools">🛠 Tools</button>
+      <button class="filter-btn" data-filter="ui">🖥 UI</button>
+      <button class="filter-btn" data-filter="modules">⚙️ Modules</button>
+      <button class="filter-btn" data-filter="ecs">🧱 ECS</button>
+      <button class="filter-btn" data-filter="shaders">✨ Shaders</button>
+      <button class="filter-btn" data-filter="procgen">🧬 Procgen</button>
+      <button class="filter-btn" data-filter="tutorials">📚 Tutorials</button>
+    </div>
+
+    <!-- ── TOOLS ──────────────────────────────────────────── -->
+    <section class="section" id="tools" data-category="tools">
+      <div class="section-head">
+        <div class="section-icon icon-tools">🛠</div>
+        <span class="section-title">Tools</span>
+        <span class="section-count">4 items</span>
+      </div>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-header"><span class="card-emoji">🧩</span></div>
+          <h3>Tileset Combiner</h3>
+          <p>Merge multiple tilesets into a single consolidated sheet. Reduces draw calls and simplifies atlas management.</p>
+          <div class="card-links">
+            <a class="card-link launch" href="https://tilesetconsolidator.vercel.app/" target="_blank">Launch ↗</a>
+            <a
+              class="card-link"
+              href="https://github.com/jyoung4242/Game-Dev-Library/blob/main/Tools/Tile%20Set%20Combiner/readme.md"
+              target="_blank"
+              >Docs</a
+            >
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-emoji">🌊</span></div>
+          <h3>WFC Authoring Tool</h3>
+          <p>Visually define adjacency rules for Wave Function Collapse tile generation — no hand-written config needed.</p>
+          <div class="card-links">
+            <a class="card-link launch" href="https://wfc-auth-tool.vercel.app/" target="_blank">Launch ↗</a>
+            <a
+              class="card-link"
+              href="https://github.com/jyoung4242/Game-Dev-Library/blob/main/Tools/WFC%20Tool/readme.md"
+              target="_blank"
+              >Docs</a
+            >
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-emoji">🎬</span></div>
+          <h3>Animation Builder</h3>
+          <p>Build and preview sprite animations interactively. Exports configs ready to drop straight into ExcaliburJS.</p>
+          <div class="card-links">
+            <a class="card-link launch" href="https://anim-genv2.vercel.app/" target="_blank">Launch ↗</a>
+            <a
+              class="card-link"
+              href="https://github.com/jyoung4242/Game-Dev-Library/blob/main/Tools/Animation%20Builder/Readme.md"
+              target="_blank"
+              >Docs</a
+            >
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-emoji">🌳</span></div>
+          <h3>Behavior Tree Builder</h3>
+          <p>Visually construct behavior trees and export to code. Pairs directly with the BT ECS component below.</p>
+          <div class="card-links">
+            <a class="card-link launch" href="https://bt-builder.vercel.app/" target="_blank">Launch ↗</a>
+            <a
+              class="card-link"
+              href="https://github.com/jyoung4242/Game-Dev-Library/blob/main/Tools/BT%20Builder/readme.md"
+              target="_blank"
+              >Docs</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── UI COMPONENTS ──────────────────────────────────── -->
+    <section class="section" id="ui" data-category="ui">
+      <div class="section-head">
+        <div class="section-icon icon-ui">🖥</div>
+        <span class="section-title">UI Components</span>
+        <span class="section-count">3 items</span>
+      </div>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-header"><span class="card-emoji">🪟</span></div>
+          <h3>UI Framework</h3>
+          <p>A full component framework for in-game UI. Provides layout, events, and rendering pipeline for complex HUDs and menus.</p>
+          <div class="card-links">
+            <a class="card-link launch" href="https://github.com/jyoung4242/UIFramework/tree/main" target="_blank">Repo ↗</a>
+            <a
+              class="card-link"
+              href="https://github.com/jyoung4242/Game-Dev-Library/blob/main/UIcomponents/UIFramework/readme.md"
+              target="_blank"
+              >Guidelines</a
+            >
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-emoji">⌨️</span></div>
+          <h3>Typewriter Graphic</h3>
+          <p>Animated typewriter text effect as a graphic component. Drop-in for dialogue boxes, intros, and narrative sequences.</p>
+          <div class="card-links">
+            <a
+              class="card-link"
+              href="https://github.com/jyoung4242/Game-Dev-Library/blob/main/UIcomponents/Typewriter%20Graphic/readme.md"
+              target="_blank"
+              >Docs</a
+            >
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-emoji">🖼</span></div>
+          <h3>SVG Graphic</h3>
+          <p>Render inline SVGs as Excalibur graphics. Lets you use vector art directly inside your game scene.</p>
+          <div class="card-links">
+            <a
+              class="card-link"
+              href="https://github.com/jyoung4242/Game-Dev-Library/blob/main/UIcomponents/SVG%20Graphic/readme.md"
+              target="_blank"
+              >Docs</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── GAME MODULES ───────────────────────────────────── -->
+    <section class="section" id="modules" data-category="modules">
+      <div class="section-head">
+        <div class="section-icon icon-modules">⚙️</div>
+        <span class="section-title">Game Modules</span>
+        <span class="section-count">13 items</span>
+      </div>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-header"><span class="card-emoji">🗂</span></div>
+          <h3>Game State Manager</h3>
+          <p>
+            Top-level state machine for managing game screens and flow. Handles transitions between menus, gameplay, and cutscenes.
+          </p>
+          <div class="card-links">
+            <a
+              class="card-link"
+              href="https://github.com/jyoung4242/Game-Dev-Library/blob/main/Game%20Systems/Game%20State%20Manager/readme.md"
+              target="_blank"
+              >Docs</a
+            >
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-emoji">🔄</span></div>
+          <h3>Finite State Machine</h3>
+          <p>Lightweight, typed FSM for actors and game objects. Define states and transitions with clear enter/exit hooks.</p>
+          <div class="card-links">
+            <a
+              class="card-link"
+              href="https://github.com/jyoung4242/Game-Dev-Library/blob/main/Game%20Systems/Finite%20State%20Machine/readme.md"
+              target="_blank"
+              >Docs</a
+            >
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-emoji">📡</span></div>
+          <h3>Pub/Sub Signals</h3>
+          <p>Decoupled event system for game-wide communication. Publish and subscribe to named signals without tight coupling.</p>
+          <div class="card-links">
+            <a
+              class="card-link"
+              href="https://github.com/jyoung4242/Game-Dev-Library/blob/main/Game%20Systems/Pub%20Sub%20Signals/readme.md"
+              target="_blank"
+              >Docs</a
+            >
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-emoji">🎮</span></div>
+          <h3>Input Mapping</h3>
+          <p>Rebindable input abstraction over keyboard, mouse, and gamepad. Map logical actions to physical keys at runtime.</p>
+          <div class="card-links">
+            <a
+              class="card-link"
+              href="https://github.com/jyoung4242/Game-Dev-Library/blob/main/Game%20Systems/Input%20Mapping/readme.md"
+              target="_blank"
+              >Docs</a
+            >
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-emoji">🆔</span></div>
+          <h3>UUID</h3>
+          <p>Tiny UUID generator. Generate unique identifiers for entities, save states, or network messages.</p>
+          <div class="card-links">
+            <a
+              class="card-link"
+              href="https://github.com/jyoung4242/Game-Dev-Library/blob/main/Game%20Systems/UUID/readme.md"
+              target="_blank"
+              >Docs</a
+            >
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-emoji">🃏</span></div>
+          <h3>Poker Hand Evaluation</h3>
+          <p>Evaluate and rank poker hands from a card array. Useful for card games, mini-games, or any poker-style mechanic.</p>
+          <div class="card-links">
+            <a
+              class="card-link"
+              href="https://github.com/jyoung4242/Game-Dev-Library/blob/main/Game%20Systems/Poker%20Hand%20Evaluation/readme.md"
+              target="_blank"
+              >Docs</a
+            >
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-emoji">🗺</span></div>
+          <h3>ASCII Level Editor</h3>
+          <p>Design levels using ASCII art and convert to tile data. A quick way to author maps in plain text.</p>
+          <div class="card-links">
+            <a
+              class="card-link"
+              href="https://github.com/jyoung4242/Game-Dev-Library/blob/main/Game%20Systems/Ascii%20Level%20Editor/readme.md"
+              target="_blank"
+              >Docs</a
+            >
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-emoji">✏️</span></div>
+          <h3>Editable UI Elements</h3>
+          <p>In-game text fields and editable UI controls. Handles focus, cursor, and input for runtime-editable elements.</p>
+          <div class="card-links">
+            <a
+              class="card-link"
+              href="https://github.com/jyoung4242/Game-Dev-Library/blob/main/Game%20Systems/Editable%20UI%20Element/readme.md"
+              target="_blank"
+              >Docs</a
+            >
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-emoji">📐</span></div>
+          <h3>Flex Layout Components</h3>
+          <p>
+            Flexbox-style positioning for on-screen UI elements. Arrange HUD components responsively without manual coordinate math.
+          </p>
+          <div class="card-links">
+            <a
+              class="card-link"
+              href="https://github.com/jyoung4242/Game-Dev-Library/blob/main/Game%20Systems/Flex%20Layout%20Components/readme.md"
+              target="_blank"
+              >Docs</a
+            >
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-emoji">🗃</span></div>
+          <h3>Tilemap Chunking</h3>
+          <p>Stream and manage large tilemaps using a chunked approach. Only loads/renders tiles near the camera for performance.</p>
+          <div class="card-links">
+            <a
+              class="card-link"
+              href="https://github.com/jyoung4242/Game-Dev-Library/blob/main/Game%20Systems/Chunked%202d%20Tilemap/readme.md"
+              target="_blank"
+              >Docs</a
+            >
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-emoji">📷</span></div>
+          <h3>Platformer Camera Strategy</h3>
+          <p>A camera controller tuned for 2D platformers. Includes look-ahead, dead zones, and smooth tracking.</p>
+          <div class="card-links">
+            <a
+              class="card-link"
+              href="https://github.com/jyoung4242/Game-Dev-Library/blob/main/Game%20Systems/Platformer%20Custom%20Camera/readme.md"
+              target="_blank"
+              >Docs</a
+            >
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span class="card-emoji">🦾</span>
+            <span class="badge-new">New</span>
+          </div>
+          <h3>Inverse &amp; Forward Kinematics</h3>
+          <p>IK and FK chains for procedural limb animation. Attach to actors to drive bone-style animations at runtime.</p>
+          <div class="card-links">
+            <a
+              class="card-link"
+              href="https://github.com/jyoung4242/Game-Dev-Library/blob/main/Game%20Systems/FKIK/readme.md"
+              target="_blank"
+              >Docs</a
+            >
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span class="card-emoji">🌐</span>
+            <span class="badge-new">New</span>
+          </div>
+          <h3>Peer-to-Peer Networking</h3>
+          <p>WebRTC-based P2P networking layer for multiplayer games. Sync game state between peers without a dedicated server.</p>
+          <div class="card-links">
+            <a
+              class="card-link"
+              href="https://github.com/jyoung4242/Game-Dev-Library/blob/main/Game%20Systems/P2P/readme.md"
+              target="_blank"
+              >Docs</a
+            >
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span class="card-emoji">🕹</span>
+            <span class="badge-new">New</span>
+          </div>
+          <h3>Virtual Joysticks</h3>
+          <p>On-screen virtual joystick for mobile and touch input. Configurable dead zone, radius, and output mapping.</p>
+          <div class="card-links">
+            <a
+              class="card-link"
+              href="https://github.com/jyoung4242/Game-Dev-Library/blob/main/Game%20Systems/VirtualJoystick/readme.md"
+              target="_blank"
+              >Docs</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── ECS ────────────────────────────────────────────── -->
+    <section class="section" id="ecs" data-category="ecs">
+      <div class="section-head">
+        <div class="section-icon icon-ecs">🧱</div>
+        <span class="section-title">ECS Components &amp; Systems</span>
+        <span class="section-count">7 items</span>
+      </div>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-header"><span class="card-emoji">📄</span></div>
+          <h3>Component Template</h3>
+          <p>Boilerplate for building your own ECS components. A clean starting point with lifecycle hooks and typed data.</p>
+          <div class="card-links">
+            <a
+              class="card-link launch"
+              href="https://github.com/jyoung4242/Game-Dev-Library/blob/main/Systems%26Components/General%20Purpose%20Component%20Template/GP%20Component.ts"
+              target="_blank"
+              >Source ↗</a
+            >
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-emoji">🌳</span></div>
+          <h3>Behavior Trees</h3>
+          <p>ECS component wrapping a full behavior tree system. Works alongside the Behavior Tree Builder tool above.</p>
+          <div class="card-links">
+            <a
+              class="card-link"
+              href="https://github.com/jyoung4242/Game-Dev-Library/blob/main/Systems%26Components/Behavior%20Tree/readme.md"
+              target="_blank"
+              >Docs</a
+            >
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-emoji">⌨️</span></div>
+          <h3>Keyboard Control</h3>
+          <p>
+            Component for driving actor movement from keyboard input. Simple WASD/arrow-key control with configurable speed and axes.
+          </p>
+          <div class="card-links">
+            <a
+              class="card-link"
+              href="https://github.com/jyoung4242/Game-Dev-Library/blob/main/Systems%26Components/KeyboardControl/readme.md"
+              target="_blank"
+              >Docs</a
+            >
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-emoji">🃏</span></div>
+          <h3>Card Game Components</h3>
+          <p>A set of ECS components modeling cards, hands, and decks. Foundation for building any card-based game mechanic.</p>
+          <div class="card-links">
+            <a
+              class="card-link"
+              href="https://github.com/jyoung4242/Game-Dev-Library/blob/main/Systems%26Components/Card%20Game%20Components/readme.md"
+              target="_blank"
+              >Docs</a
+            >
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-emoji">🎞</span></div>
+          <h3>Animation Component</h3>
+          <p>Data-driven animation state machine as an ECS component. Define animation states and transition rules in config.</p>
+          <div class="card-links">
+            <a
+              class="card-link"
+              href="https://github.com/jyoung4242/Game-Dev-Library/blob/main/Systems%26Components/Animation%20Component/readme.md"
+              target="_blank"
+              >Docs</a
+            >
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-emoji">👆</span></div>
+          <h3>Touching Component</h3>
+          <p>Collision contact tracking for actors. Exposes which surfaces are touching each frame for platformer-style logic.</p>
+          <div class="card-links">
+            <a
+              class="card-link"
+              href="https://github.com/jyoung4242/Game-Dev-Library/blob/main/Systems%26Components/Touching%20Component/readme.md"
+              target="_blank"
+              >Docs</a
+            >
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-emoji">🎥</span></div>
+          <h3>Cutscene / UI Event Engine</h3>
+          <p>Sequence-based engine for scripting cutscenes and UI events. Chain camera moves, dialogue, and transitions in order.</p>
+          <div class="card-links">
+            <a
+              class="card-link"
+              href="https://github.com/jyoung4242/Game-Dev-Library/blob/main/Systems%26Components/CutScene_UIEvents/readme.md"
+              target="_blank"
+              >Docs</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SHADERS ────────────────────────────────────────── -->
+    <section class="section" id="shaders" data-category="shaders">
+      <div class="section-head">
+        <div class="section-icon icon-shaders">✨</div>
+        <span class="section-title">Shaders &amp; Post Processors</span>
+        <span class="section-count">6 items</span>
+      </div>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-header"><span class="card-emoji">💥</span></div>
+          <h3>Shockwave</h3>
+          <p>Radial distortion shockwave effect. Great for explosions, impacts, or screen-shake alternatives.</p>
+          <div class="card-links">
+            <a
+              class="card-link"
+              href="https://github.com/jyoung4242/Game-Dev-Library/blob/main/Game%20Systems/Shaders%20and%20Post%20Processors/ShockWave/readme.md"
+              target="_blank"
+              >Docs</a
+            >
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-emoji">📺</span></div>
+          <h3>CRT</h3>
+          <p>Scanline and screen-curvature CRT filter. Adds authentic retro monitor feel to any game.</p>
+          <div class="card-links">
+            <a
+              class="card-link"
+              href="https://github.com/jyoung4242/Game-Dev-Library/blob/main/Game%20Systems/Shaders%20and%20Post%20Processors/CRT/readme.md"
+              target="_blank"
+              >Docs</a
+            >
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-emoji">✨</span></div>
+          <h3>Gleam Material</h3>
+          <p>Specular gleam and shine effect for sprites and surfaces. Adds a dynamic highlight that follows your light source.</p>
+          <div class="card-links">
+            <a
+              class="card-link"
+              href="https://github.com/jyoung4242/Game-Dev-Library/blob/main/Game%20Systems/Shaders%20and%20Post%20Processors/Gleam%20Material/readme.md"
+              target="_blank"
+              >Docs</a
+            >
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-emoji">🎞</span></div>
+          <h3>Wipe Fade Material</h3>
+          <p>Directional wipe transition shader. Clean scene transitions with configurable direction and timing.</p>
+          <div class="card-links">
+            <a
+              class="card-link"
+              href="https://github.com/jyoung4242/Game-Dev-Library/blob/main/Game%20Systems/Shaders%20and%20Post%20Processors/Wipe%20Shader/readme.md"
+              target="_blank"
+              >Docs</a
+            >
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-emoji">🌫</span></div>
+          <h3>Blur Shader</h3>
+          <p>Gaussian blur post processor. Use for depth-of-field effects, focus pulls, or background blurring.</p>
+          <div class="card-links">
+            <a
+              class="card-link"
+              href="https://github.com/jyoung4242/Game-Dev-Library/blob/main/Game%20Systems/Shaders%20and%20Post%20Processors/Blur%20Shader/readme.md"
+              target="_blank"
+              >Docs</a
+            >
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-emoji">🪨</span></div>
+          <h3>Marble Shader</h3>
+          <p>Procedural marble texture shader. Creates a dynamic, swirling marble surface material on any actor.</p>
+          <div class="card-links">
+            <a
+              class="card-link"
+              href="https://github.com/jyoung4242/Game-Dev-Library/blob/main/Game%20Systems/Shaders%20and%20Post%20Processors/Marble%20Shader/readme.md"
+              target="_blank"
+              >Docs</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── PROCGEN ────────────────────────────────────────── -->
+    <section class="section" id="procgen" data-category="procgen">
+      <div class="section-head">
+        <div class="section-icon icon-procgen">🧬</div>
+        <span class="section-title">Procedural Generation</span>
+        <span class="section-count">2 items</span>
+      </div>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-header"><span class="card-emoji">🦠</span></div>
+          <h3>Cellular Automata</h3>
+          <p>
+            Cave and organic map generation using cellular automata rules. Configurable birth/death thresholds for different terrain
+            styles.
+          </p>
+          <div class="card-links">
+            <a
+              class="card-link"
+              href="https://github.com/jyoung4242/Game-Dev-Library/blob/main/Game%20Systems/Procedural%20Generation/Cellular%20Automata/readme.md"
+              target="_blank"
+              >Docs</a
+            >
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-emoji">🌊</span></div>
+          <h3>Wave Function Collapse</h3>
+          <p>Tile-based WFC procedural generation implementation. Pair with the WFC Authoring Tool above for a complete pipeline.</p>
+          <div class="card-links">
+            <a
+              class="card-link"
+              href="https://github.com/jyoung4242/Game-Dev-Library/blob/main/Game%20Systems/Procedural%20Generation/Wave%20Function%20Collapse/readme.md"
+              target="_blank"
+              >Docs</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── TUTORIALS ──────────────────────────────────────── -->
+    <section class="section" id="tutorials" data-category="tutorials">
+      <div class="section-head">
+        <div class="section-icon icon-tutorials">📚</div>
+        <span class="section-title">Tutorials</span>
+        <span class="section-count">2 items</span>
+      </div>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-header"><span class="card-emoji">🚀</span></div>
+          <h3>Deploy to Itch via GitHub Actions</h3>
+          <p>Automate deployment of your game builds to Itch.io. Step-by-step guide for setting up a CI/CD pipeline.</p>
+          <div class="card-links">
+            <a
+              class="card-link"
+              href="https://github.com/jyoung4242/Game-Dev-Library/blob/main/Tutorials/using%20GH%20actions%20for%20Itch/readme.md"
+              target="_blank"
+              >Docs</a
+            >
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-emoji">✅</span></div>
+          <h3>Preparing Your Itch Site</h3>
+          <p>
+            Everything you need before launching your game page. Covers thumbnails, descriptions, tags, pricing, and accessibility.
+          </p>
+          <div class="card-links">
+            <a
+              class="card-link"
+              href="https://github.com/jyoung4242/Game-Dev-Library/blob/main/Tutorials/preparing%20your%20itch%20site/readme.md"
+              target="_blank"
+              >Docs</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <p>MIT License — free for commercial and hobby projects alike.</p>
+      <p>Questions? Open an issue or find me on Discord: <code>mookie4241</code></p>
+    </footer>
+
+    <script>
+      const btns = document.querySelectorAll(".filter-btn");
+      const sections = document.querySelectorAll(".section[data-category]");
+
+      btns.forEach(btn => {
+        btn.addEventListener("click", () => {
+          btns.forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+
+          const filter = btn.dataset.filter;
+          sections.forEach(sec => {
+            if (filter === "all" || sec.dataset.category === filter) {
+              delete sec.dataset.hidden;
+            } else {
+              sec.dataset.hidden = "";
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
