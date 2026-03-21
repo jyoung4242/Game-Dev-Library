@@ -241,19 +241,6 @@
         border-color: var(--accent2);
         color: #fff;
       }
-      .filter-btn-new {
-        border-color: color-mix(in srgb, #3d7ede 50%, transparent);
-        color: #3d7ede;
-      }
-      .filter-btn-new:hover {
-        border-color: #3d7ede;
-        color: #3d7ede;
-      }
-      .filter-btn-new.active {
-        background: #3d7ede;
-        border-color: #3d7ede;
-        color: #fff;
-      }
 
       /* ── SECTION ───────────────────────────────────── */
       .section {
@@ -343,44 +330,6 @@
         border-color: var(--accent2);
         background: var(--surface2);
         transform: translateY(-2px);
-      }
-
-      /* ── NEW CARD ANIMATION ────────────────────────── */
-      @property --angle {
-        syntax: "<angle>";
-        initial-value: 0deg;
-        inherits: false;
-      }
-      @keyframes spin-border {
-        to {
-          --angle: 360deg;
-        }
-      }
-
-      .card.is-new {
-        border: none;
-        padding: 1px;
-        background: conic-gradient(from var(--angle), #3d7ede 0%, #4dbd7e 25%, #4fa3e8 50%, #4dbd7e 75%, #3d7ede 100%);
-        animation: spin-border 3s linear infinite;
-      }
-      .card.is-new .card-inner {
-        background: var(--surface);
-        border-radius: 9px;
-        padding: 1.1rem 1.15rem 0.9rem;
-        display: flex;
-        flex-direction: column;
-        gap: 0.55rem;
-        height: 100%;
-        transition:
-          background 0.18s,
-          transform 0.18s;
-      }
-      .card.is-new:hover .card-inner {
-        background: var(--surface2);
-        transform: translateY(-2px);
-      }
-      .card.is-new:hover {
-        transform: none;
       }
       .card-header {
         display: flex;
@@ -501,7 +450,6 @@
 
     <div class="filter-bar" id="filter-bar">
       <button class="filter-btn active" data-filter="all">All</button>
-      <button class="filter-btn filter-btn-new" data-filter="new">★ New</button>
     </div>
 
     <div id="sections"></div>
@@ -865,15 +813,13 @@
         const links = item.links
           .map(l => `<a class="card-link${l.launch ? " launch" : ""}" href="${l.href}" target="_blank">${l.label}</a>`)
           .join("");
-        const inner = `
+        return `
+    <div class="card">
       <div class="card-header"><span class="card-emoji">${item.emoji}</span>${badge}</div>
       <h3>${item.title}</h3>
       <p>${item.desc}</p>
-      <div class="card-links">${links}</div>`;
-        if (item.isNew) {
-          return `<div class="card is-new" data-new="true"><div class="card-inner">${inner}</div></div>`;
-        }
-        return `<div class="card">${inner}</div>`;
+      <div class="card-links">${links}</div>
+    </div>`;
       }
 
       function buildSection(sec) {
@@ -932,25 +878,9 @@
           filterBtns.forEach(b => b.classList.remove("active"));
           btn.classList.add("active");
           const f = btn.dataset.filter;
-
           allSections.forEach(sec => {
-            if (f === "new") {
-              // Show only cards flagged as new; hide sections with none
-              const cards = sec.querySelectorAll(".card");
-              let visibleCount = 0;
-              cards.forEach(card => {
-                const hide = !card.dataset.new;
-                card.style.display = hide ? "none" : "";
-                if (!hide) visibleCount++;
-              });
-              if (visibleCount === 0) sec.dataset.hidden = "";
-              else delete sec.dataset.hidden;
-            } else {
-              // Restore all cards, then show/hide sections by category
-              sec.querySelectorAll(".card").forEach(c => (c.style.display = ""));
-              if (f === "all" || sec.dataset.category === f) delete sec.dataset.hidden;
-              else sec.dataset.hidden = "";
-            }
+            if (f === "all" || sec.dataset.category === f) delete sec.dataset.hidden;
+            else sec.dataset.hidden = "";
           });
         });
       });
