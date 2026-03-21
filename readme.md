@@ -39,6 +39,7 @@ mapping, pub/sub signals, UUID generation, behavior trees, and simple components
   - [Custom Platformer Camera Strategy](/Game%20Systems/Platformer%20Custom%20Camera/readme.md)
   - :star:[Inverse and Forward Kinimatics](/Game%20Systems/FKIK/readme.md):arrow_backward: NEW STUFF HERE!!!!!
   - :star:[Peer2Peer Networking](/Game%20Systems/P2P/readme.md):arrow_backward: NEW STUFF HERE!!!!!
+  - :star:[Virtual Joysticks](/Game%20Systems/VirtualJoystick/readme.md):arrow_backward: NEW STUFF HERE!!!!!
 
 - ECS Components/Systems
   - [Component Template](/Systems&Components/General%20Purpose%20Component%20Template/GP%20Component.ts)
