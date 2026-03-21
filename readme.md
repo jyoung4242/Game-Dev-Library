@@ -62,6 +62,7 @@ mapping, pub/sub signals, UUID generation, behavior trees, and simple components
 - Procedural Generation
   - [Cellular Automata](/Game%20Systems/Procedural%20Generation/Cellular%20Automata/readme.md)
   - [Wave Function Collapse](/Game%20Systems/Procedural%20Generation/Wave%20Function%20Collapse/readme.md)
+  - :star:[Poisson Disk Sampling](/Game%20Systems/Procedural%20Generation/Poisson%20Disk/readme.md):arrow_backward: NEW STUFF HERE!!!!!
 
 - Tutorials
   - [Pushing to Itch via Github Actions](/Tutorials/using%20GH%20actions%20for%20Itch/readme.md)
