@@ -473,6 +473,44 @@
         border-radius: 4px;
         color: var(--accent3);
       }
+
+      /* ── BACK TO TOP ───────────────────────────────── */
+      #back-to-top {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        z-index: 200;
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        background: var(--surface2);
+        border: 1px solid var(--border-hi);
+        color: var(--muted);
+        font-size: 1.1rem;
+        line-height: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        text-decoration: none;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(8px);
+        transition:
+          opacity 0.2s,
+          transform 0.2s,
+          border-color 0.15s,
+          color 0.15s;
+      }
+      #back-to-top.visible {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+      }
+      #back-to-top:hover {
+        border-color: var(--accent2);
+        color: var(--accent2);
+      }
     </style>
   </head>
   <body>
@@ -510,6 +548,8 @@
       <p>MIT License — free for commercial and hobby projects alike.</p>
       <p>Questions? Open an issue or find me on Discord: <code>mookie4241</code></p>
     </footer>
+
+    <a id="back-to-top" href="#" aria-label="Back to top" title="Back to top">↑</a>
 
     <script>
       // =============================================================================
@@ -954,6 +994,15 @@
           });
         });
       });
+      // Back to top
+      const topBtn = document.getElementById("back-to-top");
+      window.addEventListener(
+        "scroll",
+        () => {
+          topBtn.classList.toggle("visible", window.scrollY > 400);
+        },
+        { passive: true },
+      );
     </script>
   </body>
 </html>
