@@ -19,13 +19,13 @@
 export const GITHUB = "https://github.com/jyoung4242/Game-Dev-Library/blob/main";
 
 export const SECTIONS = [
-  { id: "tools",    label: "Tools",                    icon: "🛠",  iconClass: "icon-tools"    },
-  { id: "ui",       label: "UI Components",            icon: "🖥",  iconClass: "icon-ui"       },
-  { id: "modules",  label: "Game Modules",             icon: "⚙️", iconClass: "icon-modules"  },
-  { id: "ecs",      label: "ECS Components & Systems", icon: "🧱", iconClass: "icon-ecs"      },
-  { id: "shaders",  label: "Shaders & Post Processors",icon: "✨", iconClass: "icon-shaders"  },
-  { id: "procgen",  label: "Procedural Generation",    icon: "🧬", iconClass: "icon-procgen"  },
-  { id: "tutorials",label: "Tutorials",                icon: "📚", iconClass: "icon-tutorials"},
+  { id: "tools", label: "Tools", icon: "🛠", iconClass: "icon-tools" },
+  { id: "ui", label: "UI Components", icon: "🖥", iconClass: "icon-ui" },
+  { id: "modules", label: "Game Modules", icon: "⚙️", iconClass: "icon-modules" },
+  { id: "ecs", label: "ECS Components & Systems", icon: "🧱", iconClass: "icon-ecs" },
+  { id: "shaders", label: "Shaders & Post Processors", icon: "✨", iconClass: "icon-shaders" },
+  { id: "procgen", label: "Procedural Generation", icon: "🧬", iconClass: "icon-procgen" },
+  { id: "tutorials", label: "Tutorials", icon: "📚", iconClass: "icon-tutorials" },
 ];
 
 export const ITEMS = [
@@ -37,7 +37,7 @@ export const ITEMS = [
     desc: "Merge multiple tilesets into a single consolidated sheet. Reduces draw calls and simplifies atlas management.",
     links: [
       { label: "Launch ↗", href: "https://tilesetconsolidator.vercel.app/", launch: true },
-      { label: "Docs",     href: `${GITHUB}/Tools/Tile%20Set%20Combiner/readme.md` },
+      { label: "Docs", href: `${GITHUB}/Tools/Tile%20Set%20Combiner/readme.md` },
     ],
   },
   {
@@ -47,7 +47,7 @@ export const ITEMS = [
     desc: "Visually define adjacency rules for Wave Function Collapse tile generation — no hand-written config needed.",
     links: [
       { label: "Launch ↗", href: "https://wfc-auth-tool.vercel.app/", launch: true },
-      { label: "Docs",     href: `${GITHUB}/Tools/WFC%20Tool/readme.md` },
+      { label: "Docs", href: `${GITHUB}/Tools/WFC%20Tool/readme.md` },
     ],
   },
   {
@@ -57,7 +57,7 @@ export const ITEMS = [
     desc: "Build and preview sprite animations interactively. Exports configs ready to drop straight into ExcaliburJS.",
     links: [
       { label: "Launch ↗", href: "https://anim-genv2.vercel.app/", launch: true },
-      { label: "Docs",     href: `${GITHUB}/Tools/Animation%20Builder/Readme.md` },
+      { label: "Docs", href: `${GITHUB}/Tools/Animation%20Builder/Readme.md` },
     ],
   },
   {
@@ -67,7 +67,7 @@ export const ITEMS = [
     desc: "Visually construct behavior trees and export to code. Pairs directly with the BT ECS component below.",
     links: [
       { label: "Launch ↗", href: "https://bt-builder.vercel.app/", launch: true },
-      { label: "Docs",     href: `${GITHUB}/Tools/BT%20Builder/readme.md` },
+      { label: "Docs", href: `${GITHUB}/Tools/BT%20Builder/readme.md` },
     ],
   },
 
@@ -78,8 +78,8 @@ export const ITEMS = [
     title: "UI Framework",
     desc: "A full component framework for in-game UI. Provides layout, events, and rendering pipeline for complex HUDs and menus.",
     links: [
-      { label: "Repo ↗",    href: "https://github.com/jyoung4242/UIFramework/tree/main", launch: true },
-      { label: "Guidelines",href: `${GITHUB}/UIcomponents/UIFramework/readme.md` },
+      { label: "Repo ↗", href: "https://github.com/jyoung4242/UIFramework/tree/main", launch: true },
+      { label: "Guidelines", href: `${GITHUB}/UIcomponents/UIFramework/readme.md` },
     ],
   },
   {
@@ -263,6 +263,14 @@ export const ITEMS = [
     title: "Cutscene / UI Event Engine",
     desc: "Sequence-based engine for scripting cutscenes and UI events. Chain camera moves, dialogue, and transitions in order.",
     links: [{ label: "Docs", href: `${GITHUB}/Systems%26Components/CutScene_UIEvents/readme.md` }],
+  },
+  {
+    section: "ecs",
+    emoji: "💥",
+    title: "Destructive Actor Component",
+    desc: "Component for causing actors to explode and fragment into smaller procedureally generated pieces.",
+    links: [{ label: "Docs", href: `${GITHUB}/Systems&Components/Destructive%20Actor%20Component/readme.md` }],
+    isNew: true,
   },
 
   // ── SHADERS ───────────────────────────────────────────────────────────────
