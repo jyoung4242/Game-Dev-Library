@@ -2,8 +2,62 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Game Dev Library</title>
+
+    <!-- SEO: primary meta -->
+    <meta
+      name="description"
+      content="A modular TypeScript library for ExcaliburJS game development. Reusable systems for FSMs, input mapping, pub/sub signals, behavior trees, shaders, procedural generation, ECS components, and more. MIT licensed."
+    />
+    <meta
+      name="keywords"
+      content="ExcaliburJS, TypeScript, game development, finite state machine, behavior tree, ECS, shaders, procedural generation, wave function collapse, cellular automata, game library, open source"
+    />
+    <meta name="author" content="jyoung4242" />
+    <link rel="canonical" href="https://jyoung4242.github.io/Game-Dev-Library/" />
+
+    <!-- SEO: Open Graph (social sharing) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://jyoung4242.github.io/Game-Dev-Library/" />
+    <meta property="og:title" content="Game Dev Library — ExcaliburJS TypeScript Modules &amp; Tools" />
+    <meta
+      property="og:description"
+      content="Modular, reusable TypeScript systems for ExcaliburJS and general game development. FSMs, input mapping, pub/sub signals, behavior trees, shaders, procedural generation, and more. MIT licensed."
+    />
+    <meta property="og:image" content="https://jyoung4242.github.io/Game-Dev-Library/og-image.png" />
+    <meta property="og:site_name" content="Game Dev Library" />
+
+    <!-- SEO: Twitter / X card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://jyoung4242.github.io/Game-Dev-Library/" />
+    <meta name="twitter:title" content="Game Dev Library — ExcaliburJS TypeScript Modules &amp; Tools" />
+    <meta
+      name="twitter:description"
+      content="Modular, reusable TypeScript systems for ExcaliburJS and general game development. MIT licensed."
+    />
+    <meta name="twitter:image" content="https://jyoung4242.github.io/Game-Dev-Library/og-image.png" />
+
+    <!-- SEO: JSON-LD structured data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareSourceCode",
+        "name": "Game Dev Library",
+        "description": "A modular TypeScript library for ExcaliburJS game development. Reusable systems for FSMs, input mapping, pub/sub signals, behavior trees, shaders, procedural generation, and ECS components.",
+        "url": "https://jyoung4242.github.io/Game-Dev-Library/",
+        "codeRepository": "https://github.com/jyoung4242/Game-Dev-Library",
+        "programmingLanguage": "TypeScript",
+        "license": "https://opensource.org/licenses/MIT",
+        "author": {
+          "@type": "Person",
+          "name": "jyoung4242",
+          "url": "https://github.com/jyoung4242"
+        },
+        "keywords": "ExcaliburJS, TypeScript, game development, ECS, shaders, procedural generation"
+      }
+    </script>
+    <title>Game Dev Library — ExcaliburJS TypeScript Modules, Tools &amp; Shaders</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=DM+Sans:wght@400;500;600&display=swap"
@@ -743,14 +797,6 @@
           desc: "Render inline SVGs as Excalibur graphics. Lets you use vector art directly inside your game scene.",
           links: [{ label: "Docs", href: `${GITHUB}/UIcomponents/SVG%20Graphic/readme.md` }],
         },
-        {
-          section: "ui",
-          emoji: "🗺️",
-          title: "Mini-map",
-          desc: "Display a mini-map of the game world. Useful for visualizing game state and navigation.",
-          links: [{ label: "Docs", href: `${GITHUB}/UIcomponents/MiniMap/readme.md` }],
-          isNew: true,
-        },
 
         // ── GAME MODULES ──────────────────────────────────────────────────────────
         {
@@ -971,14 +1017,6 @@
           desc: "Tile-based WFC procedural generation implementation. Pair with the WFC Authoring Tool above for a complete pipeline.",
           links: [{ label: "Docs", href: `${GITHUB}/Game%20Systems/Procedural%20Generation/Wave%20Function%20Collapse/readme.md` }],
         },
-        {
-          section: "procgen",
-          emoji: "🕸️",
-          title: "Poisson Disc Sampling",
-          desc: "This is extremely useful in gamedev (trees, enemies, loot, etc.) because it avoids clumping while still looking natural",
-          links: [{ label: "Docs", href: `${GITHUB}/Game%20Systems/Procedural%20Generation/Poisson%20Disc/readme.md` }],
-          isNew: true,
-        },
 
         // ── TUTORIALS ─────────────────────────────────────────────────────────────
         {
@@ -1007,7 +1045,7 @@
           .map(l => `<a class="card-link${l.launch ? " launch" : ""}" href="${l.href}" target="_blank">${l.label}</a>`)
           .join("");
         const inner = `
-      <div class="card-header"><span class="card-emoji">${item.emoji}</span>${badge}</div>
+      <div class="card-header"><span class="card-emoji" aria-hidden="true">${item.emoji}</span>${badge}</div>
       <h3>${item.title}</h3>
       <p>${item.desc}</p>
       <div class="card-links">${links}</div>`;
@@ -1024,8 +1062,8 @@
         return `
     <section class="section" id="${sec.id}" data-category="${sec.id}">
       <div class="section-head">
-        <div class="section-icon ${sec.iconClass}">${sec.icon}</div>
-        <span class="section-title">${labelSafe}</span>
+        <div class="section-icon ${sec.iconClass}" aria-hidden="true">${sec.icon}</div>
+        <h2 class="section-title">${labelSafe}</h2>
         <span class="section-count">${items.length} item${items.length !== 1 ? "s" : ""}</span>
       </div>
       <div class="card-grid">${items.map(buildCard).join("")}</div>

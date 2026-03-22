@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://jyoung4242.github.io/Game-Dev-Library/sitemap.xml
