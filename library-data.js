@@ -352,42 +352,84 @@ export const ITEMS = [
     emoji: "💥",
     title: "Shockwave",
     desc: "Radial distortion shockwave effect. Great for explosions, impacts, or screen-shake alternatives.",
-    links: [{ label: "Docs", href: `${GITHUB}/Game%20Systems/Shaders%20and%20Post%20Processors/ShockWave/readme.md` }],
+    links: [
+      {
+        label: "Source ↗",
+        href: `${GITHUB}/Game%20Systems/Shaders%20and%20Post%20Processors/ShockWave/shockwave.ts`,
+        launch: true,
+      },
+      { label: "Docs", href: `${GITHUB}/Game%20Systems/Shaders%20and%20Post%20Processors/ShockWave/readme.md` },
+    ],
   },
   {
     section: "shaders",
     emoji: "📺",
     title: "CRT",
     desc: "Scanline and screen-curvature CRT filter. Adds authentic retro monitor feel to any game.",
-    links: [{ label: "Docs", href: `${GITHUB}/Game%20Systems/Shaders%20and%20Post%20Processors/CRT/readme.md` }],
+    links: [
+      {
+        label: "Source ↗",
+        href: `${GITHUB}/Game%20Systems/Shaders%20and%20Post%20Processors/CRT/CRT.ts`,
+        launch: true,
+      },
+      { label: "Docs", href: `${GITHUB}/Game%20Systems/Shaders%20and%20Post%20Processors/CRT/readme.md` },
+    ],
   },
   {
     section: "shaders",
     emoji: "✨",
     title: "Gleam Material",
     desc: "Specular gleam and shine effect for sprites and surfaces. Adds a dynamic highlight that follows your light source.",
-    links: [{ label: "Docs", href: `${GITHUB}/Game%20Systems/Shaders%20and%20Post%20Processors/Gleam%20Material/readme.md` }],
+    links: [
+      {
+        label: "Source ↗",
+        href: `${GITHUB}/Game%20Systems/Shaders%20and%20Post%20Processors/Gleam%20Material/gleamMaterial.ts`,
+        launch: true,
+      },
+      { label: "Docs", href: `${GITHUB}/Game%20Systems/Shaders%20and%20Post%20Processors/Gleam%20Material/readme.md` },
+    ],
   },
   {
     section: "shaders",
     emoji: "🎞",
     title: "Wipe Fade Material",
     desc: "Directional wipe transition shader. Clean scene transitions with configurable direction and timing.",
-    links: [{ label: "Docs", href: `${GITHUB}/Game%20Systems/Shaders%20and%20Post%20Processors/Wipe%20Shader/readme.md` }],
+    links: [
+      {
+        label: "Source ↗",
+        href: `${GITHUB}/Game%20Systems/Shaders%20and%20Post%20Processors/Wipe%20Shader/Wipe.ts`,
+        launch: true,
+      },
+      { label: "Docs", href: `${GITHUB}/Game%20Systems/Shaders%20and%20Post%20Processors/Wipe%20Shader/readme.md` },
+    ],
   },
   {
     section: "shaders",
     emoji: "🌫",
     title: "Blur Shader",
     desc: "Gaussian blur post processor. Use for depth-of-field effects, focus pulls, or background blurring.",
-    links: [{ label: "Docs", href: `${GITHUB}/Game%20Systems/Shaders%20and%20Post%20Processors/Blur%20Shader/readme.md` }],
+    links: [
+      {
+        label: "Source ↗",
+        href: `${GITHUB}/Game%20Systems/Shaders%20and%20Post%20Processors/Blur%20Shader/blur.ts`,
+        launch: true,
+      },
+      { label: "Docs", href: `${GITHUB}/Game%20Systems/Shaders%20and%20Post%20Processors/Blur%20Shader/readme.md` },
+    ],
   },
   {
     section: "shaders",
     emoji: "🪨",
     title: "Marble Shader",
     desc: "Procedural marble texture shader. Creates a dynamic, swirling marble surface material on any actor.",
-    links: [{ label: "Docs", href: `${GITHUB}/Game%20Systems/Shaders%20and%20Post%20Processors/Marble%20Shader/readme.md` }],
+    links: [
+      {
+        label: "Source ↗",
+        href: `${GITHUB}/Game%20Systems/Shaders%20and%20Post%20Processors/Marble%20Shader/marble.ts`,
+        launch: true,
+      },
+      { label: "Docs", href: `${GITHUB}/Game%20Systems/Shaders%20and%20Post%20Processors/Marble%20Shader/readme.md` },
+    ],
   },
 
   // ── PROCGEN ───────────────────────────────────────────────────────────────
