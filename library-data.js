@@ -87,14 +87,20 @@ export const ITEMS = [
     emoji: "⌨️",
     title: "Typewriter Graphic",
     desc: "Animated typewriter text effect as a graphic component. Drop-in for dialogue boxes, intros, and narrative sequences.",
-    links: [{ label: "Docs", href: `${GITHUB}/UIcomponents/Typewriter%20Graphic/readme.md` }],
+    links: [
+      { label: "Repo ↗", href: `${GITHUB}/UIcomponents/Typewriter%20Graphic/typewriter.ts`, launch: true },
+      { label: "Docs", href: `${GITHUB}/UIcomponents/Typewriter%20Graphic/readme.md` },
+    ],
   },
   {
     section: "ui",
     emoji: "🖼",
     title: "SVG Graphic",
     desc: "Render inline SVGs as Excalibur graphics. Lets you use vector art directly inside your game scene.",
-    links: [{ label: "Docs", href: `${GITHUB}/UIcomponents/SVG%20Graphic/readme.md` }],
+    links: [
+      { label: "Repo ↗", href: `${GITHUB}/UIcomponents/SVG%20Graphic/SVGGraphic.ts`, launch: true },
+      { label: "Docs", href: `${GITHUB}/UIcomponents/SVG%20Graphic/readme.md` },
+    ],
   },
   {
     section: "ui",
@@ -111,14 +117,20 @@ export const ITEMS = [
     emoji: "🗂",
     title: "Game State Manager",
     desc: "Top-level state machine for managing game screens and flow. Handles transitions between menus, gameplay, and cutscenes.",
-    links: [{ label: "Docs", href: `${GITHUB}/Game%20Systems/Game%20State%20Manager/readme.md` }],
+    links: [
+      { label: "Repo ↗", href: `${GITHUB}/Game%20Systems/Game%20State%20Manager/state%20management.ts`, launch: true },
+      { label: "Docs", href: `${GITHUB}/Game%20Systems/Game%20State%20Manager/readme.md` },
+    ],
   },
   {
     section: "modules",
     emoji: "🔄",
     title: "Finite State Machine",
     desc: "Lightweight, typed FSM for actors and game objects. Define states and transitions with clear enter/exit hooks.",
-    links: [{ label: "Docs", href: `${GITHUB}/Game%20Systems/Finite%20State%20Machine/readme.md` }],
+    links: [
+      { label: "Repo ↗", href: `${GITHUB}/Game%20Systems/Finite%20State%20Machine/ExFSM.ts`, launch: true },
+      { label: "Docs", href: `${GITHUB}/Game%20Systems/Finite%20State%20Machine/readme.md` },
+    ],
   },
   {
     section: "modules",
