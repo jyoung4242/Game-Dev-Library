@@ -88,7 +88,7 @@ export const ITEMS = [
     title: "Typewriter Graphic",
     desc: "Animated typewriter text effect as a graphic component. Drop-in for dialogue boxes, intros, and narrative sequences.",
     links: [
-      { label: "File ↗", href: `${GITHUB}/UIcomponents/Typewriter%20Graphic/typewriter.ts`, launch: true },
+      { label: "Source ↗", href: `${GITHUB}/UIcomponents/Typewriter%20Graphic/typewriter.ts`, launch: true },
       { label: "Docs", href: `${GITHUB}/UIcomponents/Typewriter%20Graphic/readme.md` },
     ],
   },
@@ -98,7 +98,7 @@ export const ITEMS = [
     title: "SVG Graphic",
     desc: "Render inline SVGs as Excalibur graphics. Lets you use vector art directly inside your game scene.",
     links: [
-      { label: "File ↗", href: `${GITHUB}/UIcomponents/SVG%20Graphic/SVGGraphic.ts`, launch: true },
+      { label: "Source ↗", href: `${GITHUB}/UIcomponents/SVG%20Graphic/SVGGraphic.ts`, launch: true },
       { label: "Docs", href: `${GITHUB}/UIcomponents/SVG%20Graphic/readme.md` },
     ],
   },
@@ -109,7 +109,7 @@ export const ITEMS = [
     desc: "Display a mini-map of the game world. Useful for visualizing game state and navigation.",
     isNew: true,
     links: [
-      { label: "File ↗", href: `${GITHUB}/UIcomponents/MiniMap/minimap.ts`, launch: true },
+      { label: "Source ↗", href: `${GITHUB}/UIcomponents/MiniMap/minimap.ts`, launch: true },
       { label: "Docs", href: `${GITHUB}/UIcomponents/MiniMap/readme.md` },
     ],
   },
@@ -121,7 +121,7 @@ export const ITEMS = [
     title: "Game State Manager",
     desc: "Top-level state machine for managing game screens and flow. Handles transitions between menus, gameplay, and cutscenes.",
     links: [
-      { label: "File ↗", href: `${GITHUB}/Game%20Systems/Game%20State%20Manager/state%20management.ts`, launch: true },
+      { label: "Source ↗", href: `${GITHUB}/Game%20Systems/Game%20State%20Manager/state%20management.ts`, launch: true },
       { label: "Docs", href: `${GITHUB}/Game%20Systems/Game%20State%20Manager/readme.md` },
     ],
   },
@@ -131,7 +131,7 @@ export const ITEMS = [
     title: "Finite State Machine",
     desc: "Lightweight, typed FSM for actors and game objects. Define states and transitions with clear enter/exit hooks.",
     links: [
-      { label: "File ↗", href: `${GITHUB}/Game%20Systems/Finite%20State%20Machine/ExFSM.ts`, launch: true },
+      { label: "Source ↗", href: `${GITHUB}/Game%20Systems/Finite%20State%20Machine/ExFSM.ts`, launch: true },
       { label: "Docs", href: `${GITHUB}/Game%20Systems/Finite%20State%20Machine/readme.md` },
     ],
   },
@@ -141,7 +141,7 @@ export const ITEMS = [
     title: "Pub/Sub Signals",
     desc: "Decoupled event system for game-wide communication. Publish and subscribe to named signals without tight coupling.",
     links: [
-      { label: "File ↗", href: `${GITHUB}/Game%20Systems/Pub%20Sub%20Signals/Signals.ts`, launch: true },
+      { label: "Source ↗", href: `${GITHUB}/Game%20Systems/Pub%20Sub%20Signals/Signals.ts`, launch: true },
       { label: "Docs", href: `${GITHUB}/Game%20Systems/Pub%20Sub%20Signals/readme.md` },
     ],
   },
@@ -151,7 +151,7 @@ export const ITEMS = [
     title: "Input Mapping",
     desc: "Rebindable input abstraction over keyboard, mouse, and gamepad. Map logical actions to physical keys at runtime.",
     links: [
-      { label: "File ↗", href: `${GITHUB}/Game%20Systems/Input%20Mapping/InputMapper.ts`, launch: true },
+      { label: "Source ↗", href: `${GITHUB}/Game%20Systems/Input%20Mapping/InputMapper.ts`, launch: true },
       { label: "Docs", href: `${GITHUB}/Game%20Systems/Input%20Mapping/readme.md` },
     ],
   },
@@ -161,7 +161,7 @@ export const ITEMS = [
     title: "UUID",
     desc: "Tiny UUID generator. Generate unique identifiers for entities, save states, or network messages.",
     links: [
-      { label: "File ↗", href: `${GITHUB}/Game%20Systems/UUID/UUID.ts`, launch: true },
+      { label: "Source ↗", href: `${GITHUB}/Game%20Systems/UUID/UUID.ts`, launch: true },
       { label: "Docs", href: `${GITHUB}/Game%20Systems/UUID/readme.md` },
     ],
   },
@@ -171,7 +171,7 @@ export const ITEMS = [
     title: "Poker Hand Evaluation",
     desc: "Evaluate and rank poker hands from a card array. Useful for card games, mini-games, or any poker-style mechanic.",
     links: [
-      { label: "File ↗", href: `${GITHUB}/Game%20Systems/Poker%20Hand%20Evaluation/Poker%20Hand%20Eval.ts`, launch: true },
+      { label: "Source ↗", href: `${GITHUB}/Game%20Systems/Poker%20Hand%20Evaluation/Poker%20Hand%20Eval.ts`, launch: true },
       { label: "Docs", href: `${GITHUB}/Game%20Systems/Poker%20Hand%20Evaluation/readme.md` },
     ],
   },
@@ -181,7 +181,7 @@ export const ITEMS = [
     title: "ASCII Level Editor",
     desc: "Design levels using ASCII art and convert to tile data. A quick way to author maps in plain text.",
     links: [
-      { label: "File ↗", href: `${GITHUB}/Game%20Systems/Ascii%20Level%20Editor/LevelEditor.ts`, launch: true },
+      { label: "Source ↗", href: `${GITHUB}/Game%20Systems/Ascii%20Level%20Editor/LevelEditor.ts`, launch: true },
       { label: "Docs", href: `${GITHUB}/Game%20Systems/Ascii%20Level%20Editor/readme.md` },
     ],
   },
@@ -191,7 +191,7 @@ export const ITEMS = [
     title: "Editable UI Elements",
     desc: "In-game text fields and editable UI controls. Handles focus, cursor, and input for runtime-editable elements.",
     links: [
-      { label: "File ↗", href: `${GITHUB}/Game%20Systems/Editable%20UI%20Element/EditableUI.ts`, launch: true },
+      { label: "Source ↗", href: `${GITHUB}/Game%20Systems/Editable%20UI%20Element/EditableUI.ts`, launch: true },
       { label: "Docs", href: `${GITHUB}/Game%20Systems/Editable%20UI%20Element/readme.md` },
     ],
   },
@@ -208,7 +208,7 @@ export const ITEMS = [
     title: "Tilemap Chunking",
     desc: "Stream and manage large tilemaps using a chunked approach. Only loads/renders tiles near the camera for performance.",
     links: [
-      { label: "File ↗", href: `${GITHUB}/Game%20Systems/Chunked%202d%20Tilemap/Chunked2dTilemap.ts`, launch: true },
+      { label: "Source ↗", href: `${GITHUB}/Game%20Systems/Chunked%202d%20Tilemap/Chunked2dTilemap.ts`, launch: true },
       { label: "Docs", href: `${GITHUB}/Game%20Systems/Chunked%202d%20Tilemap/readme.md` },
     ],
   },
@@ -218,7 +218,7 @@ export const ITEMS = [
     title: "Platformer Camera Strategy",
     desc: "A camera controller tuned for 2D platformers. Includes look-ahead, dead zones, and smooth tracking.",
     links: [
-      { label: "File ↗", href: `${GITHUB}/Game%20Systems/Platformer%20Custom%20Camera/CustomCameraStrategy.ts`, launch: true },
+      { label: "Source ↗", href: `${GITHUB}/Game%20Systems/Platformer%20Custom%20Camera/CustomCameraStrategy.ts`, launch: true },
       { label: "Docs", href: `${GITHUB}/Game%20Systems/Platformer%20Custom%20Camera/readme.md` },
     ],
   },
@@ -240,7 +240,7 @@ export const ITEMS = [
     desc: "WebRTC-based P2P networking layer for multiplayer games. Sync game state between peers without a dedicated server.",
     isNew: true,
     links: [
-      { label: "File ↗", href: `${GITHUB}/Game%20Systems/P2P/PeerNetworManager.ts`, launch: true },
+      { label: "Source ↗", href: `${GITHUB}/Game%20Systems/P2P/PeerNetworManager.ts`, launch: true },
       { label: "Docs", href: `${GITHUB}/Game%20Systems/P2P/readme.md` },
     ],
   },
@@ -251,7 +251,7 @@ export const ITEMS = [
     desc: "On-screen virtual joystick for mobile and touch input. Configurable dead zone, radius, and output mapping.",
     isNew: true,
     links: [
-      { label: "File ↗", href: `${GITHUB}/Game%20Systems/VirtualJoystick/VirtualJoystick.ts`, launch: true },
+      { label: "Source ↗", href: `${GITHUB}/Game%20Systems/VirtualJoystick/VirtualJoystick.ts`, launch: true },
       { label: "Docs", href: `${GITHUB}/Game%20Systems/VirtualJoystick/readme.md` },
     ],
   },
@@ -275,49 +275,74 @@ export const ITEMS = [
     emoji: "🌳",
     title: "Behavior Trees",
     desc: "ECS component wrapping a full behavior tree system. Works alongside the Behavior Tree Builder tool above.",
-    links: [{ label: "Docs", href: `${GITHUB}/Systems%26Components/Behavior%20Tree/readme.md` }],
+    links: [
+      { label: "Source ↗", href: `${GITHUB}/Systems%26Components/Behavior%20Tree/BehaviorTree.ts`, launch: true },
+      { label: "Docs", href: `${GITHUB}/Systems%26Components/Behavior%20Tree/readme.md` },
+    ],
   },
   {
     section: "ecs",
     emoji: "⌨️",
     title: "Keyboard Control",
     desc: "Component for driving actor movement from keyboard input. Simple WASD/arrow-key control with configurable speed and axes.",
-    links: [{ label: "Docs", href: `${GITHUB}/Systems%26Components/KeyboardControl/readme.md` }],
+    links: [
+      { label: "Source ↗", href: `${GITHUB}/Systems%26Components/KeyboardControl/KeyboardControl.ts`, launch: true },
+      { label: "Docs", href: `${GITHUB}/Systems%26Components/KeyboardControl/readme.md` },
+    ],
   },
   {
     section: "ecs",
     emoji: "🃏",
     title: "Card Game Components",
     desc: "A set of ECS components modeling cards, hands, and decks. Foundation for building any card-based game mechanic.",
-    links: [{ label: "Docs", href: `${GITHUB}/Systems%26Components/Card%20Game%20Components/readme.md` }],
+    links: [
+      { label: "Source ↗", href: `${GITHUB}/Systems%26Components/Card%20Game%20Components/CardSystem.ts`, launch: true },
+      { label: "Docs", href: `${GITHUB}/Systems%26Components/Card%20Game%20Components/readme.md` },
+    ],
   },
   {
     section: "ecs",
     emoji: "🎞",
     title: "Animation Component",
     desc: "Data-driven animation state machine as an ECS component. Define animation states and transition rules in config.",
-    links: [{ label: "Docs", href: `${GITHUB}/Systems%26Components/Animation%20Component/readme.md` }],
+    links: [
+      { label: "Source ↗", href: `${GITHUB}/Systems%26Components/Animation%20Component/AnimationComponent.ts`, launch: true },
+      { label: "Docs", href: `${GITHUB}/Systems%26Components/Animation%20Component/readme.md` },
+    ],
   },
   {
     section: "ecs",
     emoji: "👆",
     title: "Touching Component",
     desc: "Collision contact tracking for actors. Exposes which surfaces are touching each frame for platformer-style logic.",
-    links: [{ label: "Docs", href: `${GITHUB}/Systems%26Components/Touching%20Component/readme.md` }],
+    links: [
+      { label: "Source ↗", href: `${GITHUB}/Systems%26Components/Touching%20Component/TouchingComponent.ts`, launch: true },
+      { label: "Docs", href: `${GITHUB}/Systems%26Components/Touching%20Component/readme.md` },
+    ],
   },
   {
     section: "ecs",
     emoji: "🎥",
     title: "Cutscene / UI Event Engine",
     desc: "Sequence-based engine for scripting cutscenes and UI events. Chain camera moves, dialogue, and transitions in order.",
-    links: [{ label: "Docs", href: `${GITHUB}/Systems%26Components/CutScene_UIEvents/readme.md` }],
+    links: [
+      { label: "Source ↗", href: `${GITHUB}/Systems%26Components/CutScene_UIEvents/cutsceneEvents.ts`, launch: true },
+      { label: "Docs", href: `${GITHUB}/Systems%26Components/CutScene_UIEvents/readme.md` },
+    ],
   },
   {
     section: "ecs",
     emoji: "💥",
     title: "Destructive Actor Component",
     desc: "Component for causing actors to explode and fragment into smaller procedureally generated pieces.",
-    links: [{ label: "Docs", href: `${GITHUB}/Systems&Components/Destructive%20Actor%20Component/readme.md` }],
+    links: [
+      {
+        label: "Source ↗",
+        href: `${GITHUB}/Systems%26Components/Destructive%20Actor%20Component/DestructiveActorComponent.ts`,
+        launch: true,
+      },
+      { label: "Docs", href: `${GITHUB}/Systems&Components/Destructive%20Actor%20Component/readme.md` },
+    ],
     isNew: true,
   },
 
