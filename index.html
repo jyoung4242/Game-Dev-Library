@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="robots" content="index, follow" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+    <link rel="icon" type="image/png" href="./logo.png" />
     <!-- SEO: primary meta -->
     <meta
       name="description"
@@ -424,13 +424,27 @@
         font-size: 0.85rem;
         flex-shrink: 0;
       }
-      .icon-tools    { background: color-mix(in srgb, #e05c3a 15%, transparent); }
-      .icon-ui       { background: color-mix(in srgb, #4fa3e8 15%, transparent); }
-      .icon-modules  { background: color-mix(in srgb, #4dbd7e 15%, transparent); }
-      .icon-ecs      { background: color-mix(in srgb, #c97fd4 15%, transparent); }
-      .icon-shaders  { background: color-mix(in srgb, #f0c44a 15%, transparent); }
-      .icon-procgen  { background: color-mix(in srgb, #4fa3e8 15%, transparent); }
-      .icon-tutorials{ background: color-mix(in srgb, #4dbd7e 15%, transparent); }
+      .icon-tools {
+        background: color-mix(in srgb, #e05c3a 15%, transparent);
+      }
+      .icon-ui {
+        background: color-mix(in srgb, #4fa3e8 15%, transparent);
+      }
+      .icon-modules {
+        background: color-mix(in srgb, #4dbd7e 15%, transparent);
+      }
+      .icon-ecs {
+        background: color-mix(in srgb, #c97fd4 15%, transparent);
+      }
+      .icon-shaders {
+        background: color-mix(in srgb, #f0c44a 15%, transparent);
+      }
+      .icon-procgen {
+        background: color-mix(in srgb, #4fa3e8 15%, transparent);
+      }
+      .icon-tutorials {
+        background: color-mix(in srgb, #4dbd7e 15%, transparent);
+      }
       .section-title {
         font-family: var(--mono);
         font-size: 0.72rem;
@@ -480,7 +494,9 @@
         inherits: false;
       }
       @keyframes spin-border {
-        to { --angle: 360deg; }
+        to {
+          --angle: 360deg;
+        }
       }
 
       .card.is-new {
@@ -730,8 +746,7 @@
           const data = await res.json();
           const count = data.stargazers_count;
           if (typeof count === "number") {
-            document.getElementById("star-count").textContent =
-              count >= 1000 ? (count / 1000).toFixed(1) + "k" : count.toString();
+            document.getElementById("star-count").textContent = count >= 1000 ? (count / 1000).toFixed(1) + "k" : count.toString();
           }
         } catch (_) {
           // API unavailable — count stays as "—"
@@ -789,8 +804,8 @@
       // =============================================================================
       //  SEARCH
       // =============================================================================
-      const searchWrap  = document.getElementById("nav-search");
-      const searchIcon  = document.getElementById("search-icon");
+      const searchWrap = document.getElementById("nav-search");
+      const searchIcon = document.getElementById("search-icon");
       const searchInput = document.getElementById("search-input");
       const searchClear = document.getElementById("search-clear");
 
@@ -823,8 +838,8 @@
           let visibleCount = 0;
           cards.forEach(card => {
             const title = card.querySelector("h3")?.textContent.toLowerCase() ?? "";
-            const desc  = card.querySelector("p")?.textContent.toLowerCase() ?? "";
-            const cat   = sec.dataset.category.toLowerCase();
+            const desc = card.querySelector("p")?.textContent.toLowerCase() ?? "";
+            const cat = sec.dataset.category.toLowerCase();
             const match = title.includes(q) || desc.includes(q) || cat.includes(q);
             card.style.display = match ? "" : "none";
             if (match) visibleCount++;
@@ -857,22 +872,30 @@
 
       // Clicking a category filter while search is open clears the search first
       filterBtns.forEach(btn => {
-        btn.addEventListener("click", () => {
-          if (searchInput.value) {
-            searchInput.value = "";
-            searchWrap.classList.remove("has-value", "active");
-            searchInput.classList.remove("open");
-          }
-        }, true);
+        btn.addEventListener(
+          "click",
+          () => {
+            if (searchInput.value) {
+              searchInput.value = "";
+              searchWrap.classList.remove("has-value", "active");
+              searchInput.classList.remove("open");
+            }
+          },
+          true,
+        );
       });
 
       // =============================================================================
       //  BACK TO TOP
       // =============================================================================
       const topBtn = document.getElementById("back-to-top");
-      window.addEventListener("scroll", () => {
-        topBtn.classList.toggle("visible", window.scrollY > 400);
-      }, { passive: true });
+      window.addEventListener(
+        "scroll",
+        () => {
+          topBtn.classList.toggle("visible", window.scrollY > 400);
+        },
+        { passive: true },
+      );
     </script>
   </body>
 </html>
