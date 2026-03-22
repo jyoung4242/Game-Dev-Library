@@ -108,7 +108,10 @@ export const ITEMS = [
     title: "Mini-map",
     desc: "Display a mini-map of the game world. Useful for visualizing game state and navigation.",
     isNew: true,
-    links: [{ label: "Docs", href: `${GITHUB}/UIcomponents/MiniMap/readme.md` }],
+    links: [
+      { label: "Repo ↗", href: `${GITHUB}/UIcomponents/MiniMap/minimap.ts`, launch: true },
+      { label: "Docs", href: `${GITHUB}/UIcomponents/MiniMap/readme.md` },
+    ],
   },
 
   // ── GAME MODULES ──────────────────────────────────────────────────────────
@@ -137,7 +140,10 @@ export const ITEMS = [
     emoji: "📡",
     title: "Pub/Sub Signals",
     desc: "Decoupled event system for game-wide communication. Publish and subscribe to named signals without tight coupling.",
-    links: [{ label: "Docs", href: `${GITHUB}/Game%20Systems/Pub%20Sub%20Signals/readme.md` }],
+    links: [
+      { label: "Repo ↗", href: `${GITHUB}/Game%20Systems/Pub%20Sub%20Signals/Signals.ts`, launch: true },
+      { label: "Docs", href: `${GITHUB}/Game%20Systems/Pub%20Sub%20Signals/readme.md` },
+    ],
   },
   {
     section: "modules",
@@ -154,7 +160,10 @@ export const ITEMS = [
     emoji: "🆔",
     title: "UUID",
     desc: "Tiny UUID generator. Generate unique identifiers for entities, save states, or network messages.",
-    links: [{ label: "Docs", href: `${GITHUB}/Game%20Systems/UUID/readme.md` }],
+    links: [
+      { label: "Repo ↗", href: `${GITHUB}/Game%20Systems/UUID`, launch: true },
+      { label: "Docs", href: `${GITHUB}/Game%20Systems/UUID/readme.md` },
+    ],
   },
   {
     section: "modules",
