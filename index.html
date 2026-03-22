@@ -118,6 +118,9 @@
         overflow-x: auto;
       }
       .nav-logo {
+        display: flex;
+        align-items: center;
+        gap: 6px;
         font-family: var(--mono);
         font-weight: 700;
         font-size: 0.9rem;
@@ -653,11 +656,19 @@
         border-color: var(--accent2);
         color: var(--accent2);
       }
+
+      .icon-ui {
+        width: 20px;
+        height: 20px;
+      }
     </style>
   </head>
   <body>
     <nav>
-      <span class="nav-logo">⬡ game-dev-lib</span>
+      <span class="nav-logo">
+        <img class="icon-ui" src="./logo.png" alt="logo" />
+        game-dev-lib
+      </span>
       <span id="nav-links"></span>
       <a href="https://github.com/jyoung4242/ExcaliburRepoTemplate" target="_blank">⚡ Template</a>
       <div class="nav-search" id="nav-search">
