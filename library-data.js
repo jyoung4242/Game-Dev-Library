@@ -438,14 +438,28 @@ export const ITEMS = [
     emoji: "🦠",
     title: "Cellular Automata",
     desc: "Cave and organic map generation using cellular automata rules. Configurable birth/death thresholds for different terrain styles.",
-    links: [{ label: "Docs", href: `${GITHUB}/Game%20Systems/Procedural%20Generation/Cellular%20Automata/readme.md` }],
+    links: [
+      {
+        label: "Source ↗",
+        href: `${GITHUB}/Game%20Systems/Procedural%20Generation/Cellular%20Automata/cellularAutomata.ts`,
+        launch: true,
+      },
+      { label: "Docs", href: `${GITHUB}/Game%20Systems/Procedural%20Generation/Cellular%20Automata/readme.md` },
+    ],
   },
   {
     section: "procgen",
     emoji: "🌊",
     title: "Wave Function Collapse",
     desc: "Tile-based WFC procedural generation implementation. Pair with the WFC Authoring Tool above for a complete pipeline.",
-    links: [{ label: "Docs", href: `${GITHUB}/Game%20Systems/Procedural%20Generation/Wave%20Function%20Collapse/readme.md` }],
+    links: [
+      {
+        label: "Source ↗",
+        href: `${GITHUB}/Game%20Systems/Procedural%20Generation/Wave%20Function%20Collapse/WFC.ts`,
+        launch: true,
+      },
+      { label: "Docs", href: `${GITHUB}/Game%20Systems/Procedural%20Generation/Wave%20Function%20Collapse/readme.md` },
+    ],
   },
   {
     section: "procgen",
@@ -453,7 +467,14 @@ export const ITEMS = [
     title: "Poisson Disc Sampling",
     desc: "This is extremely useful in gamedev (trees, enemies, loot, etc.) because it avoids clumping while still looking natural",
     isNew: true,
-    links: [{ label: "Docs", href: `${GITHUB}/Game%20Systems/Procedural%20Generation/Poisson%20Disc/readme.md` }],
+    links: [
+      {
+        label: "Source ↗",
+        href: `${GITHUB}/Game%20Systems/Procedural%20Generation/Poisson%20Disk/Poisson.ts`,
+        launch: true,
+      },
+      { label: "Docs", href: `${GITHUB}/Game%20Systems/Procedural%20Generation/Poisson%20Disc/readme.md` },
+    ],
   },
 
   // ── TUTORIALS ─────────────────────────────────────────────────────────────
