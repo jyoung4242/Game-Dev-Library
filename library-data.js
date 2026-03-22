@@ -144,7 +144,10 @@ export const ITEMS = [
     emoji: "🎮",
     title: "Input Mapping",
     desc: "Rebindable input abstraction over keyboard, mouse, and gamepad. Map logical actions to physical keys at runtime.",
-    links: [{ label: "Docs", href: `${GITHUB}/Game%20Systems/Input%20Mapping/readme.md` }],
+    links: [
+      { label: "Repo ↗", href: `${GITHUB}/Game%20Systems/Input%20Mapping/InputMapper.ts`, launch: true },
+      { label: "Docs", href: `${GITHUB}/Game%20Systems/Input%20Mapping/readme.md` },
+    ],
   },
   {
     section: "modules",
@@ -158,14 +161,20 @@ export const ITEMS = [
     emoji: "🃏",
     title: "Poker Hand Evaluation",
     desc: "Evaluate and rank poker hands from a card array. Useful for card games, mini-games, or any poker-style mechanic.",
-    links: [{ label: "Docs", href: `${GITHUB}/Game%20Systems/Poker%20Hand%20Evaluation/readme.md` }],
+    links: [
+      { label: "Repo ↗", href: `${GITHUB}/Game%20Systems/Poker%20Hand%20Evaluation/Poker%20Hand%20Eval.ts`, launch: true },
+      { label: "Docs", href: `${GITHUB}/Game%20Systems/Poker%20Hand%20Evaluation/readme.md` },
+    ],
   },
   {
     section: "modules",
     emoji: "🗺",
     title: "ASCII Level Editor",
     desc: "Design levels using ASCII art and convert to tile data. A quick way to author maps in plain text.",
-    links: [{ label: "Docs", href: `${GITHUB}/Game%20Systems/Ascii%20Level%20Editor/readme.md` }],
+    links: [
+      { label: "Repo ↗", href: `${GITHUB}/Game%20Systems/Ascii%20Level%20Editor/LevelEditor.ts`, launch: true },
+      { label: "Docs", href: `${GITHUB}/Game%20Systems/Ascii%20Level%20Editor/readme.md` },
+    ],
   },
   {
     section: "modules",
