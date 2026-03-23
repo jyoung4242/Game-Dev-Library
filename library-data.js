@@ -326,7 +326,7 @@ export const ITEMS = [
     title: "Cutscene / UI Event Engine",
     desc: "Sequence-based engine for scripting cutscenes and UI events. Chain camera moves, dialogue, and transitions in order.",
     links: [
-      { label: "Repo ↗", href: `${GITHUB}/Systems%26Components/CutScene_UIEvents/`, launch: true },
+      { label: "Source ↗", href: `${GITHUB}/Systems%26Components/CutScene_UIEvents/cutsceneEvents.ts`, launch: true },
       { label: "Docs", href: `${GITHUB}/Systems%26Components/CutScene_UIEvents/readme.md` },
     ],
   },
