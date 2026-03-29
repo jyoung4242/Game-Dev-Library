@@ -32,6 +32,17 @@ export const ITEMS = [
   // ── TOOLS ────────────────────────────────────────────────────────────────
   {
     section: "tools",
+    emoji: "Ⓐ",
+    title: "Sprite Font Forge",
+    desc: "Draw your own custom bitmap fonts and export as Excalibur sprite sheets. Perfect for pixel art titles, UI, or unique in-game text.",
+    links: [
+      { label: "Launch ↗", href: "https://sprite-font-forge.vercel.app/", launch: true },
+      { label: "Docs", href: `${GITHUB}/Tools/SpriteFont%20Forge/readme.md` },
+    ],
+    isNew: true,
+  },
+  {
+    section: "tools",
     emoji: "🧩",
     title: "Tileset Combiner",
     desc: "Merge multiple tilesets into a single consolidated sheet. Reduces draw calls and simplifies atlas management.",

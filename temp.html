@@ -1,0 +1,170 @@
+            <div className="workspace">
+              {/* LEFT – glyph selector */}
+              <div className="panel">
+                <div className="ph">
+                  <span className="ph-title">Glyphs</span>
+                  <span className="tag">ASCII 32–126</span>
+                </div>
+                <div className="pb">
+                  <div className="glyph-grid">
+                    {CHARS.map(ch => {
+                      const px = glyphs[ch] || emptyGlyph(size);
+                      const sc = Math.max(1, Math.floor(18 / size));
+                      return (
+                        <button
+                          key={ch}
+                          className={`g-btn${ch === sel ? " active" : ""}${hasAny(ch) ? " has-data" : ""}`}
+                          onClick={() => setSel(ch)}
+                          title={`U+${ch.charCodeAt(0).toString(16).toUpperCase().padStart(4, "0")} ${ch === " " ? "SPACE" : ch}`}
+                        >
+                          <span className="g-char">{ch === " " ? "·" : ch}</span>
+                          <GlyphThumb pixels={px} size={size} scale={sc} />
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+
+              {/* CENTER – pixel editor */}
+              <div className="editor">
+                <div className="toolbar">
+                  <div className="row">
+                    {SIZES.map(s => (
+                      <button key={s} className={`sz-btn${s === size ? " active" : ""}`} onClick={() => requestResize(s)}>
+                        {s}×{s}
+                      </button>
+                    ))}
+                  </div>
+                  <div className="vsep" style={{ height: 18 }} />
+                  <button className="btn btn-sm" onClick={() => shiftG(0, -1)}>
+                    ↑
+                  </button>
+                  <button className="btn btn-sm" onClick={() => shiftG(0, 1)}>
+                    ↓
+                  </button>
+                  <button className="btn btn-sm" onClick={() => shiftG(-1, 0)}>
+                    ←
+                  </button>
+                  <button className="btn btn-sm" onClick={() => shiftG(1, 0)}>
+                    →
+                  </button>
+                  <div className="vsep" style={{ height: 18 }} />
+                  <button className="btn btn-sm" onClick={invertG}>
+                    Invert
+                  </button>
+                  <button className={`btn btn-sm ${fillMode ? "acc" : ""}`} onClick={() => setFillMode(f => !f)}>
+                    Fill
+                  </button>
+                  <button className="btn btn-sm" onClick={copyG}>
+                    Copy
+                  </button>
+                  <button className="btn btn-sm" onClick={pasteG} disabled={!clipboard}>
+                    Paste
+                  </button>
+                  <div className="spacer" />
+                  <button className="btn btn-sm danger" onClick={clearG}>
+                    Clear
+                  </button>
+                </div>
+                <div className="canvas-wrap">
+                  <div style={{ width: "100%", height: "100%", overflow: "auto" }}>
+                    <div
+                      style={{
+                        textAlign: "center",
+                        marginBottom: 10,
+                        fontSize: 10,
+                        color: "var(--t1)",
+                        letterSpacing: ".08em",
+                        textTransform: "uppercase",
+                      }}
+                    >
+                      Editing: <span style={{ color: "var(--acc)", fontWeight: 700 }}>"{sel === " " ? "SPACE" : sel}"</span>
+                      <span style={{ color: "var(--t2)", marginLeft: 10 }}>— click or drag to paint</span>
+                    </div>
+
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <PixelGrid pixels={curPx} size={size} onChange={onChange} fillMode={fillMode} />
+                    </div>
+                    <div style={{ textAlign: "center", marginTop: 8, fontSize: 9, color: "var(--t2)", letterSpacing: ".08em" }}>
+                      {size}×{size} px · {curPx.filter(v => v).length} pixels on
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* RIGHT – preview + export */}
+              <div className="panel panel-r" style={{ width: previewWidth }} ref={previewRef}>
+                <div className="ph">
+                  <span className="ph-title">Preview &amp; Export</span>
+                </div>
+                <div className="pb">
+                  <div className="slabel">Sample Text</div>
+                  <input
+                    className="txt-input"
+                    value={prevText}
+                    onChange={e => setPrevText(e.target.value)}
+                    placeholder="Type preview…"
+                    spellCheck="false"
+                    style={{ marginBottom: 8 }}
+                  />
+                  <div className="divider" />
+                  <PreviewCanvas glyphs={glyphs} size={size} text={prevText} ps={1} label="1× Scale" />
+                  <PreviewCanvas glyphs={glyphs} size={size} text={prevText} ps={2} label="2× Scale" />
+                  <PreviewCanvas glyphs={glyphs} size={size} text={prevText} ps={4} label="4× Scale" />
+                  <PreviewCanvas glyphs={glyphs} size={size} text={prevText} ps={8} label="8× Scale" />
+
+                  <div className="divider" />
+                  <div className="slabel">Export PNG Sprite Sheet</div>
+                  <div className="export-row">
+                    <input
+                      className="txt-input"
+                      value={expName}
+                      onChange={e => setExpName(e.target.value)}
+                      placeholder="spritefont"
+                      spellCheck="false"
+                    />
+                    <span className="exp-ext">.png</span>
+                  </div>
+                  <button className="btn acc" style={{ width: "100%", justifyContent: "center", marginBottom: 6 }} onClick={exportPNG}>
+                    ⬇ Export Sprite Sheet
+                  </button>
+                  <div style={{ fontSize: 9, color: "var(--t2)", lineHeight: 1.6, marginBottom: 10 }}>
+                    16 columns · {CHARS.length} glyphs · transparent bg · 1px per pixel
+                  </div>
+
+                  <div className="divider" />
+                  <div className="slabel">Resize Preference</div>
+                  <label className="toggle-row">
+                    <input type="checkbox" checked={alwaysReset} onChange={e => setAlwaysReset(e.target.checked)} />
+                    Always reset glyphs on resize
+                  </label>
+
+                  <div className="divider" />
+                  <div className="slabel">Danger Zone</div>
+                  <button
+                    className="btn danger"
+                    style={{ width: "100%", justifyContent: "center" }}
+                    onClick={() => {
+                      if (window.confirm("Clear ALL glyph data?")) resetAll();
+                    }}
+                  >
+                    ✕ Clear All Glyphs
+                  </button>
+
+                  <div className="divider" />
+                  <div className="slabel">Shortcuts</div>
+                  <div className="kbd">
+                    <div>Ctrl+Z — Undo</div>
+                    <div>Ctrl+Y / Ctrl+Shift+Z — Redo</div>
+                    <div>Click + drag — Paint / Erase</div>
+                  </div>
+                </div>
+              </div>
+            </div>

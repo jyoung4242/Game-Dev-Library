@@ -17,6 +17,8 @@ mapping, pub/sub signals, UUID generation, behavior trees, and simple components
   - :star:[Mini-map](/UIcomponents/MiniMap/readme.md):arrow_backward: NEW STUFF HERE!!!!!
 
 - Tools
+  - :star:[SpriteFontForge](https://sprite-font-forge.vercel.app/):arrow_backward: NEW STUFF HERE!!!!!
+    - [Readme](./Tools/SpriteFont%20Forge/readme.md)
   - [Tileset Combiner](https://tilesetconsolidator.vercel.app/)
     - [Readme](/Tools/Tile%20Set%20Combiner/readme.md)
   - [Wave Function Collapse Authoring Tool](https://wfc-auth-tool.vercel.app/)
