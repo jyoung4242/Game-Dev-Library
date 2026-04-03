@@ -446,7 +446,7 @@ export const ITEMS = [
     section: "shaders",
     emoji: "🌅",
     title: "Sunset Synthwave Shader",
-    desc: "Procedural sunset and sky shader. Creates a dynamic, colorful sky with realistic lighting effects.",
+    desc: "Procedural sunset and sky shader. Creates a dynamic synthwave pattern for the moving ground",
     links: [
       {
         label: "Source ↗",
