@@ -55,6 +55,8 @@ mapping, pub/sub signals, UUID generation, behavior trees, and simple components
   - :star:[Destructive Component](/Systems&Components/Destructive%20Actor%20Component/readme.md):arrow_backward: NEW STUFF HERE!!!!!
 
 - Shaders and Post Processors
+  - :star:[SynthWave Sunset](/Game%20Systems/Shaders%20and%20Post%20Processors/Sunset%20Synthwave/readme.md):arrow_backward: NEW STUFF
+    HERE!!!!!
   - [Shockwave](/Game%20Systems/Shaders%20and%20Post%20Processors/ShockWave/readme.md)
   - [CRT](/Game%20Systems/Shaders%20and%20Post%20Processors/CRT/readme.md)
   - [Gleam Material](/Game%20Systems/Shaders%20and%20Post%20Processors/Gleam%20Material/readme.md)

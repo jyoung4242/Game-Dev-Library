@@ -442,6 +442,21 @@ export const ITEMS = [
       { label: "Docs", href: `${GITHUB}/Game%20Systems/Shaders%20and%20Post%20Processors/Marble%20Shader/readme.md` },
     ],
   },
+  {
+    section: "shaders",
+    emoji: "🌅",
+    title: "Sunset Synthwave Shader",
+    desc: "Procedural sunset and sky shader. Creates a dynamic, colorful sky with realistic lighting effects.",
+    links: [
+      {
+        label: "Source ↗",
+        href: `${GITHUB}/Game%20Systems/Shaders%20and%20Post%20Processors/Sunset%20Synthwave/sunsetShader.ts`,
+        launch: true,
+      },
+      { label: "Docs", href: `${GITHUB}/Game%20Systems/Shaders%20and%20Post%20Processors/Sunset%20Synthwave/readme.md` },
+    ],
+    isNew: true,
+  },
 
   // ── PROCGEN ───────────────────────────────────────────────────────────────
   {
