@@ -17,6 +17,8 @@ mapping, pub/sub signals, UUID generation, behavior trees, and simple components
   - :star:[Mini-map](/UIcomponents/MiniMap/readme.md):arrow_backward: NEW STUFF HERE!!!!!
 
 - Tools
+  - :star:[SoundForge - JSFXR](https://gdl-sound-forge.vercel.app/):arrow_backward: NEW STUFF HERE!!!!!
+    - [Readme](./Tools/SoundForge/readme.md)
   - :star:[SpriteFontForge](https://sprite-font-forge.vercel.app/):arrow_backward: NEW STUFF HERE!!!!!
     - [Readme](./Tools/SpriteFont%20Forge/readme.md)
   - [Tileset Combiner](https://tilesetconsolidator.vercel.app/)

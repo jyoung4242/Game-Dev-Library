@@ -32,6 +32,17 @@ export const ITEMS = [
   // ── TOOLS ────────────────────────────────────────────────────────────────
   {
     section: "tools",
+    emoji: "🎶",
+    title: "JSFXR Sound Forge",
+    desc: "Create retro sound effects with a web-based SFXR-inspired tool. Perfect for prototyping and adding quick audio to your games.",
+    links: [
+      { label: "Launch ↗", href: "https://gdl-sound-forge.vercel.app/", launch: true },
+      { label: "Docs", href: `${GITHUB}/Tools/Sound%20Forge/readme.md` },
+    ],
+    isNew: true,
+  },
+  {
+    section: "tools",
     emoji: "Ⓐ",
     title: "Sprite Font Forge",
     desc: "Draw your own custom bitmap fonts and export as Excalibur sprite sheets. Perfect for pixel art titles, UI, or unique in-game text.",
