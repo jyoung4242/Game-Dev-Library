@@ -37,7 +37,7 @@ export const ITEMS = [
     desc: "Create retro sound effects with a web-based SFXR-inspired tool. Perfect for prototyping and adding quick audio to your games.",
     links: [
       { label: "Launch ↗", href: "https://gdl-sound-forge.vercel.app/", launch: true },
-      { label: "Docs", href: `${GITHUB}/Tools/Sound%20Forge/readme.md` },
+      { label: "Docs", href: `${GITHUB}/Tools/SoundForge/readme.md` },
     ],
     isNew: true,
   },
