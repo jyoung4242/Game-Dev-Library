@@ -367,6 +367,21 @@ export const ITEMS = [
     ],
     isNew: true,
   },
+  {
+    section: "ecs",
+    emoji: "☁️",
+    title: "Fog Of War System",
+    desc: "System for managing the fog of war in the game world.",
+    links: [
+      {
+        label: "Source ↗",
+        href: `${GITHUB}/Systems%26Components/FogOfWar/FowSystem.ts`,
+        launch: true,
+      },
+      { label: "Docs", href: `${GITHUB}/Systems&Components/FogOfWar/readme.md` },
+    ],
+    isNew: true,
+  },
 
   // ── SHADERS ───────────────────────────────────────────────────────────────
   {
