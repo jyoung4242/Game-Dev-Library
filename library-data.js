@@ -207,6 +207,7 @@ export const ITEMS = [
       { label: "Docs", href: `${GITHUB}/Game%20Systems/Ascii%20Level%20Editor/readme.md` },
     ],
   },
+
   {
     section: "ui",
     emoji: "✏️",
@@ -275,6 +276,17 @@ export const ITEMS = [
     links: [
       { label: "Source ↗", href: `${GITHUB}/Game%20Systems/VirtualJoystick/VirtualJoystick.ts`, launch: true },
       { label: "Docs", href: `${GITHUB}/Game%20Systems/VirtualJoystick/readme.md` },
+    ],
+  },
+  {
+    section: "modules",
+    emoji: "🎬",
+    title: "Custom Scene Loader",
+    desc: "Asset loader that is Scene based versus DOM based",
+    isNew: true,
+    links: [
+      { label: "Source ↗", href: `${GITHUB}/Game%20Systems/Custom%20Scene%20Loader/DefaultSceneLoader.ts`, launch: true },
+      { label: "Docs", href: `${GITHUB}/Game%20Systems/Custom%20Scene%20Loader/readme.md` },
     ],
   },
 
