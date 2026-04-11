@@ -1,4 +1,4 @@
-import { Engine, Color, vec, Font } from "excalibur";
+import { Engine, Color, vec, Font, SceneActivationContext, Loadable, Util } from "excalibur";
 import { UIButton } from "../UI/uiButton";
 import { UIProgressBar } from "../UI/uiProgress";
 import { UILabel } from "../UI/uiLabel";
@@ -27,6 +27,7 @@ export class Loader extends DefaultSceneLoader {
       height: 50,
       pos: engine.screen.center.sub(vec(100, -25)),
       callback: () => {
+        this.remove(this.button!);
         engine.goToScene("main");
       },
       idleText: "Start",
@@ -73,9 +74,22 @@ export class Loader extends DefaultSceneLoader {
     });
   }
 
+  public onAfterLoad(_loaded: Loadable<any>[], isInitialLoad: boolean): Promise<void> {
+    return new Promise(async resolve => {
+      if (isInitialLoad) {
+        await this.showPlayButton();
+      } else {
+        Util.delay(1000, this.engine?.clock).then(() => {
+          this.engine?.goToScene("main");
+        });
+      }
+      resolve();
+    });
+  }
+
   onPreUpdate(engine: Engine, elapsed: number): void {
     if (this.pbar) {
-      const percent = this._numLoaded / this._resources.length;
+      const percent = this.progress;
       this.pbar.value = percent * 100;
     }
   }

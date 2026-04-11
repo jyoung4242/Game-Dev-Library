@@ -1,233 +1,262 @@
-# DefaultSceneLoader
+# DefaultSceneLoader Guide
 
-A custom Excalibur scene loader that manages asynchronous resource loading with progress tracking, event emission, and automatic sound
-engine wiring.
-
-![ss](./ss.png)
+A flexible scene loader for Excalibur that handles resource loading with progress tracking and customizable UI.
 
 ## Overview
 
-`DefaultSceneLoader` extends Excalibur's `Scene` class to provide a flexible resource loading system. It handles loading multiple
-resources concurrently, tracks progress, emits lifecycle events, and manages audio context initialization.
+`DefaultSceneLoader` is a base class that extends Excalibur's `Scene` to provide a robust resource loading system. It automatically
+loads resources, tracks progress, handles audio context unlocking, and provides lifecycle hooks for customization.
 
-## Installation
+## Key Features
 
-Import the `DefaultSceneLoader` class into your project:
+- **Automatic Resource Loading**: Loads all provided resources in parallel
+- **Progress Tracking**: Access loading progress via the `progress` getter (0-1)
+- **Lazy Loading Support**: Add resources dynamically and reload
+- **Audio Context Unlocking**: Automatically unlocks Web Audio on initial load
+- **Concurrent Call Coalescing**: Multiple `load()` calls coalesce onto a single in-flight promise
+- **Lifecycle Hooks**: Customizable hooks for before/after loading
+
+## Getting Started
+
+### Basic Usage
 
 ```typescript
-import { DefaultSceneLoader } from "./DefaultSceneLoader";
+import { Loader } from "./Scenes/Loader";
+import { resources } from "./resources";
+
+// Create a loader scene with your resources
+const loaderScene = new Loader(resources);
+
+// Add it to your engine
+engine.addScene("loader", loaderScene);
+
+// Go to the loader scene
+engine.goToScene("loader");
 ```
 
-## Basic Usage
+### Creating a Custom Loader
 
-### Creating a Loader
-
-Initialize the loader by passing an object containing your Excalibur resources:
+Extend `DefaultSceneLoader` and override lifecycle hooks to customize the loading experience:
 
 ```typescript
+import { Engine, Color, vec, Font, SceneActivationContext, Loadable, Util } from "excalibur";
+import { UIButton } from "../UI/uiButton";
+import { UIProgressBar } from "../UI/uiProgress";
+import { UILabel } from "../UI/uiLabel";
 import { DefaultSceneLoader } from "./DefaultSceneLoader";
-import { ImageSource, Sound, Engine } from "excalibur";
 
-//load resources...
-const Resources = {
-  playerImage: new ImageSource("./assets/player.png"),
-  backgroundImage: new ImageSource("./assets/background.png"),
-  bgm: new Sound("./assets/music.mp3"),
-  sfx: new Sound("./assets/effect.wav"),
-};
+export class Loader extends DefaultSceneLoader {
+  button: UIButton | null = null;
+  pbar: UIProgressBar | null = null;
+  label: UILabel | null = null;
 
-// create Custom Loader
-class MyCustomLoader extends DefaultSceneLoader {
   constructor(resources: any) {
     super(resources);
   }
 
+  // Set up UI elements
   onInitialize(engine: Engine): void {
-    // add decorative Actors and ScreenElements
+    this.pbar = new UIProgressBar({
+      ... // user defined progress bar details
+    });
+
+    this.button = new UIButton({
+       ... // user defined button details
+       // button callback to switch to first playable scene...
+    });
+
+    this.label = new UILabel({
+        ... // user defined label details
+    });
+
+    this.add(this.pbar);
+    this.add(this.label);
   }
 
+  // Display the start button after resources are loaded
   showPlayButton(): Promise<void> {
-    //this gets called when all resources are loaded
     return new Promise(resolve => {
-      // show button here
-      // this.add(mybutton)     ---> Button event should call engine.goTo('main');
+      this.add(this.button!);
       resolve();
     });
   }
 
+  // Handle post-load transitions
+  public onAfterLoad(_loaded: Loadable<any>[], isInitialLoad: boolean): Promise<void> {
+    return new Promise(async resolve => {
+      if (isInitialLoad) {
+        await this.showPlayButton();
+      } else {
+        Util.delay(1000, this.engine?.clock).then(() => {
+          this.engine?.goToScene("main");
+        });
+      }
+      resolve();
+    });
+  }
+
+  // Update progress bar during loading
   onPreUpdate(engine: Engine, elapsed: number): void {
-    //update any progress bar here
-    //this.myProgressBar.value = ....
+    if (this.pbar) {
+      const percent = this.progress;
+      this.pbar.value = percent * 100;
+    }
   }
 }
-
-const game = new Engine({
-  width: 800, // the width of the canvas
-  height: 600, // the height of the canvas
-  displayMode: DisplayMode.Fixed, // the display mode
-  pixelArt: true,
-  scenes: {
-    loader: new Loader(Resources), // you can also pass a list of resources to load here
-    main: new Main(), // main or 'first' game scene
-  },
-});
-
-await game.start();
-game.goToScene("loader");
 ```
-
-## Key Features
-
-### Automatic Resource Loading
-
-Resources are loaded automatically when the loader scene is created. The constructor calls `load()` internally.
-
-### Concurrent Loading
-
-Multiple resources load in parallel for optimal performance:
-
-```typescript
-// All resources load concurrently, not sequentially
-const loader = new DefaultSceneLoader({
-  image1: new ImageSource("./a.png"),
-  image2: new ImageSource("./b.png"),
-  sound1: new Sound("./c.mp3"),
-  // All three load at the same time
-});
-```
-
-#### Progress Tracking
-
-    OnPreUpdate method can be used to update status of loads
-
-#### Sound Engine Wiring
-
-    Sounds are automatically wired to the Excalibur engine:
-
-#### AudioContext Unlock
-
-    Handles browser AudioContext initialization after user interaction:
-
-## Events
-
-The loader emits events throughout its lifecycle:
-
-- **`beforeload`** - Emitted before loading starts
-- **`loadresourcestart`** - Emitted when a resource begins loading
-- **`loadresourceend`** - Emitted when a resource finishes loading
-- **`useraction`** - Emitted after user interaction
-- **`afterload`** - Emitted after all loading is complete
 
 ## Lifecycle Hooks
 
-Override these methods to customize loader behavior:
+### `onBeforeLoad(pending: Loadable<any>[], isInitialLoad: boolean)`
 
-### `onBeforeLoad()`
+Called before resource loading begins. Use this to prepare UI or log loading start.
 
-Called before resource loading begins. Override to perform setup:
+**Parameters:**
 
-```typescript
-class CustomLoader extends DefaultSceneLoader {
-  async onBeforeLoad() {
-    console.log("Preparing to load...");
-    // Custom setup code
-  }
-}
-```
+- `pending`: Array of resources about to be loaded
+- `isInitialLoad`: `true` if this is the first load batch, `false` for subsequent loads
 
 ### `onUserAction()`
 
-Called after all resources load and waits for user interaction. Override to show UI:
+Called after resources are loaded (only on initial load) to prompt user interaction for audio context unlocking. Override to display a
+"Click to continue" button or similar.
 
-```typescript
-class CustomLoader extends DefaultSceneLoader {
-  async onUserAction() {
-    await super.onUserAction();
-    // Custom user interaction handling
-    // Show "Press to Continue" button, etc.
-  }
-}
-```
+**Default behavior:** Delays 200ms then calls `showPlayButton()`
+
+### `onAfterLoad(loaded: Loadable<any>[], isInitialLoad: boolean)`
+
+Called after resources are loaded and audio context is unlocked. Use this to trigger scene transitions or cleanup.
+
+**Parameters:**
+
+- `loaded`: Array of resources that were loaded
+- `isInitialLoad`: `true` if this is the first load batch
+
+### `onInitialLoadComplete()`
+
+Called once after the very first load batch completes. Use this to trigger scene transitions.
 
 ### `showPlayButton()`
 
-Override to display play button UI:
-
-```typescript
-class CustomLoader extends DefaultSceneLoader {
-  showPlayButton() {
-    return new Promise(resolve => {
-      // Show UI button
-      document.getElementById("playButton").style.display = "block";
-
-      // Resolve when player clicks
-      document.getElementById("playButton").onclick = () => {
-        document.getElementById("playButton").style.display = "none";
-        resolve();
-      };
-    });
-  }
-}
-```
-
-### `onAfterLoad()`
-
-Called after user action. Use for cleanup or final setup:
-
-```typescript
-class CustomLoader extends DefaultSceneLoader {
-  async onAfterLoad() {
-    console.log("All loading complete, transitioning to game...");
-    // Perform cleanup
-    // Could transition to game scene here
-  }
-}
-```
+Override to display a button that allows users to proceed. Must return a promise.
 
 ### `dispose()`
 
-Override to clean up resources:
+Called after initial load completes. Use this for cleanup.
+
+## Public API
+
+### `isLoaded(): boolean`
+
+Returns `true` if all current resources are loaded.
+
+### `progress: number`
+
+Returns loading progress as a decimal (0-1). Use this to update progress bars or other UI.
 
 ```typescript
-class CustomLoader extends DefaultSceneLoader {
-  dispose() {
-    // Cleanup code
-    console.log("Cleaning up loader...");
-  }
+onPreUpdate(engine: Engine, elapsed: number): void {
+  const percent = this.progress; // Value from 0 to 1
+  // Update UI based on progress
 }
 ```
 
-## API Reference
+### `load(): Promise<Loadable<any>[]>`
 
-### Constructor
+Loads all unloaded resources. Safe to call multiple times — concurrent calls coalesce onto a single promise.
+
+Returns a promise resolving to the array of all loaded resources.
+
+### `addResource(loadable: Loadable<any>): void`
+
+Dynamically add a resource to be loaded. Marks the loader as needing to reload.
+
+## Events
+
+The loader emits events for fine-grained control:
+
+- `"beforeload"`: Fired before loading starts. Payload: `{ resources: Loadable<any>[], isInitialLoad: boolean }`
+- `"loadresourcestart"`: Fired before a resource starts loading. Payload: `resource: Loadable<any>`
+- `"loadresourceend"`: Fired after a resource finishes loading. Payload: `resource: Loadable<any>`
+- `"useraction"`: Fired after user action. Payload: `none`
+- `"afterload"`: Fired after loading completes. Payload: `{ resources: Loadable<any>[], isInitialLoad: boolean }`
+
+### Example Event Listener
 
 ```typescript
-constructor(resources: any)
+const loader = new Loader(resources);
+
+loader.events.on("loadresourcestart", resource => {
+  console.log(`Loading: ${resource.name}`);
+});
+
+loader.events.on("afterload", event => {
+  console.log(`Load complete. Initial load: ${event.isInitialLoad}`);
+});
 ```
 
-Creates a new loader with the given resources object.
+## Constructor Options
 
-### Properties
+The `DefaultSceneLoader` constructor accepts optional parameters:
 
-- `_resources: Loadable<any>[]` - Array of resources being loaded
-- `_isLoading: boolean` - Whether loading is currently in progress
-- `_loaded: boolean` - Whether all resources are loaded
-- `_numLoaded: number` - Count of resources that have finished loading
-- `data: Loadable<any>[]` - Loaded resources data
+```typescript
+const loader = new DefaultSceneLoader(resources, {
+  suppressPlayButton: false, // Set to true to skip showing play button
+  nextScene: "main", // Scene to transition to (optional)
+});
+```
 
-### Methods
+## Tips & Best Practices
 
-- `load(): Promise<Loadable<any>[]>` - Begin loading resources
-- `isLoaded(): boolean` - Check if all resources are loaded
-- `addResource(loadable: Loadable): void` - Add a resource after initialization
-- `onBeforeLoad(): Promise<void>` - Hook called before loading starts
-- `onUserAction(): Promise<void>` - Hook called after resources load
-- `showPlayButton(): Promise<void>` - Show play button UI
-- `onAfterLoad(): Promise<void>` - Hook called after user action
-- `dispose(): void` - Cleanup method
+1. **Use Object Format for Named Resources**: Pass resources as an object for easy reference:
 
-## Notes
+   ```typescript
+   const resources = {
+     background: new ImageSource("./background.png"),
+     music: new Sound("./music.mp3"),
+   };
+   const loader = new Loader(resources);
+   ```
 
-- Resources are only loaded once. Subsequent calls to `load()` return the cached resources
-- The loader respects Excalibur's `Loadable` interface for all resources
-- Sound wiring is automatic for all `Sound` instances in the resources
+2. **Track Progress**: Use the `progress` property and `onPreUpdate()` to smoothly update UI:
+
+   ```typescript
+   onPreUpdate(engine: Engine, elapsed: number): void {
+     this.progressBar.value = this.progress * 100;
+   }
+   ```
+
+3. **Handle Initial vs Reload**: Use the `isInitialLoad` parameter to show UI only once:
+
+   ```typescript
+   onAfterLoad(_loaded: Loadable<any>[], isInitialLoad: boolean) {
+     if (isInitialLoad) {
+       // Show start button
+       this.showPlayButton();
+     } else {
+       // Auto-transition on reload
+       this.engine?.goToScene("main");
+     }
+   }
+   ```
+
+## Example: Complete Integration
+
+```typescript
+import { Engine, ImageSource, Sound } from "excalibur";
+import { Loader } from "./Scenes/Loader";
+import { resources } from "./resources";
+
+const engine = new Engine({
+  width: 800,
+  height: 600,
+  scenes: {
+    loader: new Loader(resources),
+    main: new MainScene(),
+  },
+});
+
+// Start with the loader
+engine.goToScene("loader");
+engine.start();
+```
