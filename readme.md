@@ -14,7 +14,7 @@ mapping, pub/sub signals, UUID generation, behavior trees, and simple components
     - [Developer Guidelines for UIFramework](./UIcomponents/UIFramework/readme.md)
   - [TypeWriter Graphic](/UIcomponents/Typewriter%20Graphic/readme.md)
   - [SVG Graphic](/UIcomponents/SVG%20Graphic/readme.md)
-  - :star:[Mini-map](/UIcomponents/MiniMap/readme.md):arrow_backward: NEW STUFF HERE!!!!!
+  - [Mini-map](/UIcomponents/MiniMap/readme.md)
 
 - Tools
   - :star:[SoundForge - JSFXR](https://gdl-sound-forge.vercel.app/):arrow_backward: NEW STUFF HERE!!!!!
@@ -42,9 +42,9 @@ mapping, pub/sub signals, UUID generation, behavior trees, and simple components
   - [Flex Box Positioning of Screen Elements](/Game%20Systems/Flex%20Layout%20Components/readme.md)
   - [Tilemap Chunking](/Game%20Systems/Chunked%202d%20Tilemap/readme.md)
   - [Custom Platformer Camera Strategy](/Game%20Systems/Platformer%20Custom%20Camera/readme.md)
-  - :star:[Inverse and Forward Kinimatics](/Game%20Systems/FKIK/readme.md):arrow_backward: NEW STUFF HERE!!!!!
-  - :star:[Peer2Peer Networking](/Game%20Systems/P2P/readme.md):arrow_backward: NEW STUFF HERE!!!!!
-  - :star:[Virtual Joysticks](/Game%20Systems/VirtualJoystick/readme.md):arrow_backward: NEW STUFF HERE!!!!!
+  - [Inverse and Forward Kinimatics](/Game%20Systems/FKIK/readme.md)
+  - [Peer2Peer Networking](/Game%20Systems/P2P/readme.md)
+  - [Virtual Joysticks](/Game%20Systems/VirtualJoystick/readme.md)
   - :star:[Custom Scene based Loader](/Game%20Systems/Custom%20Scene%20Loader/readme.md):arrow_backward: NEW STUFF HERE!!!!!
 
 - ECS Components/Systems
@@ -55,8 +55,9 @@ mapping, pub/sub signals, UUID generation, behavior trees, and simple components
   - [Animation Component](/Systems&Components/Animation%20Component/readme.md)
   - [Touching Component](/Systems&Components/Touching%20Component/readme.md)
   - [Cutscene/UI Event engine](/Systems&Components//CutScene_UIEvents/readme.md)
-  - :star:[Destructive Component](/Systems&Components/Destructive%20Actor%20Component/readme.md):arrow_backward: NEW STUFF HERE!!!!!
+  - [Destructive Component](/Systems&Components/Destructive%20Actor%20Component/readme.md)
   - :star:[Fog Of War System](/Systems&Components/FogOfWar/readme.md):arrow_backward: NEW STUFF HERE!!!!!
+  - :star:[Fog Actor](/Systems&Components/FogActor/readme.md):arrow_backward: NEW STUFF HERE!!!!!
 
 - Shaders and Post Processors
   - :star:[SynthWave Sunset](/Game%20Systems/Shaders%20and%20Post%20Processors/Sunset%20Synthwave/readme.md):arrow_backward: NEW STUFF
@@ -71,7 +72,7 @@ mapping, pub/sub signals, UUID generation, behavior trees, and simple components
 - Procedural Generation
   - [Cellular Automata](/Game%20Systems/Procedural%20Generation/Cellular%20Automata/readme.md)
   - [Wave Function Collapse](/Game%20Systems/Procedural%20Generation/Wave%20Function%20Collapse/readme.md)
-  - :star:[Poisson Disk Sampling](/Game%20Systems/Procedural%20Generation/Poisson%20Disk/readme.md):arrow_backward: NEW STUFF HERE!!!!!
+  - [Poisson Disk Sampling](/Game%20Systems/Procedural%20Generation/Poisson%20Disk/readme.md)
 
 - Tutorials
   - [Pushing to Itch via Github Actions](/Tutorials/using%20GH%20actions%20for%20Itch/readme.md)

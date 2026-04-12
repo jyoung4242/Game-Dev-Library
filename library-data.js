@@ -129,7 +129,7 @@ export const ITEMS = [
     emoji: "🗺️",
     title: "Mini-map",
     desc: "Display a mini-map of the game world. Useful for visualizing game state and navigation.",
-    isNew: true,
+
     links: [
       { label: "Source ↗", href: `${GITHUB}/UIcomponents/MiniMap/minimap.ts`, launch: true },
       { label: "Docs", href: `${GITHUB}/UIcomponents/MiniMap/readme.md` },
@@ -250,7 +250,7 @@ export const ITEMS = [
     emoji: "🦾",
     title: "Inverse & Forward Kinematics",
     desc: "IK and FK chains for procedural limb animation. Attach to actors to drive bone-style animations at runtime.",
-    isNew: true,
+
     links: [
       { label: "Repo ↗", href: `${GITHUB}/Game%20Systems/FKIK/kinematics`, launch: true },
       { label: "Docs", href: `${GITHUB}/Game%20Systems/FKIK/readme.md` },
@@ -261,7 +261,7 @@ export const ITEMS = [
     emoji: "🌐",
     title: "Peer-to-Peer Networking",
     desc: "WebRTC-based P2P networking layer for multiplayer games. Sync game state between peers without a dedicated server.",
-    isNew: true,
+
     links: [
       { label: "Source ↗", href: `${GITHUB}/Game%20Systems/P2P/PeerNetworManager.ts`, launch: true },
       { label: "Docs", href: `${GITHUB}/Game%20Systems/P2P/readme.md` },
@@ -272,7 +272,7 @@ export const ITEMS = [
     emoji: "🕹",
     title: "Virtual Joysticks",
     desc: "On-screen virtual joystick for mobile and touch input. Configurable dead zone, radius, and output mapping.",
-    isNew: true,
+
     links: [
       { label: "Source ↗", href: `${GITHUB}/Game%20Systems/VirtualJoystick/VirtualJoystick.ts`, launch: true },
       { label: "Docs", href: `${GITHUB}/Game%20Systems/VirtualJoystick/readme.md` },
@@ -303,6 +303,17 @@ export const ITEMS = [
         launch: true,
       },
     ],
+  },
+  {
+    section: "ecs",
+    emoji: "☁️",
+    title: "Fog Actor",
+    desc: "Actor with built-in fog overlay. Add as a Child Actor to create a fog effect on that actor, like for a room or map",
+    links: [
+      { label: "Source ↗", href: `${GITHUB}/Systems%26Components/FogActor/FogActor.ts`, launch: true },
+      { label: "Docs", href: `${GITHUB}/Systems%26Components/FogActor/readme.md` },
+    ],
+    isNew: true,
   },
   {
     section: "ecs",
@@ -377,7 +388,6 @@ export const ITEMS = [
       },
       { label: "Docs", href: `${GITHUB}/Systems&Components/Destructive%20Actor%20Component/readme.md` },
     ],
-    isNew: true,
   },
   {
     section: "ecs",
@@ -530,7 +540,7 @@ export const ITEMS = [
     emoji: "🕸️",
     title: "Poisson Disc Sampling",
     desc: "This is extremely useful in gamedev (trees, enemies, loot, etc.) because it avoids clumping while still looking natural",
-    isNew: true,
+
     links: [
       {
         label: "Source ↗",
