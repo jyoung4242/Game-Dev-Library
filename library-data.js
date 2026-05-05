@@ -554,7 +554,7 @@ export const ITEMS = [
   {
     section: "procgen",
     emoji: "🕸️",
-    title: "Poisson Disc Sampling",
+    title: "Poisson Disk Sampling",
     desc: "This is extremely useful in gamedev (trees, enemies, loot, etc.) because it avoids clumping while still looking natural",
 
     links: [
@@ -563,7 +563,7 @@ export const ITEMS = [
         href: `${GITHUB}/Game%20Systems/Procedural%20Generation/Poisson%20Disk/Poisson.ts`,
         launch: true,
       },
-      { label: "Docs", href: `${GITHUB}/Game%20Systems/Procedural%20Generation/Poisson%20Disc/readme.md` },
+      { label: "Docs", href: `${GITHUB}/Game%20Systems/Procedural%20Generation/Poisson%20Disk/readme.md` },
     ],
   },
 
