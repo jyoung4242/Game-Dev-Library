@@ -39,7 +39,6 @@ export const ITEMS = [
       { label: "Launch ↗", href: "https://gdl-sound-forge.vercel.app/", launch: true },
       { label: "Docs", href: `${GITHUB}/Tools/SoundForge/readme.md` },
     ],
-    isNew: true,
   },
   {
     section: "tools",
@@ -50,7 +49,6 @@ export const ITEMS = [
       { label: "Launch ↗", href: "https://sprite-font-forge.vercel.app/", launch: true },
       { label: "Docs", href: `${GITHUB}/Tools/SpriteFont%20Forge/readme.md` },
     ],
-    isNew: true,
   },
   {
     section: "tools",
@@ -91,6 +89,28 @@ export const ITEMS = [
       { label: "Launch ↗", href: "https://bt-builder.vercel.app/", launch: true },
       { label: "Docs", href: `${GITHUB}/Tools/BT%20Builder/readme.md` },
     ],
+  },
+  {
+    section: "tools",
+    emoji: "🎮",
+    title: "GamePad Tester",
+    desc: "Visualize gamepad input and output. Useful for prototyping and debugging gamepad controls.",
+    links: [
+      { label: "Launch ↗", href: "https://gamepad-tester-nu-ivory.vercel.app/", launch: true },
+      { label: "Docs", href: `${GITHUB}/Tools/GamePad%20Tester/readme.md` },
+    ],
+    isNew: true,
+  },
+  {
+    section: "tools",
+    emoji: "🤖",
+    title: "SpriteSheet Parser",
+    desc: "Parse Spritesheets and code gen for ExcaliburJS.",
+    links: [
+      { label: "Launch ↗", href: "https://sprite-sheet-parser.vercel.app/", launch: true },
+      { label: "Docs", href: `${GITHUB}/Tools/SpriteSheet%20Parser/readme.md` },
+    ],
+    isNew: true,
   },
 
   // ── UI COMPONENTS ─────────────────────────────────────────────────────────
@@ -283,7 +303,6 @@ export const ITEMS = [
     emoji: "🎬",
     title: "Custom Scene Loader",
     desc: "Asset loader that is Scene based versus DOM based",
-    isNew: true,
     links: [
       { label: "Source ↗", href: `${GITHUB}/Game%20Systems/Custom%20Scene%20Loader/DefaultSceneLoader.ts`, launch: true },
       { label: "Docs", href: `${GITHUB}/Game%20Systems/Custom%20Scene%20Loader/readme.md` },
@@ -313,7 +332,6 @@ export const ITEMS = [
       { label: "Source ↗", href: `${GITHUB}/Systems%26Components/FogActor/FogActor.ts`, launch: true },
       { label: "Docs", href: `${GITHUB}/Systems%26Components/FogActor/readme.md` },
     ],
-    isNew: true,
   },
   {
     section: "ecs",
@@ -402,7 +420,6 @@ export const ITEMS = [
       },
       { label: "Docs", href: `${GITHUB}/Systems&Components/FogOfWar/readme.md` },
     ],
-    isNew: true,
   },
 
   // ── SHADERS ───────────────────────────────────────────────────────────────
@@ -503,7 +520,6 @@ export const ITEMS = [
       },
       { label: "Docs", href: `${GITHUB}/Game%20Systems/Shaders%20and%20Post%20Processors/Sunset%20Synthwave/readme.md` },
     ],
-    isNew: true,
   },
 
   // ── PROCGEN ───────────────────────────────────────────────────────────────

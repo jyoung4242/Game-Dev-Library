@@ -17,9 +17,9 @@ mapping, pub/sub signals, UUID generation, behavior trees, and simple components
   - [Mini-map](/UIcomponents/MiniMap/readme.md)
 
 - Tools
-  - :star:[SoundForge - JSFXR](https://gdl-sound-forge.vercel.app/):arrow_backward: NEW STUFF HERE!!!!!
+  - :star:[SoundForge - JSFXR](https://gdl-sound-forge.vercel.app/)
     - [Readme](./Tools/SoundForge/readme.md)
-  - :star:[SpriteFontForge](https://sprite-font-forge.vercel.app/):arrow_backward: NEW STUFF HERE!!!!!
+  - :star:[SpriteFontForge](https://sprite-font-forge.vercel.app/)
     - [Readme](./Tools/SpriteFont%20Forge/readme.md)
   - [Tileset Combiner](https://tilesetconsolidator.vercel.app/)
     - [Readme](/Tools/Tile%20Set%20Combiner/readme.md)
@@ -29,6 +29,10 @@ mapping, pub/sub signals, UUID generation, behavior trees, and simple components
     - [Readme](/Tools//Animation%20Builder/Readme.md)
   - [Behavior Tree Builder](https://bt-builder.vercel.app/)
     - [Readme](/Tools/BT%20Builder/readme.md)
+  - [GamePad Tester](https://gamepad-tester-nu-ivory.vercel.app/):arrow_backward: NEW STUFF HERE!!!!!
+    - [Readme](./Tools/GamePad%20Tester/readme.md)
+  - [SpriteSheet Parser](https://sprite-sheet-parser.vercel.app/):arrow_backward: NEW STUFF HERE!!!!!
+    - [Readme](./Tools/SpriteSheet%20Parser/readme.md)
 
 - Game Modules
   - [Game State Management](/Game%20Systems/Game%20State%20Manager/readme.md)
@@ -45,7 +49,7 @@ mapping, pub/sub signals, UUID generation, behavior trees, and simple components
   - [Inverse and Forward Kinimatics](/Game%20Systems/FKIK/readme.md)
   - [Peer2Peer Networking](/Game%20Systems/P2P/readme.md)
   - [Virtual Joysticks](/Game%20Systems/VirtualJoystick/readme.md)
-  - :star:[Custom Scene based Loader](/Game%20Systems/Custom%20Scene%20Loader/readme.md):arrow_backward: NEW STUFF HERE!!!!!
+  - :star:[Custom Scene based Loader](/Game%20Systems/Custom%20Scene%20Loader/readme.md)
 
 - ECS Components/Systems
   - [Component Template](/Systems&Components/General%20Purpose%20Component%20Template/GP%20Component.ts)
@@ -56,12 +60,11 @@ mapping, pub/sub signals, UUID generation, behavior trees, and simple components
   - [Touching Component](/Systems&Components/Touching%20Component/readme.md)
   - [Cutscene/UI Event engine](/Systems&Components//CutScene_UIEvents/readme.md)
   - [Destructive Component](/Systems&Components/Destructive%20Actor%20Component/readme.md)
-  - :star:[Fog Of War System](/Systems&Components/FogOfWar/readme.md):arrow_backward: NEW STUFF HERE!!!!!
-  - :star:[Fog Actor](/Systems&Components/FogActor/readme.md):arrow_backward: NEW STUFF HERE!!!!!
+  - :star:[Fog Of War System](/Systems&Components/FogOfWar/readme.md)
+  - :star:[Fog Actor](/Systems&Components/FogActor/readme.md)
 
 - Shaders and Post Processors
-  - :star:[SynthWave Sunset](/Game%20Systems/Shaders%20and%20Post%20Processors/Sunset%20Synthwave/readme.md):arrow_backward: NEW STUFF
-    HERE!!!!!
+  - :star:[SynthWave Sunset](/Game%20Systems/Shaders%20and%20Post%20Processors/Sunset%20Synthwave/readme.md)
   - [Shockwave](/Game%20Systems/Shaders%20and%20Post%20Processors/ShockWave/readme.md)
   - [CRT](/Game%20Systems/Shaders%20and%20Post%20Processors/CRT/readme.md)
   - [Gleam Material](/Game%20Systems/Shaders%20and%20Post%20Processors/Gleam%20Material/readme.md)
