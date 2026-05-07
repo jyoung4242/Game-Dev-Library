@@ -112,6 +112,17 @@ export const ITEMS = [
     ],
     isNew: true,
   },
+  {
+    section: "tools",
+    emoji: "✨",
+    title: "Excalibur Shader Editor",
+    desc: "Create and edit custom shaders for ExcaliburJS.",
+    links: [
+      { label: "Launch ↗", href: "https://exshaderlab.vercel.app/", launch: true },
+      { label: "Docs", href: `${GITHUB}/Tools/ExShaderLab/readme.md` },
+    ],
+    isNew: true,
+  },
 
   // ── UI COMPONENTS ─────────────────────────────────────────────────────────
   {
