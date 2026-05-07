@@ -165,14 +165,6 @@ Always include these sections:
 
 Requires WebGL2 capable browser.
 
-## Keyboard Shortcuts
-
-| Action | Shortcut |
-|--------|----------|
-| Switch tabs | Arrow keys |
-| Full screen canvas | F11 |
-| Browser dev tools | F12 |
-
 ## Troubleshooting
 
 **Shader won't compile?**
@@ -190,13 +182,8 @@ Requires WebGL2 capable browser.
 - Simplify shader calculations
 - Use lower precision (mediump vs highp)
 
-## License
-
-See the main repository LICENSE file.
-
 ## Credits
 
 Built with:
 - [Excalibur.js](https://excaliburjs.org/) — Game engine
-- [React](https://react.dev/) — UI framework
-- [WebGL2](https://www.khronos.org/webgl/) — GPU graphics
+
