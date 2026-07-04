@@ -99,7 +99,6 @@ export const ITEMS = [
       { label: "Launch ↗", href: "https://gamepad-tester-nu-ivory.vercel.app/", launch: true },
       { label: "Docs", href: `${GITHUB}/Tools/GamePad%20Tester/readme.md` },
     ],
-    isNew: true,
   },
   {
     section: "tools",
@@ -110,7 +109,6 @@ export const ITEMS = [
       { label: "Launch ↗", href: "https://sprite-sheet-parser.vercel.app/", launch: true },
       { label: "Docs", href: `${GITHUB}/Tools/SpriteSheet%20Parser/readme.md` },
     ],
-    isNew: true,
   },
   {
     section: "tools",
@@ -120,6 +118,16 @@ export const ITEMS = [
     links: [
       { label: "Launch ↗", href: "https://exshaderlab.vercel.app/", launch: true },
       { label: "Docs", href: `${GITHUB}/Tools/ExShaderLab/readme.md` },
+    ],
+  },
+  {
+    section: "tools",
+    emoji: "💬",
+    title: "Skyrelda Dialog Editor",
+    desc: "Create complicated branching dialog into a JSON format",
+    links: [
+      { label: "Launch ↗", href: "https://dialog-editor-brown.vercel.app/", launch: true },
+      { label: "Docs", href: "https://github.com/jyoung4242/dialogEditor/readme.md" },
     ],
     isNew: true,
   },

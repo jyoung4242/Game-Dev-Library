@@ -29,12 +29,14 @@ mapping, pub/sub signals, UUID generation, behavior trees, and simple components
     - [Readme](/Tools//Animation%20Builder/Readme.md)
   - [Behavior Tree Builder](https://bt-builder.vercel.app/)
     - [Readme](/Tools/BT%20Builder/readme.md)
-  - [GamePad Tester](https://gamepad-tester-nu-ivory.vercel.app/):arrow_backward: NEW STUFF HERE!!!!!
+  - [GamePad Tester](https://gamepad-tester-nu-ivory.vercel.app/)
     - [Readme](./Tools/GamePad%20Tester/readme.md)
-  - [SpriteSheet Parser](https://sprite-sheet-parser.vercel.app/):arrow_backward: NEW STUFF HERE!!!!!
+  - [SpriteSheet Parser](https://sprite-sheet-parser.vercel.app/)
     - [Readme](./Tools/SpriteSheet%20Parser/readme.md)
-  - [ExShaderLab](https://exshaderlab.vercel.app/):arrow_backward: NEW STUFF HERE!!!!!
+  - [ExShaderLab](https://exshaderlab.vercel.app/)
     - [Readme](./Tools/ExShaderLab/readme.md)
+  - [DialogEditor](https://dialog-editor-brown.vercel.app/):arrow_backward: NEW STUFF HERE!!!!!
+    - [Readme](https://github.com/jyoung4242/dialogEditor/readme.md)
 
 - Game Modules
   - [Game State Management](/Game%20Systems/Game%20State%20Manager/readme.md)
