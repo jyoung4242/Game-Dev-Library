@@ -129,6 +129,13 @@ export const ITEMS = [
       { label: "Launch ↗", href: "https://dialog-editor-brown.vercel.app/", launch: true },
       { label: "Docs", href: "https://github.com/jyoung4242/dialogEditor/readme.md" },
     ],
+  },
+  {
+    section: "tools",
+    emoji: "🔗",
+    title: "Tilemap Graph Tool",
+    desc: "Let's you build navigation Graphs from static image",
+    links: [{ label: "Launch ↗", href: "https://jyoung4242.github.io/graphGenTool/", launch: true }],
     isNew: true,
   },
 
